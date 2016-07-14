@@ -1,9 +1,37 @@
-<h2>Gidmon Brewing</h2>
+<div>
+        <a class="navbar-brand" href="#"><img src="assets/images/logo-medium.png" class="top-logo" /></a>
+</div>
+    <div class="header gm">
+        <nav class="navbar tb-clean">
+            <div class="container-fluid gm-90">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!--<a class="navbar-brand" href="#">Gidmon.se</a>-->
+                </div>
+                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                  
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"> {{#link-to "index"}}Start{{/link-to}}</li>
+                        <li>{{#link-to "beers"}}Beers{{/link-to}}</li>
+                        <li class="dropdown">
+                            {{#link-to "recipes"}}Recipes{{/link-to}}
+                        </li>
+                    </ul>
+                  
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </nav>
+    </div>
+    
+    {{outlet}}
+    
+    <footer class="footer">
+        <p>footer dådåva</p>
+    </footer>
 
-<nav>
-  {{#link-to "index"}}Start{{/link-to}}
-  {{#link-to "beers"}}Beers{{/link-to}}
-  {{#link-to "recipes"}}Recipes{{/link-to}}
-</nav>
 
-{{outlet}}
