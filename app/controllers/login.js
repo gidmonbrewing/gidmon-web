@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   authManager: Ember.inject.service(),
   isAuthenticated: Ember.computed('authManager.token',  function() {
-    return this.get("authManager.token") != "";
+    return this.get("authManager.token") !== "";
   }),
   actions: {
     authenticate() {

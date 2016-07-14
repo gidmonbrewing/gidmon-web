@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
   token: Ember.computed({
-    get(key) {
+    get() {
       if (sessionStorage.token) {
         return sessionStorage.token;
       } else {
@@ -29,6 +29,6 @@ export default Ember.Service.extend({
   },
 
   isAuthenticated: Ember.computed('token',  function() {
-    return this.get('token') != "";
+    return this.get('token') !== "";
   }),
 });
