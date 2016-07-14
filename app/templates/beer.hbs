@@ -1,2 +1,4 @@
 <h2>{{model.name}}</h2>
-Abv: {{input name="abv" value=model.abv enter="updateModel"}}
+Abv: {{input name="abv" value=model.abv enter="updateModel"}} <br/>
+<button {{action "saveModel"}}>Save</button>
+<button {{action "createRecipe" model.id}}>Create recipe</button>
