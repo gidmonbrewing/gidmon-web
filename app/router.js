@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('beer', { path: '/beer/:beer_id' });
   this.route('login');
   this.route('about');
+  this.route('news-item');
 });
 
 export default Router;

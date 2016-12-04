@@ -2,6 +2,27 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
+/* 	this.get('store').push({
+		data: [{
+			id: 1,
+			type: 'news-item',
+			title: 'News about beer'
+		}, {
+			id: 2,
+			type: 'news-item',
+			title: 'More news about beer'
+		}]
+	}); */
+	let store = this.get('store');
+	store.createRecord('news-item', {
+	  title: 'News about beer',
+	  author: 'Johan Gidlund',
+	});
+	store.createRecord('news-item', {
+	  title: 'News about beer 2',
+	  author: 'Johan Gidlund',
+	});
+	return this.get('store').findAll('news-item');
     // let beer = this.get('store').createRecord('beer', {
     //   id: 1,
     //   name: 'Gidmon Dumle'

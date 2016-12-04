@@ -1,5 +1,5 @@
 <h3>Beer Recipes</h3>
 
-{{#each model as |beer|}}
-  <p>{{#link-to "beer" beer}}{{beer.name}}{{/link-to}}</p>
+{{#each model as |recipe|}}
+  <p>Recipe: {{recipe.beer.name}}</p>
 {{/each}}

@@ -25,6 +25,9 @@ You will need the following things properly installed on your computer.
 * `ember server`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
+To proxy ajax request to local server:
+--proxy http://127.0.0.1:8000
+
 ### Code Generators
 
 Make use of the many generators for code, try `ember help generate` for more details
