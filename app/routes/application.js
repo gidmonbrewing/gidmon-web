@@ -14,13 +14,17 @@ export default Ember.Route.extend({
 		}]
 	}); */
 	let store = this.get('store');
-	store.createRecord('news-item', {
+	let newsItem = store.createRecord('news-item', {
 	  title: 'News about beer',
 	  author: 'Johan Gidlund',
 	});
 	store.createRecord('news-item', {
 	  title: 'News about beer 2',
 	  author: 'Johan Gidlund',
+	});
+	store.createRecord('news-comment', {
+	  author: 'Johan Gidlund',
+	  newsItem: newsItem
 	});
 	return this.get('store').findAll('news-item');
     // let beer = this.get('store').createRecord('beer', {
