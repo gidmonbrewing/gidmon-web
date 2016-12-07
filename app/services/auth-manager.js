@@ -17,7 +17,7 @@ export default Ember.Service.extend({
   authenticate(login, password) {
     return Ember.$.ajax({
       method: "POST",
-      url: "/api-token-auth",
+      url: "/api/token-auth",
       data: { username: login, password: password }
     }).then((result) => {
       this.set('token', result.token);

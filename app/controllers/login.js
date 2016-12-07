@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
       const { login, password } = this.getProperties('login', 'password');
       this.get('authManager').authenticate(login, password).then(() => {
       }, (err) => {
-        alert('Error obtaining token: ' + err.responseText);
+        alert('Error obtaining token: [' + err.status + "] " + err.statusText);
       });
     },
     logout() {

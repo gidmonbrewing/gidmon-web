@@ -26,7 +26,7 @@ export default Ember.Route.extend({
 	  author: 'Johan Gidlund',
 	  newsItem: newsItem
 	});
-	return this.get('store').findAll('news-item');
+	return this.get('store').peekAll('news-item');
     // let beer = this.get('store').createRecord('beer', {
     //   id: 1,
     //   name: 'Gidmon Dumle'
