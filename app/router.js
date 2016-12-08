@@ -12,7 +12,12 @@ Router.map(function() {
   this.route('beer', { path: '/beer/:beer_id' });
   this.route('login');
   this.route('about');
-  this.route('news-item');
+  this.route('news-item', function() {
+    this.route('comment');
+  });
+  this.route('news', function() {
+    this.route('new');
+  });
 });
 
 export default Router;

@@ -1,0 +1,17 @@
+<h2>Title</h2>
+{{input name="title" value=model.title enter="updateModel"}} <br/>
+<h2>Content</h2>
+{{textarea cols="80" rows="6" name="content" value=model.content enter="updateModel"}} <br/>
+<button {{action "saveModel"}}>Save</button>
+<hr/>
+<header>
+	<img src="/assets/images/tmp-header.png" style="max-width:100%"/>
+	<h1>{{model.title}}</h1>
+</header>
+<p class="meta">By <a href="#">{{model.author}}</a>, {{format-date model.created}} | <a href="#">54 Comments</a> | <a href="#">Brewing</a>, <a href="#">Hops</a></p>
+<div style="display:block;">
+	<div class="body">
+		{{! Use tripple braces to show html unencoded }}
+		{{{model.htmlContent}}}
+	</div>
+</div>
