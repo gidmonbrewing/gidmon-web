@@ -18,6 +18,7 @@ Router.map(function() {
   this.route('news', function() {
     this.route('new');
   });
+  this.route('user', { path: '/user/:user_id' });
 });
 
 export default Router;
