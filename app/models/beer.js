@@ -4,6 +4,9 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   name: attr(),
+  description: attr(),
   abv: attr(),
+  imageName: attr(),
+  untappdUrl: attr(),
   recipe: belongsTo('recipe')
 });
