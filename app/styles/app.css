@@ -12,6 +12,24 @@ body {
 
 
 
+.adminbar .icon {
+    border-radius: 10%;
+    border: 0px solid #333;
+    display: block;
+    height: 35px;
+    width: 35px;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    bottom: 7px;
+    right: 5px;
+}
+
+.loginbar .icon img {
+    width: 35px;
+}
+
+
 .menu-box {
     border: 0px solid black;
     padding:2px;

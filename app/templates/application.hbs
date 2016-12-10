@@ -14,7 +14,31 @@
                     <!--<a class="navbar-brand" href="#">Gidmon.se</a>-->
                 </div>
                 <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-                  
+                    {{#if authManager.isAuthenticated}}
+                    <ul id="loginbar" class="nav navbar-nav navbar-right loginbar">
+                        {{#if authManager.isStaff}}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">News</li>
+                                <li><a href="#">Add</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Beer</li>
+                                <li><a href="#">Add</a></li>
+                                {{#if authManager.isSuperuser}}
+                                   <li class="dropdown-header">Users</li>
+                                {{/if}}
+                            </ul>
+                        </li>
+                        {{/if}}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{user.fullName}} <div class="icon"><img src="img/avatar1.png" alt="avatar"></div><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {{/if}}
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"> {{#link-to "index"}}Start{{/link-to}}</li>
                         <li>{{#link-to "beers"}}Beers{{/link-to}}</li>
