@@ -19,11 +19,11 @@ export default Ember.Service.extend({
 			if (sessionStorage.user) {
 				return sessionStorage.user;
 			} else {
-				return null;
+				return -1;
 			}
 		},
 		set(key, value) {
-			sessionStorage.user = value;
+			sessionStorage.user = value.id;
 			return value;
 		}
 	}),
@@ -48,7 +48,7 @@ export default Ember.Service.extend({
 
 	invalidate() {
 		this.set('token', "");
-		this.set('currentUser', null);
+		this.set('currentUser', -1);
 	},
 
 	isAuthenticated: Ember.computed('token',  function() {

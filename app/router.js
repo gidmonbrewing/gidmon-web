@@ -12,7 +12,7 @@ Router.map(function() {
   this.route('beer', { path: '/beer/:beer_id' });
   this.route('login');
   this.route('about');
-  this.route('news-item', function() {
+  this.route('news-item', { path: '/news-item/:news-item_id' }, function() {
     this.route('comment');
   });
   this.route('news', function() {
