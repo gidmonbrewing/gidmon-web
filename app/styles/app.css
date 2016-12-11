@@ -10,9 +10,15 @@ body {
      font-weight:100;
 }
 
+.loginbar form {
+    padding: 5px;
+}
 
+.loginbar input {
+    margin-bottom: 5px;
+}
 
-.adminbar .icon {
+.loginbar .icon {
     border-radius: 10%;
     border: 0px solid #333;
     display: block;
