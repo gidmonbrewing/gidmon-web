@@ -22,7 +22,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">News</li>
-                                <li><a href="#">Add</a></li>
+                                <li> {{#link-to "news.new"}}Add{{/link-to}}</li>
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Beer</li>
                                 <li><a href="#">Add</a></li>
@@ -72,7 +72,7 @@
     {{outlet}}
     
     <footer class="footer">
-        <p>footer dådåva</p>
+        <p>©2016 Gidmon</p><p>Contact: <a href="mailto:info@gidmon.se">info@gidmon.se</a></p>
     </footer>
 
 
