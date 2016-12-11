@@ -17,6 +17,8 @@ Router.map(function() {
   });
   this.route('news', function() {
     this.route('new');
+    this.route('item', { path: '/:news_id' });
+    this.route('edit');
   });
   this.route('user', { path: '/user/:user_id' });
 });

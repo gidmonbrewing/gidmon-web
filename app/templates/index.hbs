@@ -13,18 +13,18 @@
 					{{! Use tripple braces to show html unencoded }}
 					<p>{{{newsItem.htmlPreamble}}}</p>
 				</div>
-				{{#link-to "news-item" newsItem.id}}Read more{{/link-to}}
+				{{#link-to "news.item" newsItem.id}}Read more{{/link-to}}
 				<hr />
 				{{/each}}
 			</div>
 			<div class="col-md-4">
 				<h2>Latest posts</h2>
 				<hr />
-				{{#each model as |newsItem|}}
 				<div class="container-fluid">
+					{{#each model as |newsItem|}}
 					<div class="row text-center blog-list">
 						<div class="col-md-12 box">
-							<div class="box-button" {{action "gotoItem" newsItem.id}}>
+							<div class="box-button" {{action "gotoPage" "news.item" newsItem.id target=appCont}}>
 								<div class="content">
 									<img src="assets/images/logo-small.png" />
 									<div class="text">
@@ -35,8 +35,8 @@
 							</div>
 						</div>
 					</div>
+					{{/each}}
 				</div>
-				{{/each}}
 			</div>
 		</div>
 	</div>

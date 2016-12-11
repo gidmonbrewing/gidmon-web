@@ -1,1 +1,30 @@
-{{outlet}}
+<div class="container-fluid">
+	<div class="col-md-12">
+		<div class="row gidblog">
+			<div class="col-md-8">
+				{{outlet}}
+			</div>
+			<div class="col-md-4">
+				<h2>Latest posts</h2>
+				<hr />
+				<div class="container-fluid">
+					{{#each model as |newsItem|}}
+					<div class="row text-center blog-list">
+						<div class="col-md-12 box">
+							<div class="box-button" {{action "gotoPage" "news.item" newsItem.id target=appCont}}>
+								<div class="content">
+									<img src="/assets/images/logo-small.png" />
+									<div class="text">
+										<h3>{{newsItem.title}}</h3>
+										<p>{{{newsItem.htmlPreamble}}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

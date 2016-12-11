@@ -1,0 +1,14 @@
+{{#each model as |newsItem|}}
+<header>
+	<img src="/assets/images/tmp-header.png" style="max-width:100%" />
+	<h1>{{newsItem.title}}</h1>
+</header>
+<p class="meta"><span class="glyphicon glyphicon-user"></span> <a href="#">{{newsItem.author.fullName}}</a> <span class="glyphicon glyphicon-calendar"></span> {{format-date newsItem.created}} <span class="glyphicon glyphicon-comment"></span> <a href="#">{{newsItem.commentCount}} Comments</a> <span class="glyphicon glyphicon-tags"></span> <a href="#">Brewing</a>, <a href="#">Hops</a></p>
+<hr />
+<div class="ingress">
+	{{! Use tripple braces to show html unencoded }}
+	<p>{{{newsItem.htmlPreamble}}}</p>
+</div>
+{{#link-to "news-item" newsItem.id}}Read more{{/link-to}}
+<hr />
+{{/each}}
