@@ -20,47 +20,23 @@
 			<div class="col-md-4">
 				<h2>Latest posts</h2>
 				<hr />
+				{{#each model as |newsItem|}}
 				<div class="container-fluid">
 					<div class="row text-center blog-list">
 						<div class="col-md-12 box">
-							<div class="box-button">
+							<div class="box-button" {{action "gotoItem" newsItem.id}}>
 								<div class="content">
 									<img src="assets/images/logo-small.png" />
 									<div class="text">
-										<h3>Dumle on the go!</h3>
-										<p>brew brew brew!</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row text-center blog-list">
-						<div class="col-md-12 box">
-							<div class="box-button mod">
-								<div class="content">
-									<img src="assets/images/logo-small.png" />
-									<div class="text">
-										<h3>Renovating the brewery</h3>
-										<p>brew brew brew!</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row text-center blog-list">
-						<div class="col-md-12 box">
-							<div class="box-button">
-								<div class="content">
-									<img src="assets/images/logo-small.png" />
-									<div class="text">
-										<h3>Hops hops hops!</h3>
-										<p>brew brew brew!</p>
+										<h3>{{newsItem.title}}</h3>
+										<p>{{{newsItem.htmlPreamble}}}</p>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				{{/each}}
 			</div>
 		</div>
 	</div>

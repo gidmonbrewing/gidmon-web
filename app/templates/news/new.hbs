@@ -1,5 +1,7 @@
 <h2>Title</h2>
 {{input name="title" value=model.title enter="updateModel"}} <br/>
+<h2>Preamble</h2>
+{{textarea cols="80" rows="3" name="preamble" value=model.preamble}} <br/>
 <h2>Content</h2>
 {{textarea cols="80" rows="6" name="content" value=model.content}} <br/>
 <button {{action "saveModel"}}>Save</button>
