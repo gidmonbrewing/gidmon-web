@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>gidmon-web</Name>
+    <RootNamespace>gidmon-web</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>65ebb5f3-dd25-4c61-82c7-f1bb8d023952</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>ember-cli-build.js</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app\adapters\application.js" />
+    <Compile Include="app\app.js" />
+    <Compile Include="app\components\clickable-text.js" />
+    <Compile Include="app\controllers\application.js" />
+    <Compile Include="app\controllers\beer.js" />
+    <Compile Include="app\controllers\login.js" />
+    <Compile Include="app\controllers\news\new.js" />
+    <Compile Include="app\helpers\format-date.js" />
+    <Compile Include="app\models\beer.js" />
+    <Compile Include="app\models\news-comment.js" />
+    <Compile Include="app\models\news-item.js" />
+    <Compile Include="app\models\recipe.js" />
+    <Compile Include="app\models\user.js" />
+    <Compile Include="app\resolver.js" />
+    <Compile Include="app\router.js" />
+    <Compile Include="app\routes\about.js" />
+    <Compile Include="app\routes\application.js" />
+    <Compile Include="app\routes\beer.js" />
+    <Compile Include="app\routes\beers.js" />
+    <Compile Include="app\routes\login.js" />
+    <Compile Include="app\routes\news-item.js" />
+    <Compile Include="app\routes\news-item\comment.js" />
+    <Compile Include="app\routes\news.js" />
+    <Compile Include="app\routes\news\new.js" />
+    <Compile Include="app\routes\recipes.js" />
+    <Compile Include="app\routes\user.js" />
+    <Compile Include="app\serializers\application.js" />
+    <Compile Include="app\services\auth-manager.js" />
+    <Compile Include="config\environment.js" />
+    <Compile Include="ember-cli-build.js" />
+    <Compile Include="testem.js" />
+    <Compile Include="tests\helpers\destroy-app.js" />
+    <Compile Include="tests\helpers\module-for-acceptance.js" />
+    <Compile Include="tests\helpers\resolver.js" />
+    <Compile Include="tests\helpers\start-app.js" />
+    <Compile Include="tests\integration\components\clickable-text-test.js" />
+    <Compile Include="tests\integration\components\model-input-field-test.js" />
+    <Compile Include="tests\test-helper.js" />
+    <Compile Include="tests\unit\adapters\application-test.js" />
+    <Compile Include="tests\unit\controllers\application-test.js" />
+    <Compile Include="tests\unit\controllers\beer-test.js" />
+    <Compile Include="tests\unit\controllers\login-test.js" />
+    <Compile Include="tests\unit\controllers\news\new-test.js" />
+    <Compile Include="tests\unit\helpers\format-date-test.js" />
+    <Compile Include="tests\unit\models\beer-test.js" />
+    <Compile Include="tests\unit\models\news-comment-test.js" />
+    <Compile Include="tests\unit\models\news-item-test.js" />
+    <Compile Include="tests\unit\models\recipe-test.js" />
+    <Compile Include="tests\unit\models\user-test.js" />
+    <Compile Include="tests\unit\routes\about-test.js" />
+    <Compile Include="tests\unit\routes\application-test.js" />
+    <Compile Include="tests\unit\routes\beer-test.js" />
+    <Compile Include="tests\unit\routes\beers-test.js" />
+    <Compile Include="tests\unit\routes\login-test.js" />
+    <Compile Include="tests\unit\routes\news-item-test.js" />
+    <Compile Include="tests\unit\routes\news-item\comment-test.js" />
+    <Compile Include="tests\unit\routes\news-test.js" />
+    <Compile Include="tests\unit\routes\news\new-test.js" />
+    <Compile Include="tests\unit\routes\recipes-test.js" />
+    <Compile Include="tests\unit\routes\user-test.js" />
+    <Compile Include="tests\unit\serializers\application-test.js" />
+    <Compile Include="tests\unit\services\auth-manager-test.js" />
+    <Content Include=".bowerrc" />
+    <Content Include=".editorconfig" />
+    <Content Include=".ember-cli" />
+    <Content Include=".gitignore" />
+    <Content Include=".jshintrc" />
+    <Content Include=".travis.yml" />
+    <Content Include=".watchmanconfig" />
+    <Content Include="app\components\.gitkeep" />
+    <Content Include="app\controllers\.gitkeep" />
+    <Content Include="app\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="app\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="app\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="app\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="app\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="app\helpers\.gitkeep" />
+    <Content Include="app\index.html" />
+    <Content Include="app\models\.gitkeep" />
+    <Content Include="app\routes\.gitkeep" />
+    <Content Include="app\styles\app.css" />
+    <Content Include="app\templates\about.hbs" />
+    <Content Include="app\templates\application.hbs" />
+    <Content Include="app\templates\beer.hbs" />
+    <Content Include="app\templates\beers.hbs" />
+    <Content Include="app\templates\components\.gitkeep" />
+    <Content Include="app\templates\components\clickable-text.hbs" />
+    <Content Include="app\templates\index.hbs" />
+    <Content Include="app\templates\login.hbs" />
+    <Content Include="app\templates\news-item.hbs" />
+    <Content Include="app\templates\news-item\comment.hbs" />
+    <Content Include="app\templates\news.hbs" />
+    <Content Include="app\templates\news\new.hbs" />
+    <Content Include="app\templates\recipes.hbs" />
+    <Content Include="app\templates\user.hbs" />
+    <Content Include="bower.json" />
+    <Content Include="jsconfig.json" />
+    <Content Include="package.json" />
+    <Content Include="public\assets\images\avatar1.png" />
+    <Content Include="public\assets\images\avatar2.png" />
+    <Content Include="public\assets\images\avatar3.png" />
+    <Content Include="public\assets\images\bottles.png" />
+    <Content Include="public\assets\images\calypso.png" />
+    <Content Include="public\assets\images\citra.png" />
+    <Content Include="public\assets\images\dummy.PNG" />
+    <Content Include="public\assets\images\facebook.png" />
+    <Content Include="public\assets\images\googleplus.png" />
+    <Content Include="public\assets\images\greenbullet.png" />
+    <Content Include="public\assets\images\linkedin.png" />
+    <Content Include="public\assets\images\logo-medium.png" />
+    <Content Include="public\assets\images\logo-small.png" />
+    <Content Include="public\assets\images\logo.png" />
+    <Content Include="public\assets\images\mail.png" />
+    <Content Include="public\assets\images\mosaic.png" />
+    <Content Include="public\assets\images\tmp-about.png" />
+    <Content Include="public\assets\images\tmp-blog.png" />
+    <Content Include="public\assets\images\tmp-contact.png" />
+    <Content Include="public\assets\images\tmp-daniel.png" />
+    <Content Include="public\assets\images\tmp-header.png" />
+    <Content Include="public\assets\images\tmp-johan.png" />
+    <Content Include="public\assets\images\tmp-media.png" />
+    <Content Include="public\assets\images\tmp-per.png" />
+    <Content Include="public\assets\images\tmp-reuithe.png" />
+    <Content Include="public\assets\images\twitter.png" />
+    <Content Include="public\assets\images\ut_icon_32.png" />
+    <Content Include="public\assets\images\ut_icon_50.png" />
+    <Content Include="public\assets\images\ut_icon_64.png" />
+    <Content Include="public\assets\images\ut_icon_72.png" />
+    <Content Include="public\crossdomain.xml" />
+    <Content Include="public\robots.txt" />
+    <Content Include="README.md" />
+    <Content Include="tests\.jshintrc" />
+    <Content Include="tests\index.html" />
+    <Content Include="tests\integration\.gitkeep" />
+    <Content Include="tests\unit\.gitkeep" />
+    <Content Include="vendor\.gitkeep" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\" />
+    <Folder Include="app\adapters\" />
+    <Folder Include="app\components\" />
+    <Folder Include="app\controllers\" />
+    <Folder Include="app\controllers\news\" />
+    <Folder Include="app\fonts\" />
+    <Folder Include="app\helpers\" />
+    <Folder Include="app\models\" />
+    <Folder Include="app\routes\" />
+    <Folder Include="app\routes\news-item\" />
+    <Folder Include="app\routes\news\" />
+    <Folder Include="app\serializers\" />
+    <Folder Include="app\services\" />
+    <Folder Include="app\styles\" />
+    <Folder Include="app\templates\" />
+    <Folder Include="app\templates\components\" />
+    <Folder Include="app\templates\news-item\" />
+    <Folder Include="app\templates\news\" />
+    <Folder Include="config\" />
+    <Folder Include="public\" />
+    <Folder Include="public\assets\" />
+    <Folder Include="public\assets\images\" />
+    <Folder Include="tests\" />
+    <Folder Include="tests\helpers\" />
+    <Folder Include="tests\integration\" />
+    <Folder Include="tests\integration\components\" />
+    <Folder Include="tests\unit\" />
+    <Folder Include="tests\unit\adapters\" />
+    <Folder Include="tests\unit\controllers\" />
+    <Folder Include="tests\unit\controllers\news\" />
+    <Folder Include="tests\unit\helpers\" />
+    <Folder Include="tests\unit\models\" />
+    <Folder Include="tests\unit\routes\" />
+    <Folder Include="tests\unit\routes\news-item\" />
+    <Folder Include="tests\unit\routes\news\" />
+    <Folder Include="tests\unit\serializers\" />
+    <Folder Include="tests\unit\services\" />
+    <Folder Include="typings\" />
+    <Folder Include="typings\ember\" />
+    <Folder Include="vendor\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\ember\ember.d.ts" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
