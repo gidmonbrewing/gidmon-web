@@ -2,7 +2,7 @@
 	<img src="/assets/images/tmp-header.png" style="max-width:100%" />
 	<h1>{{model.title}}</h1>
 </header>
-<p class="meta"><span class="glyphicon glyphicon-user"></span> <a href="#">{{model.author.fullName}}</a> <span class="glyphicon glyphicon-calendar"></span> {{format-date model.created}} <span class="glyphicon glyphicon-comment"></span> <a href="#">{{model.commentCount}} Comments</a> <span class="glyphicon glyphicon-tags"></span> <a href="#">Brewing</a>, <a href="#">Hops</a></p>
+<p class="meta"><span class="glyphicon glyphicon-user"></span> <a href="#">{{model.author.fullName}}</a> <span class="glyphicon glyphicon-calendar"></span> {{format-date model.created}} <span class="glyphicon glyphicon-comment"></span> <a href="#comments">{{model.commentCount}} Comments</a> <span class="glyphicon glyphicon-tags"></span> <a href="#">Brewing</a>, <a href="#">Hops</a></p>
 <hr />
 <div style="display:block;">
 	<div class="body">
@@ -10,54 +10,44 @@
 		<p>{{{model.htmlContent}}}</p>
 	</div>
 	<div class="comments">
-		<h3>Comments (54)</h3>
+		<h3 id="comments">Comments ({{model.commentCount}})</h3>
 		<hr />
+		{{#each model.rootComments as |comment|}}
 		<div class="comment clearfix">
 			<div class="comment-avatar">
 				<img src="/assets/images/avatar1.png" alt="avatar">
 			</div>
 			<div class="comment-content clearfix">
 				<div class="comment-author">
-					<a href="#">Gunnar Malm</a>
+					<a href="#">{{comment.author.fullName}}</a>
 				</div>
 				<div class="comment-body">
-					<p>Awsome, really looking forward to this.</p>
+					<p>{{{comment.content}}}</p>
 				</div>
-				<div class="comment-meta font-alt">January 1 2015, 14:55 - <a href="#">Reply</a></div>
+				<div class="comment-meta font-alt">{{format-date comment.created}} - <a href="#">Reply</a></div>
 			</div>
 			<!-- Comment 2 start -->
+			{{#each comment.children as |childComment|}}
 			<div class="comment clearfix">
 				<div class="comment-avatar">
 					<img src="/assets/images/avatar3.png" alt="avatar">
 				</div>
 				<div class="comment-content clearfix">
 					<div class="comment-author">
-						<a href="#">Benny Storch</a>
+						<a href="#">{{childComment.author.fullName}}</a>
 					</div>
 					<div class="comment-body">
-						<p>Where do I buy this?</p>
+						<p>{{{childComment.content}}}</p>
 					</div>
-					<div class="comment-meta font-alt">Today, 14:55 - <a href="#">Reply</a></div>
+					<div class="comment-meta font-alt">{{format-date childComment.created}} - <a href="#">Reply</a></div>
 				</div>
 			</div>
+			{{/each}}
 			<!-- Comment 2 end -->
 		</div>
-		<div class="comment clearfix">
-			<div class="comment-avatar">
-				<img src="/assets/images/avatar2.png" alt="avatar">
-			</div>
-			<div class="comment-content clearfix">
-				<div class="comment-author">
-					<a href="#">Rick Rocker</a>
-				</div>
-				<div class="comment-body">
-					<p>How do you mock the rock in the smock?</p>
-				</div>
-				<div class="comment-meta font-alt">Today, 15:55 - <a href="#">Reply</a></div>
-			</div>
-		</div>
+		{{/each}}
 		<hr />
-		<h3>Add comment</h3>
+		{{outlet}}
 	</div>
 	<hr />
 </div>

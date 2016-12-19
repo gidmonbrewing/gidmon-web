@@ -10,7 +10,8 @@ export default Model.extend({
 	created: attr('date', { defaultValue() { return new Date(); } }),
 	author: belongsTo('user'),
 	comments: hasMany('news-comment'),
-	commentCount: Ember.computed('comments', function() { return this.get('comments.length'); }),
+	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),
+	rootComments: Ember.computed.filterBy('comments', 'parent.content', null),
 	htmlPreamble: Ember.computed('preamble', function() {
 		var pre = this.get('preamble');
 		if (pre === undefined)
