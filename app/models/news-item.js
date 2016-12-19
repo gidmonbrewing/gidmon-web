@@ -11,7 +11,7 @@ export default Model.extend({
 	author: belongsTo('user'),
 	comments: hasMany('news-comment'),
 	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),
-	rootComments: Ember.computed.filterBy('comments', 'parent.content', null),
+	rootComments: Ember.computed.filterBy('comments', 'isRoot', true),
 	htmlPreamble: Ember.computed('preamble', function() {
 		var pre = this.get('preamble');
 		if (pre === undefined)

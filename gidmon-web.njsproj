@@ -125,8 +125,6 @@
     <Content Include="app\templates\components\clickable-text.hbs" />
     <Content Include="app\templates\index.hbs" />
     <Content Include="app\templates\login.hbs" />
-    <Content Include="app\templates\news-item.hbs" />
-    <Content Include="app\templates\news-item\comment.hbs" />
     <Content Include="app\templates\news.hbs" />
     <Content Include="app\templates\news\edit.hbs" />
     <Content Include="app\templates\news\index.hbs" />
@@ -199,7 +197,6 @@
     <Folder Include="app\styles\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\components\" />
-    <Folder Include="app\templates\news-item\" />
     <Folder Include="app\templates\news\" />
     <Folder Include="app\templates\news\item\" />
     <Folder Include="config\" />

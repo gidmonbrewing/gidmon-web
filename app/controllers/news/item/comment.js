@@ -2,20 +2,22 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	actions: {
-		postComment() {
-			const { commentText } = this.getProperties('commentText');
-			let newComment = this.get('store').createRecord('news-comment', {
-				content: commentText,
-				newsItem: this.model
-			});
-			let _this = this;
-			newComment.save().then(function (model) {
+		saveComment() {
+			//let _this = this;
+			this.model.save().then(function (/*model*/) {
 				// save worked
-				_this.transitionToRoute('news.item', model.get('newsItem.id'));
 			}, function (error) {
-				// error object contains responseJSON so I can get access to the server response 
-				self._showErrorMessage(error.responseJSON.userMessage);
-			})
+				// error handling
+				var errorText = "";
+				error.errors.forEach(function (element) {
+					errorText += element.detail + '\n';
+				});
+				alert(errorText);
+			});
+		},
+		cancelComment() {
+			this.model.destroyRecord();
+			this.transitionToRoute('news.item'); // Not providing any argument will use the current model for item
 		},
 	}
 });

@@ -1,4 +1,3 @@
-<form {{action 'postComment' on='submit'}}>
-	{{textarea cols="80" rows="6" value=commentText}}<br>
-	<button type="submit">Submit Comment</button>
-</form>
+{{textarea cols="80" rows="6" name="content" value=model.content}}<br>
+<button {{action "saveComment"}}>Save</button>
+<button {{action "cancelComment"}}>Cancel</button>
