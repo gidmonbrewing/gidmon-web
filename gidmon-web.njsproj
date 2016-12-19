@@ -35,7 +35,10 @@
     <Compile Include="app\components\clickable-text.js" />
     <Compile Include="app\controllers\application.js" />
     <Compile Include="app\controllers\beer.js" />
+    <Compile Include="app\controllers\index.js" />
     <Compile Include="app\controllers\login.js" />
+    <Compile Include="app\controllers\news.js" />
+    <Compile Include="app\controllers\news\item\comment.js" />
     <Compile Include="app\controllers\news\new.js" />
     <Compile Include="app\helpers\format-date.js" />
     <Compile Include="app\models\beer.js" />
@@ -53,6 +56,9 @@
     <Compile Include="app\routes\news-item.js" />
     <Compile Include="app\routes\news-item\comment.js" />
     <Compile Include="app\routes\news.js" />
+    <Compile Include="app\routes\news\edit.js" />
+    <Compile Include="app\routes\news\item.js" />
+    <Compile Include="app\routes\news\item\comment.js" />
     <Compile Include="app\routes\news\new.js" />
     <Compile Include="app\routes\recipes.js" />
     <Compile Include="app\routes\user.js" />
@@ -122,6 +128,13 @@
     <Content Include="app\templates\news-item.hbs" />
     <Content Include="app\templates\news-item\comment.hbs" />
     <Content Include="app\templates\news.hbs" />
+    <Content Include="app\templates\news\edit.hbs" />
+    <Content Include="app\templates\news\index.hbs" />
+    <Content Include="app\templates\news\item.hbs" />
+    <Content Include="app\templates\news\item\comment.hbs" />
+    <Content Include="app\templates\news\item\comment.hbs" />
+    <Content Include="app\templates\news\item\index.hbs" />
+    <Content Include="app\templates\news\item\index.hbs" />
     <Content Include="app\templates\news\new.hbs" />
     <Content Include="app\templates\recipes.hbs" />
     <Content Include="app\templates\user.hbs" />
@@ -173,12 +186,14 @@
     <Folder Include="app\components\" />
     <Folder Include="app\controllers\" />
     <Folder Include="app\controllers\news\" />
+    <Folder Include="app\controllers\news\item\" />
     <Folder Include="app\fonts\" />
     <Folder Include="app\helpers\" />
     <Folder Include="app\models\" />
     <Folder Include="app\routes\" />
     <Folder Include="app\routes\news-item\" />
     <Folder Include="app\routes\news\" />
+    <Folder Include="app\routes\news\item\" />
     <Folder Include="app\serializers\" />
     <Folder Include="app\services\" />
     <Folder Include="app\styles\" />
@@ -186,6 +201,7 @@
     <Folder Include="app\templates\components\" />
     <Folder Include="app\templates\news-item\" />
     <Folder Include="app\templates\news\" />
+    <Folder Include="app\templates\news\item\" />
     <Folder Include="config\" />
     <Folder Include="public\" />
     <Folder Include="public\assets\" />
@@ -207,10 +223,14 @@
     <Folder Include="tests\unit\services\" />
     <Folder Include="typings\" />
     <Folder Include="typings\ember\" />
+    <Folder Include="typings\globals\" />
+    <Folder Include="typings\globals\node\" />
     <Folder Include="vendor\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\ember\ember.d.ts" />
+    <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
