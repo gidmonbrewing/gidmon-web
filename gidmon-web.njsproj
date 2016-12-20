@@ -33,6 +33,7 @@
     <Compile Include="app\adapters\application.js" />
     <Compile Include="app\app.js" />
     <Compile Include="app\components\clickable-text.js" />
+    <Compile Include="app\components\file-upload.js" />
     <Compile Include="app\controllers\application.js" />
     <Compile Include="app\controllers\beer.js" />
     <Compile Include="app\controllers\index.js" />
@@ -44,6 +45,7 @@
     <Compile Include="app\models\beer.js" />
     <Compile Include="app\models\news-comment.js" />
     <Compile Include="app\models\news-item.js" />
+    <Compile Include="app\models\profile.js" />
     <Compile Include="app\models\recipe.js" />
     <Compile Include="app\models\user.js" />
     <Compile Include="app\resolver.js" />
@@ -53,8 +55,6 @@
     <Compile Include="app\routes\beer.js" />
     <Compile Include="app\routes\beers.js" />
     <Compile Include="app\routes\login.js" />
-    <Compile Include="app\routes\news-item.js" />
-    <Compile Include="app\routes\news-item\comment.js" />
     <Compile Include="app\routes\news.js" />
     <Compile Include="app\routes\news\edit.js" />
     <Compile Include="app\routes\news\item.js" />
@@ -189,7 +189,6 @@
     <Folder Include="app\helpers\" />
     <Folder Include="app\models\" />
     <Folder Include="app\routes\" />
-    <Folder Include="app\routes\news-item\" />
     <Folder Include="app\routes\news\" />
     <Folder Include="app\routes\news\item\" />
     <Folder Include="app\serializers\" />
