@@ -18,6 +18,7 @@ export default EmberUploader.FileField.extend({
 				this.get('owningModel').set('picture', data.data.attributes.picture);
 			}, error => {
 				// Handle failure
+				console.log(error);
 			});
 		}
 	}

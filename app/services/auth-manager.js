@@ -23,7 +23,7 @@ export default Ember.Service.extend({
 			}
 		},
 		set(key, value) {
-			sessionStorage.user = value.id;
+			sessionStorage.user = value;
 			return value;
 		}
 	}),
@@ -41,7 +41,7 @@ export default Ember.Service.extend({
 					username: login
 				}
 			}).then(function(users) {
-				_this.set('currentUser', users.get("firstObject"));
+				_this.set('currentUser', users.get("firstObject").id);
 			});
 		});
 	},
