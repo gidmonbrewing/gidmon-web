@@ -8,6 +8,7 @@ export default DS.Model.extend({
 	email: DS.attr('string'),
 	isStaff: DS.attr(),
 	isSuperuser: DS.attr(),
+	profile: DS.belongsTo('profile'),
 	newsItem: DS.hasMany('news-item'),
 	fullName: Ember.computed('firstName', 'lastName', function() { return this.get('firstName') + " " + this.get('lastName'); }),
 });

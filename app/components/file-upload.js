@@ -13,7 +13,12 @@ export default EmberUploader.FileField.extend({
 	
 		if (!Ember.isEmpty(files)) {
 			// this second argument is optional and can to be sent as extra data with the upload
-			uploader.upload(files[0], {});
+			uploader.upload(files[0], {}).then(data => {
+				// Handle success
+				this.get('owningModel').set('picture', data.data.attributes.picture);
+			}, error => {
+				// Handle failure
+			});
 		}
 	}
 });

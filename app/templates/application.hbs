@@ -33,8 +33,9 @@
                         </li>
                         {{/if}}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.fullName}} <div class="icon"><img src="/assets/images/avatar1.png" alt="avatar"></div><span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.fullName}} <div class="icon"><img src={{currentUser.profile.picture}} alt="avatar"></div><span class="caret"></span></a>
                             <ul class="dropdown-menu">
+								<li>{{#link-to "profile" currentUser.profile.id}}Profile{{/link-to}}</li>
                                 <li><a href="#" {{action "logout"}}>Logout</a></li>
                             </ul>
                         </li>

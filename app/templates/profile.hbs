@@ -1,0 +1,4 @@
+<p>Name: {{model.user.firstName}} {{model.user.lastName}}</p>
+<img src={{model.picture}} alt="Logo" width="150" height="150">
+<br/>
+{{file-upload url="/api/profile_picture" owningModel=model}}

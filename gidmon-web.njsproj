@@ -60,6 +60,7 @@
     <Compile Include="app\routes\news\item.js" />
     <Compile Include="app\routes\news\item\comment.js" />
     <Compile Include="app\routes\news\new.js" />
+    <Compile Include="app\routes\profile.js" />
     <Compile Include="app\routes\recipes.js" />
     <Compile Include="app\routes\user.js" />
     <Compile Include="app\serializers\application.js" />
@@ -134,6 +135,7 @@
     <Content Include="app\templates\news\item\index.hbs" />
     <Content Include="app\templates\news\item\index.hbs" />
     <Content Include="app\templates\news\new.hbs" />
+    <Content Include="app\templates\profile.hbs" />
     <Content Include="app\templates\recipes.hbs" />
     <Content Include="app\templates\user.hbs" />
     <Content Include="bower.json" />

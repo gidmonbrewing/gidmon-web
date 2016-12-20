@@ -15,7 +15,7 @@
 		{{#each model.rootComments as |comment|}}
 		<div class="comment clearfix">
 			<div class="comment-avatar">
-				<img src="/assets/images/avatar1.png" alt="avatar">
+				<img src={{comment.author.profile.picture}} alt="avatar">
 			</div>
 			<div class="comment-content clearfix">
 				<div class="comment-author">
@@ -30,7 +30,7 @@
 			{{#each comment.children as |childComment|}}
 			<div class="comment clearfix">
 				<div class="comment-avatar">
-					<img src="/assets/images/avatar3.png" alt="avatar">
+					<img src={{childComment.author.profile.picture}} alt="avatar">
 				</div>
 				<div class="comment-content clearfix">
 					<div class="comment-author">
