@@ -22,7 +22,6 @@ Router.map(function() {
       });
       this.route('edit');
   });
-  this.route('user', { path: '/user/:user_id' });
   this.route('profile', { path: '/profile/:profile_id' });
 });
 
