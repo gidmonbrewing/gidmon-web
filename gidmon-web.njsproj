@@ -146,6 +146,7 @@
     <Content Include="bower.json" />
     <Content Include="jsconfig.json" />
     <Content Include="package.json" />
+    <Content Include="public\assets\favicon.ico" />
     <Content Include="public\assets\images\avatar1.png" />
     <Content Include="public\assets\images\avatar2.png" />
     <Content Include="public\assets\images\avatar3.png" />
