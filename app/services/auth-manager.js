@@ -36,12 +36,12 @@ export default Ember.Service.extend({
 			data: { username: login, password: password }
 		}).then((result) => {
 			_this.set('token', result.token);
-			_this.get('store').query('user', {
-				filter: {
-					username: login
-				}
-			}).then(function(users) {
-				_this.set('currentUser', users.get("firstObject").id);
+			_this.get('store').findAll('user').then(function(users) {
+				let currentUser = users.find(function (element) {
+					var usr = element.get("username");
+					return usr === login;
+				});
+				_this.set('currentUser', currentUser.id);
 			});
 		});
 	},
