@@ -1,0 +1,13 @@
+<h2>Recipe: {{model.beer.name}}</h2>
+<p>Creator: {{model.creator.fullName}}</p>
+<p>Total Water Volume: {{model.totalWaterVolume}}</p>
+<p>Malt:</p>
+{{#each model.maltWeights as |weight|}}
+<li>{{weight}}</li>
+{{/each}}
+<p>Total Malt Weight: {{model.totalMaltWeight}}</p>
+<p>Mashing Temp: {{input value=model.mashingTemp}}</p>
+<p>Mashing Time: {{input value=model.mashingTime}}</p>
+<p>Mash Out Temp: {{input value=model.mashOutTemp}}</p>
+<p>Mesh Out Time: {{input value=model.mashOutTime}}</p>
+<p>Pre Boil Volume: {{input value=model.preBoilVolume}}</p>

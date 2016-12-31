@@ -1,12 +1,11 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
-  name: attr(),
-  description: attr(),
-  abv: attr(),
-  imageName: attr(),
-  untappdUrl: attr(),
-  recipe: belongsTo('recipe')
+	name: attr(),
+	description: attr(),
+	imageName: attr(),
+	recipe: belongsTo('recipe'),
+	beerBatch: hasMany('beer-batch')
 });
