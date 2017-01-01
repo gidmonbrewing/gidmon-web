@@ -1,10 +1,14 @@
 <h2>Recipe: {{model.beer.name}}</h2>
 <p>Creator: {{model.creator.fullName}}</p>
-<p>Total Water Volume: {{model.totalWaterVolume}}</p>
+<p>Strike Water Volume: {{model.strikeWaterVolume}}</p>
+<p>Strike Water Temp: {{model.strikeWaterTemp}}</p>
+<p>Sparge Water Volume: {{model.spargeWaterVolume}}</p>
 <p>Malt:</p>
-{{#each model.maltWeights as |weight|}}
-<li>{{weight}}</li>
-{{/each}}
+<ul>
+	{{#each model.maltEntries as |entry|}}
+	<li>{{entry.malt.name}}: {{entry.amount}}</li>
+	{{/each}}
+</ul>
 <p>Total Malt Weight: {{model.totalMaltWeight}}</p>
 <p>Mashing Temp: {{input value=model.mashingTemp}}</p>
 <p>Mashing Time: {{input value=model.mashingTime}}</p>
