@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
 	name: DS.attr(),
@@ -8,4 +9,7 @@ export default DS.Model.extend({
 	mc: DS.attr('number'),
 	protein: DS.attr('number'),
 	maltType: DS.belongsTo('malt-type'),
+	extractYield: Ember.computed('dbfg', 'mc', function () {
+		return (this.get('dbfg') / 100) - (this.get('mc') / 100) - 0.002;
+	}),
 });

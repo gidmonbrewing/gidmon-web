@@ -1,17 +1,29 @@
-<h2>Recipe: {{model.beer.name}}</h2>
-<p>Creator: {{model.creator.fullName}}</p>
-<p>Strike Water Volume: {{model.strikeWaterVolume}}</p>
-<p>Strike Water Temp: {{model.strikeWaterTemp}}</p>
-<p>Sparge Water Volume: {{model.spargeWaterVolume}}</p>
+<h2>Recipe: {{model.recipe.beer.name}}</h2>
+<p>Creator: {{model.recipe.creator.fullName}}</p>
+<p>Pre Boil Volume: {{input type="number" value=model.recipe.preBoilVolume}} l</p>
+<p>Cold Pre Boil Volume: {{model.recipe.preBoilVolumeCold}} l</p>
+<h3>Mashing</h3>
 <p>Malt:</p>
 <ul>
-	{{#each model.maltEntries as |entry|}}
-	<li>{{entry.malt.name}}: {{entry.amount}}</li>
+	{{#each model.recipe.maltEntries as |entry|}}
+	<li>{{entry.malt.name}}: {{entry.amount}} kg ({{entry.malt.extractYield}})</li>
 	{{/each}}
 </ul>
-<p>Total Malt Weight: {{model.totalMaltWeight}}</p>
-<p>Mashing Temp: {{input value=model.mashingTemp}}</p>
-<p>Mashing Time: {{input value=model.mashingTime}}</p>
-<p>Mash Out Temp: {{input value=model.mashOutTemp}}</p>
-<p>Mesh Out Time: {{input value=model.mashOutTime}}</p>
-<p>Pre Boil Volume: {{input value=model.preBoilVolume}}</p>
+<p>Total Malt Weight: {{model.recipe.totalMaltWeight}} kg</p>
+<p>Water Absorbed By Malt: {{model.recipe.absorbedByMalt}} l</p>
+<p>Mashing Temp: {{input type="number" value=model.recipe.mashingTemp}} &deg;C</p>
+<p>Mashing Time: {{input type="number" value=model.recipe.mashingTime}} min</p>
+<p>Mash Out Temp: {{input type="number" value=model.recipe.mashOutTemp}} &deg;C</p>
+<p>Mash Out Time: {{input type="number" value=model.recipe.mashOutTime}} min</p>
+<p>Strike Water Volume: {{model.recipe.strikeWaterVolume}} l</p>
+<p>Strike Water Temp: {{model.recipe.strikeWaterTemp}} &deg;C</p>
+<p>Max First Wort SG: {{model.recipe.maxFirstWortSG}}</p>
+<p>Estimated First Wort SG: {{model.recipe.firstWortSG}}</p>
+<h3>Lautering</h3>
+<p>Sparge Water Volume: {{model.recipe.spargeWaterVolume}} l</p>
+<p>Lauter Efficiency: {{model.recipe.lauterEfficiency}}%</p>
+<h3>Fermentation</h3>
+<p>Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
+	{{yeast.name}}
+{{/power-select}}</p>
+<button {{action "saveModel"}}>Save</button>
