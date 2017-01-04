@@ -1,11 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-// Move to common
-function round(value, decimals) {
-	return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-}
-
 export default DS.Model.extend({
 	name: DS.attr(),
 	description: DS.attr(),
@@ -16,7 +11,6 @@ export default DS.Model.extend({
 	ingredientType: DS.belongsTo('mash-ingredient-type'),
 	extractYield: Ember.computed('dbfg', 'mc', function () {
 		//return (this.get('dbfg') / 100) - (this.get('mc') / 100) - 0.002;
-		var result = (this.get('dbfg') / 100) / (1 + (this.get('mc') / 100)) - 0.002;
-		return round(result, 2);
+		return (this.get('dbfg') / 100) / (1 + (this.get('mc') / 100)) - 0.002;
 	}),
 });
