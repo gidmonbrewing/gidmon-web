@@ -67,6 +67,9 @@ export default Model.extend({
 			return 100 * efficiency;
 		}
 	}),
+	brewhouseEfficiency: Ember.computed('lauterEfficiency', function () {
+		return 0.95 * this.get('lauterEfficiency');
+	}),
 	extractYields: Ember.computed.mapBy('mashEntries', 'weightedExtract'),
 	averageExtractYield: Ember.computed.sum('extractYields'),
 	maxFirstWortSG: Ember.computed('waterToMaltRatio', 'averageExtractYield', function () {
@@ -76,5 +79,16 @@ export default Model.extend({
 	}),
 	firstWortSG: Ember.computed('maxFirstWortSG', function () {
 		return 1 + (this.get('maxFirstWortSG') - 1) * 0.95;
+	}),
+	preBoilSG: Ember.computed('maxFirstWortSG', 'brewhouseEfficiency', function () {
+		return 1 + (this.get('maxFirstWortSG') - 1) * (this.get('brewhouseEfficiency') / 100);
+	}),
+	postBoilVolumeCold: Ember.computed('preBoilVolume', function () {
+		return this.get('preBoilVolume') * 0.8 * 0.96; // Warm volume is 4% larger
+	}),
+	OG: Ember.computed('preBoilSG', 'preBoilVolumeCold', 'postBoilVolumeCold', function () {
+		var gravityPoints = (this.get('preBoilSG') - 1) * 1000;
+		var postBoilGP = (this.get('preBoilVolumeCold') * gravityPoints) / this.get('postBoilVolumeCold');
+		return 1 + (postBoilGP / 1000);
 	}),
 });
