@@ -5,11 +5,12 @@
 <h3>Mashing</h3>
 <p>Malt:</p>
 <ul>
-	{{#each model.recipe.maltEntries as |entry|}}
-	<li>{{entry.malt.name}}: {{entry.amount}} kg ({{entry.malt.extractYield}})</li>
+	{{#each model.recipe.mashEntries as |entry|}}
+	<li>{{entry.ingredient.name}}: {{entry.amount}} kg ({{entry.amount}}%), Extract: {{entry.ingredient.extractYield}})</li>
 	{{/each}}
 </ul>
 <p>Total Malt Weight: {{model.recipe.totalMaltWeight}} kg</p>
+<p>Water/Malt Ratio: {{model.recipe.waterToMaltRatio}}</p>
 <p>Water Absorbed By Malt: {{model.recipe.absorbedByMalt}} l</p>
 <p>Mashing Temp: {{input type="number" value=model.recipe.mashingTemp}} &deg;C</p>
 <p>Mashing Time: {{input type="number" value=model.recipe.mashingTime}} min</p>
@@ -17,6 +18,13 @@
 <p>Mash Out Time: {{input type="number" value=model.recipe.mashOutTime}} min</p>
 <p>Strike Water Volume: {{model.recipe.strikeWaterVolume}} l</p>
 <p>Strike Water Temp: {{model.recipe.strikeWaterTemp}} &deg;C</p>
+<ul>
+	{{#each model.recipe.extractYields as |extractYield|}}
+	<li>{{extractYield}}</li>
+	{{/each}}
+</ul>
+{{model.recipe.totalExtractYield}}
+<p>Average Extract Yield: {{model.recipe.averageExtractYield}}</p>
 <p>Max First Wort SG: {{model.recipe.maxFirstWortSG}}</p>
 <p>Estimated First Wort SG: {{model.recipe.firstWortSG}}</p>
 <h3>Lautering</h3>
