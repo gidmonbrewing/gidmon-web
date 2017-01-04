@@ -6,30 +6,25 @@
 <p>Malt:</p>
 <ul>
 	{{#each model.recipe.mashEntries as |entry|}}
-	<li>{{entry.ingredient.name}}: {{entry.amount}} kg ({{entry.amount}}%), Extract: {{entry.ingredient.extractYield}})</li>
+	<li>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg ({{entry.amount}}%), Extract: {{format-number entry.ingredient.extractYield 3}})</li>
 	{{/each}}
+	<li>Unassigned: {{model.recipe.unassignedMalt}}%</li>
 </ul>
-<p>Total Malt Weight: {{model.recipe.totalMaltWeight}} kg</p>
-<p>Water/Malt Ratio: {{model.recipe.waterToMaltRatio}}</p>
-<p>Water Absorbed By Malt: {{model.recipe.absorbedByMalt}} l</p>
+<p>Total Malt Weight: {{input type="number" step="0.1" value=model.recipe.totalMaltWeight}} kg</p>
+<p>Water/Malt Ratio: {{format-number model.recipe.waterToMaltRatio 2}}</p>
+<p>Water Absorbed By Malt: {{format-number model.recipe.absorbedByMalt 2}} l</p>
 <p>Mashing Temp: {{input type="number" value=model.recipe.mashingTemp}} &deg;C</p>
 <p>Mashing Time: {{input type="number" value=model.recipe.mashingTime}} min</p>
 <p>Mash Out Temp: {{input type="number" value=model.recipe.mashOutTemp}} &deg;C</p>
 <p>Mash Out Time: {{input type="number" value=model.recipe.mashOutTime}} min</p>
-<p>Strike Water Volume: {{model.recipe.strikeWaterVolume}} l</p>
-<p>Strike Water Temp: {{model.recipe.strikeWaterTemp}} &deg;C</p>
-<ul>
-	{{#each model.recipe.extractYields as |extractYield|}}
-	<li>{{extractYield}}</li>
-	{{/each}}
-</ul>
-{{model.recipe.totalExtractYield}}
-<p>Average Extract Yield: {{model.recipe.averageExtractYield}}</p>
-<p>Max First Wort SG: {{model.recipe.maxFirstWortSG}}</p>
-<p>Estimated First Wort SG: {{model.recipe.firstWortSG}}</p>
+<p>Strike Water Volume: {{format-number model.recipe.strikeWaterVolume 1}} l</p>
+<p>Strike Water Temp: {{format-number model.recipe.strikeWaterTemp 1}} &deg;C</p>
+<p>Average Extract Yield: {{format-number model.recipe.averageExtractYieldRounded 3}}</p>
+<p>Max First Wort SG: {{format-number model.recipe.maxFirstWortSG 3}}</p>
+<p>Estimated First Wort SG: {{format-number model.recipe.firstWortSG 3}} (Estimated CE: 95%)</p>
 <h3>Lautering</h3>
 <p>Sparge Water Volume: {{model.recipe.spargeWaterVolume}} l</p>
-<p>Lauter Efficiency: {{model.recipe.lauterEfficiency}}%</p>
+<p>Estimated Lauter Efficiency: {{format-number model.recipe.lauterEfficiency 1}}%</p>
 <h3>Fermentation</h3>
 <p>Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
 	{{yeast.name}}
