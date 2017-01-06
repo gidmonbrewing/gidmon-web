@@ -1,4 +1,4 @@
-<h2>Recipe: {{model.recipe.beer.name}}</h2>
+<h2>Recipe: {{model.recipe.beer.name}} {{if hasUnsavedChanges "*" ""}}</h2>
 <p>Creator: {{model.recipe.creator.fullName}}</p>
 <p>Pre Boil Volume: {{input type="number" value=model.recipe.preBoilVolume}} l</p>
 <p>Cold Pre Boil Volume: {{model.recipe.preBoilVolumeCold}} l</p>
@@ -6,7 +6,7 @@
 <p>Malt:</p>
 <ul>
 	{{#each model.recipe.mashEntries as |entry|}}
-	<li>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg ({{entry.amount}}%), Extract: {{format-number entry.ingredient.extractYield 3}})</li>
+	<li>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg, Extract: {{format-number entry.ingredient.extractYield 3}} ({{clickable-text value=entry.amount}}%)</li>
 	{{/each}}
 	<li>Unassigned: {{model.recipe.unassignedMalt}}%</li>
 </ul>
