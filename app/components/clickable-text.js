@@ -2,23 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	tagName: 'span',
-	click() {
-		//alert("DoubleClickableComponent was clicked!");
+	updateValue() {
+		var value = Number.parseFloat(this.get('element').children[0].innerText);
+		if (Number.isNaN(value)) {
+			alert("Can only input number");
+		} else {
+			this.set('value', value);
+		}
 	},
-	keyUp() {
-		//var value = Number.parseFloat(this.get('element').children[0].innerText);
-		//if (Number.isNaN(value)) {
-		//	return false;
-		//}
+	focusOut() {
+		this.updateValue();
 	},
 	keyDown(param) {
 		if (param.keyCode === 13) {
-			var value = Number.parseFloat(this.get('element').children[0].innerText);
-			if (Number.isNaN(value)) {
-				alert("Can only input number");
-			} else {
-				this.set('value', value);
-			}
+			this.updateValue();
 			return false;
 		}
 	},

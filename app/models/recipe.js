@@ -13,6 +13,7 @@ export default Model.extend({
 	spargeCount: attr('number'),
 	spargeWaterTemp: attr('number'),
 	preBoilVolume: attr('number'),
+	boilTime: attr('number'),
 	totalMaltWeight: attr('number'),
 	primaryFermentationTemp: attr('number'),
 	primaryFermentationTime: attr('number'),
@@ -91,4 +92,6 @@ export default Model.extend({
 		var postBoilGP = (this.get('preBoilVolumeCold') * gravityPoints) / this.get('postBoilVolumeCold');
 		return 1 + (postBoilGP / 1000);
 	}),
+	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
+	IBU: Ember.computed.sum('IBUValues'),
 });
