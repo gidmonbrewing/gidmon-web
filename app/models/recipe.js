@@ -92,7 +92,7 @@ export default Model.extend({
 		var postBoilGP = (this.get('preBoilVolumeCold') * gravityPoints) / this.get('postBoilVolumeCold');
 		return 1 + (postBoilGP / 1000);
 	}),
-	finalVolume: Ember.computed('postBoilVoluneCold', function () {
+	finalVolume: Ember.computed('postBoilVolumeCold', function () {
 		return this.get('postBoilVolumeCold') - 2; // Estimating 2 litres loss
 	}),
 	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
