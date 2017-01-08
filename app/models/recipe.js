@@ -84,8 +84,8 @@ export default Model.extend({
 	preBoilSG: Ember.computed('maxFirstWortSG', 'brewhouseEfficiency', function () {
 		return 1 + (this.get('maxFirstWortSG') - 1) * (this.get('brewhouseEfficiency') / 100);
 	}),
-	postBoilVolumeCold: Ember.computed('preBoilVolume', function () {
-		return this.get('preBoilVolume') * 0.8 * 0.96; // Warm volume is 4% larger
+	postBoilVolumeCold: Ember.computed('preBoilVolume', 'boilTime', function () {
+		return this.get('preBoilVolume') * (1 - ((this.get('boilTime') / 60) * 0.1)) * 0.96; // Warm volume is 4% larger
 	}),
 	OG: Ember.computed('preBoilSG', 'preBoilVolumeCold', 'postBoilVolumeCold', function () {
 		var gravityPoints = (this.get('preBoilSG') - 1) * 1000;
