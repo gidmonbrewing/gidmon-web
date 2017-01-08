@@ -92,6 +92,18 @@ export default Model.extend({
 		var postBoilGP = (this.get('preBoilVolumeCold') * gravityPoints) / this.get('postBoilVolumeCold');
 		return 1 + (postBoilGP / 1000);
 	}),
+	finalVolume: Ember.computed('postBoilVoluneCold', function () {
+		return this.get('postBoilVolumeCold') - 2; // Estimating 2 litres loss
+	}),
 	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
 	IBU: Ember.computed.sum('IBUValues'),
+	yeastCellsNeeded: Ember.computed('OG', 'finalVolume', 'targetPitchRate', function () {
+		return (259 - (259 / this.get('OG'))) * this.get('finalVolume') * this.get('targetPitchRate');
+	}),
+	yeastNeeded: Ember.computed('yeastCellsNeeded', 'yeast.cellConcentration', function () {
+		return this.get('yeastCellsNeeded') / this.get('yeast.cellConcentration');
+	}),
+	FG: Ember.computed('OG', 'yeast.attenuation', function () {
+		return ((this.get('OG') - 1.0) * (1.0 - (this.get('yeast.attenuation') / 100.0))) + 1.0;
+	}),
 });
