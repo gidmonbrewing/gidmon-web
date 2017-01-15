@@ -13,6 +13,13 @@ export default Ember.Controller.extend({
 				});
 			});
 		},
+		createSession() {
+			var brewingSession = this.store.createRecord('brewing-session', {
+				recipe: this.model.recipe,
+				preBoilVolume: this.model.recipe.get('preBoilVolume'),
+			});
+			brewingSession.save();
+		}
 	},
 	hasUnsavedChanges: Ember.computed('model.recipe.hasDirtyAttributes', 'model.recipe.mashEntries.@each.hasDirtyAttributes', function () {
 		var result = false;

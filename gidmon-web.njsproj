@@ -47,9 +47,10 @@
     <Compile Include="app\models\beer-batch.js" />
     <Compile Include="app\models\beer-type.js" />
     <Compile Include="app\models\beer.js" />
+    <Compile Include="app\models\brewing-session.js" />
     <Compile Include="app\models\brewing-system.js" />
     <Compile Include="app\models\boil-recipe-entry.js" />
-    <Compile Include="app\models\hops.js" />
+    <Compile Include="app\models\boil-ingredient.js" />
     <Compile Include="app\models\mash-recipe-entry.js" />
     <Compile Include="app\models\mash-ingredient-type.js" />
     <Compile Include="app\models\mash-ingredient.js" />
@@ -65,6 +66,7 @@
     <Compile Include="app\routes\application.js" />
     <Compile Include="app\routes\beer.js" />
     <Compile Include="app\routes\beers.js" />
+    <Compile Include="app\routes\brewing-session.js" />
     <Compile Include="app\routes\login.js" />
     <Compile Include="app\routes\news.js" />
     <Compile Include="app\routes\news\edit.js" />
@@ -150,6 +152,7 @@
     <Content Include="app\templates\application.hbs" />
     <Content Include="app\templates\beer.hbs" />
     <Content Include="app\templates\beers.hbs" />
+    <Content Include="app\templates\brewing-session.hbs" />
     <Content Include="app\templates\components\.gitkeep" />
     <Content Include="app\templates\components\clickable-text.hbs" />
     <Content Include="app\templates\components\file-upload.hbs" />

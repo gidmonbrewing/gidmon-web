@@ -24,6 +24,7 @@ export default Model.extend({
 	mashEntries: hasMany('mash-recipe-entry'),
 	mashEntriesAmounts: Ember.computed.mapBy('mashEntries', 'amount'),
 	totalAmount: Ember.computed.sum('mashEntriesAmounts'),
+	sessions: hasMany('brewing-session'),
 	unassignedMalt: Ember.computed('totalAmount', function () {
 		return 100 - this.get('totalAmount');
 	}),

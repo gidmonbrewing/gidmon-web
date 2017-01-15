@@ -12,14 +12,14 @@
 </ul>
 <p>Total Malt Weight: {{input type="number" step="0.1" value=model.recipe.totalMaltWeight}} kg</p>
 <p>Water/Malt Ratio: {{format-number model.recipe.waterToMaltRatio 2}}</p>
+<p>Average Extract Yield: {{format-number model.recipe.averageExtractYield 3}}</p>
 <p>Water Absorbed By Malt: {{format-number model.recipe.absorbedByMalt 2}} l</p>
 <p>Mashing Temp: {{input type="number" value=model.recipe.mashingTemp}} &deg;C</p>
 <p>Mashing Time: {{input type="number" value=model.recipe.mashingTime}} min</p>
 <p>Mash Out Temp: {{input type="number" value=model.recipe.mashOutTemp}} &deg;C</p>
 <p>Mash Out Time: {{input type="number" value=model.recipe.mashOutTime}} min</p>
-<p>Strike Water Volume: {{format-number model.recipe.strikeWaterVolume 1}} l</p>
+<p>Strike Water Volume: {{format-number model.session.strikeWaterVolume 1}} l</p>
 <p>Strike Water Temp: {{format-number model.recipe.strikeWaterTemp 1}} &deg;C</p>
-<p>Average Extract Yield: {{format-number model.recipe.averageExtractYieldRounded 3}}</p>
 <p>Max First Wort SG: {{format-number model.recipe.maxFirstWortSG 3}}</p>
 <p>Estimated First Wort SG: {{format-number model.recipe.firstWortSG 3}} (Estimated CE: 95%)</p>
 <h3>Lautering</h3>
@@ -43,9 +43,17 @@
 <p>Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
 	{{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
 {{/power-select}}</p>
-<p>Temperature: {{model.recipe.primaryFermentationTemp}} &deg;C</p>
-<p>Time: {{model.recipe.primaryFermentationTime}} days</p>
+<p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
+<p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
 <p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
 <p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
 <p>FG: {{format-number model.recipe.FG 3}}</p>
 <button {{action "saveModel"}}>Save</button>
+<hr/>
+<h3>Sessions</h3>
+<ul>
+	{{#each model.recipe.sessions as |session|}}
+	<li>{{#link-to "brewing-session" session.id}}{{format-date session.date}}{{/link-to}}</li>
+	{{/each}}
+</ul>
+<button {{action "createSession"}}>Create Session</button>
