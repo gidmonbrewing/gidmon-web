@@ -32,11 +32,11 @@ export default Model.extend({
 		return this.get('totalMaltWeight') * 0.9;
 	}),
 	preBoilVolumeCold: Ember.computed('preBoilVolume', function () {
-		return (this.get('preBoilVolume') * 0.96).toFixed(2); // Warm volume is 4% larger
+		return this.get('preBoilVolume') * 0.96; // Warm volume is 4% larger
 	}),
-	strikeWaterVolume: Ember.computed('preBoilVolumeCold', 'spargeCount', 'totalMaltWeight', function () {
+	strikeWaterVolume: Ember.computed('preBoilVolumeCold', 'spargeCount', 'absorbedByMalt', function () {
 		// The volume in the kettle during lautering will be larger since this is cold volume
-		return this.get('preBoilVolumeCold') / (this.get('spargeCount') + 1) + (this.get('totalMaltWeight') * 0.9);
+		return this.get('preBoilVolumeCold') / (this.get('spargeCount') + 1) + this.get('absorbedByMalt');
 	}),
 	spargeWaterVolume: Ember.computed('preBoilVolumeCold', 'spargeCount', function () {
 		// The volume in the kettle during lautering will be larger since this is cold volume
@@ -69,29 +69,63 @@ export default Model.extend({
 			return 100 * efficiency;
 		}
 	}),
-	brewhouseEfficiency: Ember.computed('lauterEfficiency', function () {
-		return 0.95 * this.get('lauterEfficiency');
-	}),
 	extractYields: Ember.computed.mapBy('mashEntries', 'weightedExtract'),
 	averageExtractYield: Ember.computed.sum('extractYields'),
-	maxFirstWortSG: Ember.computed('waterToMaltRatio', 'averageExtractYield', function () {
-		var averageExtractYield = this.get('averageExtractYield');
-		var maxPlato = 100 * averageExtractYield / (this.get('waterToMaltRatio') + averageExtractYield);
+	totalExtractWeight: Ember.computed('averageExtractYield', 'totalMaltWeight', function () {
+		return this.get('totalMaltWeight') * this.get('averageExtractYield');
+	}),
+	//maxFirstWortSG: Ember.computed('waterToMaltRatio', 'averageExtractYield', function () {
+	//	var averageExtractYield = this.get('averageExtractYield');
+	//	var maxPlato = 100 * averageExtractYield / (this.get('waterToMaltRatio') + averageExtractYield);
+	//	return 1 + (maxPlato / (258.6 - ((maxPlato / 258.2) * 227.1)));
+	//}),
+	maxFirstWortSG: Ember.computed('strikeWaterVolume', 'totalExtractWeight', function () {
+		var totalExtractWeight = this.get('totalExtractWeight');
+		var maxPlato = 100 * totalExtractWeight / (this.get('strikeWaterVolume') + totalExtractWeight);
 		return 1 + (maxPlato / (258.6 - ((maxPlato / 258.2) * 227.1)));
 	}),
-	firstWortSG: Ember.computed('maxFirstWortSG', function () {
-		return 1 + (this.get('maxFirstWortSG') - 1) * 0.95;
+	relativeRunOffSize: Ember.computed('spargeWaterVolume', 'strikeWaterVolume', function () {
+		// Sparge water volume is the same as the cold run off volume.
+		// We want to know what percentage of the volume that ends up in the kettle (the rest is absorbed by malt)
+		return this.get('spargeWaterVolume') / this.get('strikeWaterVolume');
 	}),
-	preBoilSG: Ember.computed('maxFirstWortSG', 'brewhouseEfficiency', function () {
-		return 1 + (this.get('maxFirstWortSG') - 1) * (this.get('brewhouseEfficiency') / 100);
+	firstWortExtractWeight: Ember.computed('totalExtractWeight', 'relativeRunOffSize', function () {
+		return this.get('totalExtractWeight') * this.get('relativeRunOffSize');
+	}),
+	remainingExtractWeight: Ember.computed('firstWortExtractWeight', function () {
+		// dependency on totalExtractWeight is implicit from firstWortExtract
+		return this.get('totalExtractWeight') - this.get('firstWortExtractWeight');
+	}),
+	firstSpargeSG: Ember.computed('remainingExtractWeight', function () {
+		var remainingExtractWeight = this.get('remainingExtractWeight');
+		// strikeWaterVolume dependency is implicit from remainingExtractWeight
+		var plato = 100 * remainingExtractWeight / (this.get('strikeWaterVolume') + remainingExtractWeight);
+		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
+	}),
+	firstSpargeExtractWeight: Ember.computed('remainingExtractWeight', 'relativeRunOffSize', function () {
+		return this.get('remainingExtractWeight') * this.get('relativeRunOffSize');
+	}),
+	kettleExtractWeight: Ember.computed('firstWortExtractWeight', 'firstSpargeExtractWeight', function () {
+		// This is the total amount of extract that we get into the boiling kettle and it will detemine both SG and OG
+		return this.get('firstWortExtractWeight') + this.get('firstSpargeExtractWeight');
+	}),
+	brewhouseEfficiency: Ember.computed('kettleExtractWeight', function () {
+		// totalExtractWeight dependency is implicit
+		return 100 * this.get('kettleExtractWeight') / this.get('totalExtractWeight');
+	}),
+	preBoilSG: Ember.computed('kettleExtractWeight', function () {
+		var kettleExtractWeight = this.get('kettleExtractWeight');
+		// preBoilVolumeCold depence is implicit
+		var plato = 100 * kettleExtractWeight / (this.get('preBoilVolumeCold') + kettleExtractWeight);
+		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
 	}),
 	postBoilVolumeCold: Ember.computed('preBoilVolume', 'boilTime', function () {
 		return this.get('preBoilVolume') * (1 - ((this.get('boilTime') / 60) * 0.1)) * 0.96; // Warm volume is 4% larger
 	}),
-	OG: Ember.computed('preBoilSG', 'preBoilVolumeCold', 'postBoilVolumeCold', function () {
-		var gravityPoints = (this.get('preBoilSG') - 1) * 1000;
-		var postBoilGP = (this.get('preBoilVolumeCold') * gravityPoints) / this.get('postBoilVolumeCold');
-		return 1 + (postBoilGP / 1000);
+	OG: Ember.computed('kettleExtractWeight', 'postBoilVolumeCold', function () {
+		var kettleExtractWeight = this.get('kettleExtractWeight');
+		var plato = 100 * kettleExtractWeight / (this.get('postBoilVolumeCold') + kettleExtractWeight);
+		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
 	}),
 	finalVolume: Ember.computed('postBoilVolumeCold', function () {
 		return this.get('postBoilVolumeCold') - 2; // Estimating 2 litres loss

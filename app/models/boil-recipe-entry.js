@@ -6,12 +6,12 @@ export default DS.Model.extend({
 	ingredient: DS.belongsTo('boil-ingredient'),
 	amount: DS.attr('number'),
 	addTime: DS.attr('number'),
-	IBU: Ember.computed('recipe.preBoilSG', 'recipe.boilTime', 'recipe.finalVolume', 'ingredient.alpha', 'addTime', 'amount', function () {
+	IBU: Ember.computed('recipe.preBoilSG', 'recipe.boilTime', 'recipe.postBoilVolumeCold', 'ingredient.alpha', 'addTime', 'amount', function () {
 		var bignessFactor = 1.65 * Math.pow(0.000125, this.get('recipe.preBoilSG') - 1);
 		var timeInMins = this.get('recipe.boilTime') - this.get('addTime');
 		var boilTimeFactor = (1 - Math.exp(-0.04 * timeInMins)) / 4.15;
 		var alphaAcidUtilization = bignessFactor * boilTimeFactor;
-		var mgPerLitreAlphaAcids = (this.get('ingredient.alpha') / 100) * (this.get('amount') * 1000) / this.get('recipe.finalVolume');
+		var mgPerLitreAlphaAcids = (this.get('ingredient.alpha') / 100) * (this.get('amount') * 1000) / this.get('recipe.postBoilVolumeCold');
 		return alphaAcidUtilization * mgPerLitreAlphaAcids;
 	}),
 });
