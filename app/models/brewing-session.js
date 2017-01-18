@@ -6,13 +6,28 @@ export default DS.Model.extend({
 	recipe: DS.belongsTo('recipe'),
 	brewingSystem: DS.belongsTo('brewing-system'),
 	preBoilVolume: DS.attr('number'),
-	postBoilVolumeCold: DS.attr('number'),
-	finalVolume: DS.attr('number'),
+	postBoilVolume: DS.attr('number'),
+	fermentationVolume: DS.attr('number'),
+	measuredFirstWortSG: DS.attr('number'),
+	measuredFirstSpageSG: DS.attr('number'),
+	measuredPreBoilSG: DS.attr('number'),
+	measuredOG: DS.attr('number'),
+	measuredFG: DS.attr('number'),
+	yeastUsed: DS.attr('number'),
 	recipeScaling: Ember.computed('preBoilVolume', 'recipe.preBoilVolume', function () {
 		return this.get('preBoilVolume') / this.get('recipe.preBoilVolume');
 	}),
 	preBoilVolumeCold: Ember.computed('recipe.preBoilVolumeCold', 'recipeScaling', function () {
 		return this.get('recipe.preBoilVolumeCold') * this.get('recipeScaling');
+	}),
+	postBoilVolumeCold: Ember.computed('postBoilVolume', function () {
+		return this.get('postBoilVolume') * 0.96;
+	}),
+	scaledPostBoilVolume: Ember.computed('recipe.postBoilVolume', 'recipeScaling', function () {
+		return this.get('recipe.postBoilVolume') * this.get('recipeScaling');
+	}),
+	scaledFermentationVolume: Ember.computed('recipe.fermentationVolume', 'recipeScaling', function () {
+		return this.get('recipe.fermentationVolume') * this.get('recipeScaling');
 	}),
 	scaledMashIngredients: Ember.computed('recipeScaling', 'recipe.mashEntries', function () {
 		var list = Ember.ArrayProxy.create({ content: [] });
@@ -71,10 +86,16 @@ export default DS.Model.extend({
 		var plato = 100 * kettleExtractWeight / (this.get('preBoilVolumeCold') + kettleExtractWeight);
 		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
 	}),
-	OG: Ember.computed('kettleExtractWeight', 'postBoilVolumeCold', function () {
-		var kettleExtractWeight = this.get('kettleExtractWeight');
-		var plato = 100 * kettleExtractWeight / (Number(this.get('postBoilVolumeCold')) + kettleExtractWeight);
-		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
+	totalBoilExtract: Ember.computed('recipe.totalBoilExtract', 'recipeScaling', function () {
+		return this.get('recipe.totalBoilExtract') * this.get('recipeScaling');
+	}),
+	postBoilExtract: Ember.computed('totalBoilExtract', 'kettleExtractWeight', function () {
+		return this.get('kettleExtractWeight') + this.get('totalBoilExtract');
+	}),
+	OG: Ember.computed('postBoilExtract', 'postBoilVolumeCold', function () {
+		// ew = 2.59(sg - 1) * V
+		// sg = ew/(V * 2.59) + 1
+		return 1 + (this.get('postBoilExtract') / (this.get('postBoilVolumeCold') * 2.59));
 	}),
 	scaledBoilIngredients: Ember.computed('recipeScaling', 'recipe.boilEntries', 'recipe.boilTime', 'preBoilSG', 'postBoilVolumeCold', function () {
 		var list = Ember.ArrayProxy.create({ content: [] });
@@ -97,5 +118,18 @@ export default DS.Model.extend({
 			});
 		});
 		return list;
+	}),
+	boilTime: Ember.computed('preBoilVolume', 'scaledPostBoilVolume', 'brewingSystem.boilOffRate', function () {
+		// we want to get minutes so multiply by 60
+		return 60 * (this.get('preBoilVolume') - this.get('scaledPostBoilVolume')) / this.get('brewingSystem.boilOffRate');
+	}),
+	yeastCellsNeeded: Ember.computed('OG', 'fermentationVolume', 'recipe.targetPitchRate', function () {
+		return (259 - (259 / this.get('OG'))) * this.get('fermentationVolume') * this.get('recipe.targetPitchRate');
+	}),
+	yeastNeeded: Ember.computed('yeastCellsNeeded', 'recipe.yeast.cellConcentration', function () {
+		return this.get('yeastCellsNeeded') / this.get('recipe.yeast.cellConcentration');
+	}),
+	FG: Ember.computed('OG', 'recipe.yeast.attenuation', function () {
+		return ((this.get('OG') - 1.0) * (1.0 - (this.get('recipe.yeast.attenuation') / 100.0))) + 1.0;
 	}),
 });

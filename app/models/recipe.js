@@ -13,6 +13,8 @@ export default Model.extend({
 	spargeCount: attr('number'),
 	spargeWaterTemp: attr('number'),
 	preBoilVolume: attr('number'),
+	postBoilVolume: attr('number'),
+	fermentationVolume: attr('number'),
 	boilTime: attr('number'),
 	totalMaltWeight: attr('number'),
 	primaryFermentationTemp: attr('number'),
@@ -119,21 +121,30 @@ export default Model.extend({
 		var plato = 100 * kettleExtractWeight / (this.get('preBoilVolumeCold') + kettleExtractWeight);
 		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
 	}),
-	postBoilVolumeCold: Ember.computed('preBoilVolume', 'boilTime', function () {
-		return this.get('preBoilVolume') * (1 - ((this.get('boilTime') / 60) * 0.1)) * 0.96; // Warm volume is 4% larger
+	postBoilVolumeCold: Ember.computed('postBoilVolume', function () {
+		return this.get('postBoilVolume') * 0.96; // Warm volume is 4% larger
 	}),
-	OG: Ember.computed('kettleExtractWeight', 'postBoilVolumeCold', function () {
-		var kettleExtractWeight = this.get('kettleExtractWeight');
-		var plato = 100 * kettleExtractWeight / (this.get('postBoilVolumeCold') + kettleExtractWeight);
-		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
+	boilOff: Ember.computed('preBoilVolume', 'postBoilVolume', 'boilTime', function () {
+		// boil off per hour
+		return (this.get('preBoilVolume') - this.get('postBoilVolume')) / this.get('boilTime') * 60;
 	}),
-	finalVolume: Ember.computed('postBoilVolumeCold', function () {
-		return this.get('postBoilVolumeCold') - 2; // Estimating 2 litres loss
+	boilExtracts: Ember.computed.mapBy('boilEntries', 'extractWeight'),
+	totalBoilExtract: Ember.computed.sum('boilExtracts'),
+	postBoilExtract: Ember.computed('totalBoilExtract', 'kettleExtractWeight', function () {
+		return this.get('kettleExtractWeight') + this.get('totalBoilExtract');
+	}),
+	OG: Ember.computed('postBoilExtract', 'postBoilVolumeCold', function () {
+		// ew = 2.59(sg - 1) * V
+		// sg = ew/(V * 2.59) + 1
+		return 1 + (this.get('postBoilExtract') / (this.get('postBoilVolumeCold') * 2.59));
+	}),
+	leftInKettle: Ember.computed('postBoilVolumeCold', 'fermentationVolume', function () {
+		return this.get('postBoilVolumeCold') - this.get('fermentationVolume');
 	}),
 	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
 	IBU: Ember.computed.sum('IBUValues'),
-	yeastCellsNeeded: Ember.computed('OG', 'finalVolume', 'targetPitchRate', function () {
-		return (259 - (259 / this.get('OG'))) * this.get('finalVolume') * this.get('targetPitchRate');
+	yeastCellsNeeded: Ember.computed('OG', 'fermentationVolume', 'targetPitchRate', function () {
+		return (259 - (259 / this.get('OG'))) * this.get('fermentationVolume') * this.get('targetPitchRate');
 	}),
 	yeastNeeded: Ember.computed('yeastCellsNeeded', 'yeast.cellConcentration', function () {
 		return this.get('yeastCellsNeeded') / this.get('yeast.cellConcentration');

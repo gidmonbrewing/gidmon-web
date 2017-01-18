@@ -25,29 +25,45 @@
 <p>Conversion Efficiency: {{model.session.brewingSystem.conversionEfficiency}}%</p>
 <p>First Wort SG: {{format-number model.session.firstWortSG 3}} (Max: {{format-number model.session.recipe.maxFirstWortSG 3}})</p>
 <p>First Wort Extract Weight: {{format-number model.session.firstWortExtractWeight 2}} kg (Max: {{format-number model.session.recipe.firstWortExtractWeight 2}} kg)</p>
+<p>Measured First Wort SG: {{input type="number" step="0.001" value=model.session.measuredFirstWortSG}}</p>
 <h3>Lautering</h3>
 <p>Sparge Water Volume: {{model.session.spargeWaterVolume}} l</p>
 <p>First Sparge SG: {{format-number model.session.firstSpargeSG 3}}</p>
 <p>First Sparge Extract Weight: {{format-number model.session.firstSpargeExtractWeight 2}} kg</p>
+<p>Measured First Sparge SG: {{input type="number" step="0.001" value=model.session.measuredFirstSpargeSG}}</p>
 <p>Pre Boil SG: {{format-number model.session.preBoilSG 3}}</p>
 <p>Kettle Extract Weight: {{format-number model.session.kettleExtractWeight 2}} kg</p>
+<p>Measured Pre Boil SG: {{input type="number" step="0.001" value=model.session.measuredPreBoilSG}}</p>
 <h3>Boiling</h3>
-<p>Post Boil Volume (Cold): {{input type="number" value=model.session.postBoilVolumeCold}}</p>
-<p>Boil Time: {{model.session.recipe.boilTime}} mins</p>
+<p>Target Post Boil Volume: {{format-number model.session.scaledPostBoilVolume 1}} l</p>
+<p>System Boil Off: {{format-number model.session.brewingSystem.boilOffRate 1}} l/h</p>
+<p>Required Boil Time: {{model.session.boilTime}} mins</p>
+<p>Measured Post Boil Volume: {{input type="number" value=model.session.postBoilVolume}} l</p>
+<p>Post Boil Volume (Cold): {{format-number model.session.postBoilVolumeCold 1}} l</p>
 <p>Boil Ingredients:</p>
 <ul>
 	{{#each model.session.scaledBoilIngredients as |item|}}
+	{{#if item.entry.isHops}}
 	<li>{{item.entry.ingredient.name}}: {{format-number item.amount 2}} g, Alpha: {{item.entry.ingredient.alpha}}%, Add Time: {{item.entry.addTime}} min, IBU: {{format-number item.IBU 1}}</li>
+	{{else}}
+	<li>{{item.entry.ingredient.name}}: {{format-number item.amount 2}} g, Extract: {{item.entry.ingredient.extract}}%</li>
+	{{/if}}
 	{{/each}}
 </ul>
+<p>Boil Extract: {{format-number model.session.totalBoilExtract 2}} kg</p>
+<p>Post Boil Extract: {{format-number model.session.postBoilExtract 2}} kg</p>
 <p>OG: {{format-number model.session.OG 3}}</p>
+<p>Measured OG: {{input type="number" step="0.001" value=model.session.measuredOG}}</p>
 <p>IBU: {{format-number model.session.recipe.IBU 1}}</p>
 <h3>Fermentation</h3>
-<p>Final Volume: {{input type="number" value=model.session.finalVolume}}</p>
+<p>Target Fermentation Volume: {{format-number model.session.scaledFermentationVolume 1}} l</p>
+<p>Measured Fermentation Volume: {{input type="number" value=model.session.fermentationVolume}} l</p>
 <p>Yeast: {{model.session.recipe.yeast.name}}</p>
 <p>Temperature: {{model.session.recipe.primaryFermentationTemp}} &deg;C</p>
 <p>Time: {{model.session.recipe.primaryFermentationTime}} days</p>
-<p>Yeast Cells Needed: {{format-number model.session.recipe.yeastCellsNeeded 2}} billion</p>
-<p>Yeast Needed: {{format-number model.session.recipe.yeastNeeded 2}} g</p>
-<p>FG: {{format-number model.recipe.FG 3}}</p>
+<p>Yeast Cells Needed: {{format-number model.session.yeastCellsNeeded 2}} billion</p>
+<p>Yeast Needed: {{format-number model.session.yeastNeeded 2}} g</p>
+<p>Yeast Used: {{input type="number" value=model.session.yeastUsed}}</p>
+<p>FG: {{format-number model.session.FG 3}}</p>
+<p>Measured FG: {{input type="number" step="0.001" value=model.session.measuredFG}}</p>
 <button {{action "saveModel"}}>Save</button>
