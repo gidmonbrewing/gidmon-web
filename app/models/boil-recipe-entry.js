@@ -7,7 +7,7 @@ export default DS.Model.extend({
 	amount: DS.attr('number'),
 	addTime: DS.attr('number'),
 	isHops: Ember.computed('ingredient.ingredientType', function () {
-		return this.get('ingredient.ingredientType') != "other";
+		return this.get('ingredient.ingredientType') !== "other";
 	}),
 	IBU: Ember.computed('recipe.preBoilSG', 'recipe.boilTime', 'recipe.postBoilVolumeCold', 'ingredient.alpha', 'addTime', 'amount', function () {
 		var bignessFactor = 1.65 * Math.pow(0.000125, this.get('recipe.preBoilSG') - 1);

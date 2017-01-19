@@ -76,12 +76,7 @@ export default Model.extend({
 	totalExtractWeight: Ember.computed('averageExtractYield', 'totalMaltWeight', function () {
 		return this.get('totalMaltWeight') * this.get('averageExtractYield');
 	}),
-	//maxFirstWortSG: Ember.computed('waterToMaltRatio', 'averageExtractYield', function () {
-	//	var averageExtractYield = this.get('averageExtractYield');
-	//	var maxPlato = 100 * averageExtractYield / (this.get('waterToMaltRatio') + averageExtractYield);
-	//	return 1 + (maxPlato / (258.6 - ((maxPlato / 258.2) * 227.1)));
-	//}),
-	maxFirstWortSG: Ember.computed('strikeWaterVolume', 'totalExtractWeight', function () {
+	firstWortSG: Ember.computed('strikeWaterVolume', 'totalExtractWeight', function () {
 		var totalExtractWeight = this.get('totalExtractWeight');
 		var maxPlato = 100 * totalExtractWeight / (this.get('strikeWaterVolume') + totalExtractWeight);
 		return 1 + (maxPlato / (258.6 - ((maxPlato / 258.2) * 227.1)));
@@ -115,11 +110,10 @@ export default Model.extend({
 		// totalExtractWeight dependency is implicit
 		return 100 * this.get('kettleExtractWeight') / this.get('totalExtractWeight');
 	}),
-	preBoilSG: Ember.computed('kettleExtractWeight', function () {
-		var kettleExtractWeight = this.get('kettleExtractWeight');
-		// preBoilVolumeCold depence is implicit
-		var plato = 100 * kettleExtractWeight / (this.get('preBoilVolumeCold') + kettleExtractWeight);
-		return 1 + (plato / (258.6 - ((plato / 258.2) * 227.1)));
+	preBoilSG: Ember.computed('kettleExtractWeight', 'preBoilVolumeCold', function () {
+		// ew = 2.59(sg - 1) * V
+		// sg = ew/(V * 2.59) + 1
+		return 1 + (this.get('kettleExtractWeight') / (this.get('preBoilVolumeCold') * 2.59));
 	}),
 	postBoilVolumeCold: Ember.computed('postBoilVolume', function () {
 		return this.get('postBoilVolume') * 0.96; // Warm volume is 4% larger
@@ -138,18 +132,43 @@ export default Model.extend({
 		// sg = ew/(V * 2.59) + 1
 		return 1 + (this.get('postBoilExtract') / (this.get('postBoilVolumeCold') * 2.59));
 	}),
+	OGPlato: Ember.computed('OG', function () {
+		return 259 - (259 / this.get('OG'));
+	}),
 	leftInKettle: Ember.computed('postBoilVolumeCold', 'fermentationVolume', function () {
 		return this.get('postBoilVolumeCold') - this.get('fermentationVolume');
 	}),
 	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
 	IBU: Ember.computed.sum('IBUValues'),
-	yeastCellsNeeded: Ember.computed('OG', 'fermentationVolume', 'targetPitchRate', function () {
-		return (259 - (259 / this.get('OG'))) * this.get('fermentationVolume') * this.get('targetPitchRate');
+	yeastCellsNeeded: Ember.computed('OGPlato', 'fermentationVolume', 'targetPitchRate', function () {
+		return this.get('OGPlato') * this.get('fermentationVolume') * this.get('targetPitchRate');
 	}),
 	yeastNeeded: Ember.computed('yeastCellsNeeded', 'yeast.cellConcentration', function () {
 		return this.get('yeastCellsNeeded') / this.get('yeast.cellConcentration');
 	}),
 	FG: Ember.computed('OG', 'yeast.attenuation', function () {
 		return ((this.get('OG') - 1.0) * (1.0 - (this.get('yeast.attenuation') / 100.0))) + 1.0;
+	}),
+	realFG: Ember.computed('FG', function () {
+		return 1 + (0.1808 * (this.get('OG') - 1) + 0.8192 * (this.get('FG') - 1));
+	}),
+	realFGPlato: Ember.computed('realFG', function () {
+		return 259 - (259 / this.get('realFG'));
+	}),
+	postFermentationExtractWeight: Ember.computed('realFG', 'realFGPlato', 'fermentationVolume', function () {
+		// volume * gravity = weight of the wort
+		// plato is weight percentage extract
+		// weight of wort * (plato / 100) = extract weight
+		return this.get('fermentationVolume') * this.get('realFG') * (this.get('realFGPlato') / 100);
+	}),
+	ABW: Ember.computed('OGPlato', 'realFGPlato', function () {
+		var OGPlato = this.get('OGPlato');
+		return (OGPlato - this.get('realFGPlato')) / (2.065 - (0.010665 * OGPlato));
+	}),
+	ABV: Ember.computed('FG', 'ABW', function () {
+		return this.get('ABW') * (this.get('FG') / 0.794);
+	}),
+	approxABV: Ember.computed('OG', 'FG', function () {
+		return (this.get('OG') - this.get('FG')) * 131.5;
 	}),
 });

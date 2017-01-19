@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
+function round(value, decimals) {
+	return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
+
 export default Ember.Controller.extend({
 	actions: {
 		saveModel() {
@@ -14,9 +18,18 @@ export default Ember.Controller.extend({
 			});
 		},
 		createSession() {
+			var recipe = this.model.recipe;
 			var brewingSession = this.store.createRecord('brewing-session', {
-				recipe: this.model.recipe,
-				preBoilVolume: this.model.recipe.get('preBoilVolume'),
+				recipe: recipe,
+				preBoilVolume: recipe.get('preBoilVolume'),
+				postBoilVolume: recipe.get('postBoilVolume'),
+				fermentationVolume: recipe.get('fermentationVolume'),
+				measuredFirstWortSG: round(recipe.get('firstWortSG'), 3),
+				measuredFirstSpargeSG: round(recipe.get('firstSpargeSG'), 3),
+				measuredPreBoilSG: round(recipe.get('preBoilSG'), 3),
+				measuredOG: round(recipe.get('OG'), 3),
+				measuredFG: round(recipe.get('FG'), 3),
+				yeastUsed: 0,
 			});
 			brewingSession.save();
 		}

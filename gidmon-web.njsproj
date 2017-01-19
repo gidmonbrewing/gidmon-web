@@ -36,6 +36,7 @@
     <Compile Include="app\components\file-upload.js" />
     <Compile Include="app\controllers\application.js" />
     <Compile Include="app\controllers\beer.js" />
+    <Compile Include="app\controllers\brewing-session.js" />
     <Compile Include="app\controllers\index.js" />
     <Compile Include="app\controllers\login.js" />
     <Compile Include="app\controllers\news.js" />
