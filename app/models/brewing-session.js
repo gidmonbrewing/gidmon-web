@@ -114,7 +114,7 @@ export default DS.Model.extend({
 	actualOGPlato: Ember.computed('measuredOG', function () {
 		return 259 - (259 / this.get('measuredOG'));
 	}),
-	scaledBoilIngredients: Ember.computed('recipeScaling', 'recipe.boilEntries', 'recipe.boilTime', 'measuredPreBoilSG', 'postBoilVolumeCold', function () {
+	scaledBoilIngredients: Ember.computed('recipeScaling', 'recipe.boilEntries.@each.addTime', 'recipe.boilEntries.@each.amount', 'recipe.boilTime', 'measuredPreBoilSG', 'postBoilVolumeCold', function () {
 		var list = Ember.ArrayProxy.create({ content: [] });
 		var recipeScaling = this.get('recipeScaling');
 		var boilTime = this.get('recipe.boilTime');
