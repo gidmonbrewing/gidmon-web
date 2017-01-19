@@ -56,7 +56,10 @@
 {{/power-select}}</p>
 <p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
 <p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
-<p>Target Pitch Rate: {{format-number model.recipe.targetPitchRate 2}} billion cells/l wort/&deg;P</p>
+<p>Pitch Type: {{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
+	{{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
+	{{/power-select}}
+</p>
 <p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
 <p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
 <p>FG: {{format-number model.recipe.FG 3}}</p>

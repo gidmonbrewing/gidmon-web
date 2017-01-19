@@ -57,6 +57,7 @@
     <Compile Include="app\models\mash-ingredient.js" />
     <Compile Include="app\models\news-comment.js" />
     <Compile Include="app\models\news-item.js" />
+    <Compile Include="app\models\pitch-type.js" />
     <Compile Include="app\models\profile.js" />
     <Compile Include="app\models\recipe.js" />
     <Compile Include="app\models\user.js" />

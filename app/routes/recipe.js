@@ -7,6 +7,7 @@ export default Ember.Route.extend({
 		return RSVP.hash({
 			recipe: store.findRecord('recipe', params.recipe_id, { include: 'yeast' }),
 			yeasts: store.findAll('yeast'),
+			pitchTypes: store.findAll('pitch-type'),
 		});
 	}
 });

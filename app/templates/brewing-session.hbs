@@ -64,7 +64,7 @@
 <p>Yeast: {{model.session.recipe.yeast.name}}</p>
 <p>Temperature: {{model.session.recipe.primaryFermentationTemp}} &deg;C</p>
 <p>Time: {{model.session.recipe.primaryFermentationTime}} days</p>
-<p>Target Pitch Rate: {{format-number model.session.recipe.targetPitchRate 2}} billion cells/l wort/&deg;P</p>
+<p>Pitch Type: {{model.session.recipe.pitchType.name}} ({{format-number model.session.recipe.pitchType.pitchRate 2}} billion cells/l wort/&deg;P)</p>
 <p>Yeast Cells Needed: {{format-number model.session.yeastCellsNeeded 2}} billion</p>
 <p>Yeast Needed: {{format-number model.session.yeastNeeded 2}} g</p>
 <p>Yeast Used: {{input type="number" value=model.session.yeastUsed}}</p>

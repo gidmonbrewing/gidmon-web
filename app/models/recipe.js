@@ -21,7 +21,7 @@ export default Model.extend({
 	primaryFermentationTime: attr('number'),
 	yeast: belongsTo('yeast'),
 	yeastAmount: attr('number'),
-	targetPitchRate: attr('number'),
+	pitchType: belongsTo('pitch-type'),
 	boilEntries: hasMany('boil-recipe-entry'),
 	mashEntries: hasMany('mash-recipe-entry'),
 	mashEntriesAmounts: Ember.computed.mapBy('mashEntries', 'amount'),
@@ -140,8 +140,8 @@ export default Model.extend({
 	}),
 	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
 	IBU: Ember.computed.sum('IBUValues'),
-	yeastCellsNeeded: Ember.computed('OGPlato', 'fermentationVolume', 'targetPitchRate', function () {
-		return this.get('OGPlato') * this.get('fermentationVolume') * this.get('targetPitchRate');
+	yeastCellsNeeded: Ember.computed('OGPlato', 'fermentationVolume', 'pitchType.pitchRate', function () {
+		return this.get('OGPlato') * this.get('fermentationVolume') * this.get('pitchType.pitchRate');
 	}),
 	yeastNeeded: Ember.computed('yeastCellsNeeded', 'yeast.cellConcentration', function () {
 		return this.get('yeastCellsNeeded') / this.get('yeast.cellConcentration');
