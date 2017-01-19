@@ -32,7 +32,16 @@ export default Ember.Controller.extend({
 				yeastUsed: 0,
 			});
 			brewingSession.save();
-		}
+		},
+		addMashIngredient() {
+			var ingredient = this.get('newMashIngredient');
+			var mashRecipeEntry = this.store.createRecord('mash-recipe-entry', {
+				recipe: this.model.recipe,
+				ingredient: ingredient,
+				amount: 0,
+			});
+			mashRecipeEntry.save();
+		},
 	},
 	hasUnsavedChanges: Ember.computed('model.recipe.hasDirtyAttributes', 'model.recipe.mashEntries.@each.hasDirtyAttributes', function () {
 		var result = false;

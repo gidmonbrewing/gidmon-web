@@ -6,6 +6,7 @@ export default Model.extend({
 	name: attr(),
 	description: attr(),
 	imageName: attr(),
+	beerType: belongsTo('beer-type'),
 	recipe: belongsTo('recipe'),
 	beerBatch: hasMany('beer-batch')
 });

@@ -171,4 +171,17 @@ export default Model.extend({
 	approxABV: Ember.computed('OG', 'FG', function () {
 		return (this.get('OG') - this.get('FG')) * 131.5;
 	}),
+	dissolvedCO2: Ember.computed('primaryFermentationTemp', function () {
+		var temp = this.get('primaryFermentationTemp');
+		// The formula uses Fahreheit so we need to convert first
+		var tempFahrenheit = (temp * 1.8000) + 32.00;
+		// Need to multiply by 2 to go from volumes to g/l
+		return 2 * (3.0378 - (0.050062 * tempFahrenheit) + (0.00026555 * Math.pow(tempFahrenheit, 2)));
+	}),
+	requiredTableSugar: Ember.computed('fermentationVolume', 'dissolvedCO2', function () {
+		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
+		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
+		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
+		return (this.get('fermentationVolume') / 0.5) * (4.0 - this.get('dissolvedCO2'));
+	}),
 });

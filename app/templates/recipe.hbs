@@ -10,6 +10,7 @@
 	{{/each}}
 	<li>Unassigned: {{model.recipe.unassignedMalt}}%</li>
 </ul>
+<p>{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} <button {{action "addMashIngredient"}}>Add Mash Ingredient</button></p>
 <p>Total Malt Weight: {{input type="number" step="0.1" value=model.recipe.totalMaltWeight}} kg</p>
 <p>Water/Malt Ratio: {{format-number model.recipe.waterToMaltRatio 2}}</p>
 <p>Average Extract Yield: {{format-number model.recipe.averageExtractYield 3}}</p>
@@ -67,6 +68,10 @@
 <p>Post Fermentation Extract Weight: {{format-number model.recipe.postFermentationExtractWeight 2}} kg</p>
 <p>ABV: {{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</p>
 <p>Approximate ABV: {{format-number model.recipe.approxABV 1}}%</p>
+<h3>Bottling</h3>
+<p>Recommended CO2 For {{model.recipe.beer.beerType.name}}: {{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</p>
+<p>CO2 Dissolved In Beer: {{format-number model.recipe.dissolvedCO2 2}} g/l</p>
+<p>Required Table Sugar: {{format-number model.recipe.requiredTableSugar 1}} g</p>
 <button {{action "saveModel"}}>Save</button>
 <hr/>
 <h3>Sessions</h3>
