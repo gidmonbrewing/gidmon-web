@@ -122,6 +122,8 @@ export default Model.extend({
 		// boil off per hour
 		return (this.get('preBoilVolume') - this.get('postBoilVolume')) / this.get('boilTime') * 60;
 	}),
+	entrySorting: ['addTime'],
+	sortedBoilEntries: Ember.computed.sort('boilEntries', 'entrySorting'),
 	boilExtracts: Ember.computed.mapBy('boilEntries', 'extractWeight'),
 	totalBoilExtract: Ember.computed.sum('boilExtracts'),
 	postBoilExtract: Ember.computed('totalBoilExtract', 'kettleExtractWeight', function () {

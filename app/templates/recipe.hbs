@@ -38,11 +38,11 @@
 <p>Boil Off: {{format-number model.recipe.boilOff 1}} l/h</p>
 <p>Boil Ingredients:</p>
 <ul>
-	{{#each model.recipe.boilEntries as |entry|}}
+	{{#each model.recipe.sortedBoilEntries as |entry|}}
 	{{#if entry.isHops}}
 	<li>{{entry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
 	{{else}}
-	<li>{{entry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.ingredient.extract}}%</li>
+	<li>{{entry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
 	{{/if}}
 	{{/each}}
 </ul>

@@ -5,9 +5,17 @@ export default DS.Model.extend({
 	recipe: DS.belongsTo('recipe'),
 	ingredient: DS.belongsTo('boil-ingredient'),
 	amount: DS.attr('number'),
-	addTime: DS.attr('number'),
+	boilTime: DS.attr('number'),
 	isHops: Ember.computed('ingredient.ingredientType', function () {
 		return this.get('ingredient.ingredientType') !== "other";
+	}),
+	addTime: Ember.computed('boilTime', 'recipe.boilTime', function () {
+		var addTime = this.get('recipe.boilTime') - this.get('boilTime');
+		if (addTime < 0) {
+			return 0;
+		} else {
+			return addTime;
+		}
 	}),
 	IBU: Ember.computed('recipe.preBoilSG', 'recipe.boilTime', 'recipe.postBoilVolumeCold', 'ingredient.alpha', 'addTime', 'amount', function () {
 		var bignessFactor = 1.65 * Math.pow(0.000125, this.get('recipe.preBoilSG') - 1);

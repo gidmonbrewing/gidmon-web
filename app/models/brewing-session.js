@@ -137,6 +137,8 @@ export default DS.Model.extend({
 		});
 		return list;
 	}),
+	entrySorting: ['entry.addTime'],
+	sortedBoilEntries: Ember.computed.sort('scaledBoilIngredients', 'entrySorting'),
 	boilTime: Ember.computed('preBoilVolume', 'scaledPostBoilVolume', 'brewingSystem.boilOffRate', function () {
 		// we want to get minutes so multiply by 60
 		return 60 * (this.get('preBoilVolume') - this.get('scaledPostBoilVolume')) / this.get('brewingSystem.boilOffRate');

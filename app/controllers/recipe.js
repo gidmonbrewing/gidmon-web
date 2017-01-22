@@ -18,8 +18,9 @@ export default Ember.Controller.extend({
 			});
 		},
 		createSession() {
-			var recipe = this.model.recipe;
-			var brewingSession = this.store.createRecord('brewing-session', {
+			var recipe = this.model.recipe
+			var store = this.store;
+			var brewingSession = store.createRecord('brewing-session', {
 				recipe: recipe,
 				preBoilVolume: recipe.get('preBoilVolume'),
 				postBoilVolume: recipe.get('postBoilVolume'),
@@ -31,7 +32,16 @@ export default Ember.Controller.extend({
 				measuredFG: round(recipe.get('FG'), 3),
 				yeastUsed: 0,
 			});
-			brewingSession.save();
+			brewingSession.save().then(function () {
+				recipe.get('boilEntries').forEach(function (entry) {
+					var newEntry = store.createRecord('boil-session-entry', {
+						session: brewingSession,
+						recipeEntry: entry,
+						alpha: entry.get('ingredient.alpha'),
+					});
+					newEntry.save();
+				});
+			});
 		},
 		addMashIngredient() {
 			var ingredient = this.get('newMashIngredient');
