@@ -48,6 +48,7 @@
     <Compile Include="app\models\beer-batch.js" />
     <Compile Include="app\models\beer-type.js" />
     <Compile Include="app\models\beer.js" />
+    <Compile Include="app\models\boil-session-entry.js" />
     <Compile Include="app\models\brewing-session.js" />
     <Compile Include="app\models\brewing-system.js" />
     <Compile Include="app\models\boil-recipe-entry.js" />

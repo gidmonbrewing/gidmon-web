@@ -14,6 +14,7 @@ export default DS.Model.extend({
 	measuredOG: DS.attr('number'),
 	measuredFG: DS.attr('number'),
 	yeastUsed: DS.attr('number'),
+	boilEntries: DS.hasMany('boil-session-entry'),
 	recipeScaling: Ember.computed('preBoilVolume', 'recipe.preBoilVolume', function () {
 		return this.get('preBoilVolume') / this.get('recipe.preBoilVolume');
 	}),
@@ -114,19 +115,19 @@ export default DS.Model.extend({
 	actualOGPlato: Ember.computed('measuredOG', function () {
 		return 259 - (259 / this.get('measuredOG'));
 	}),
-	scaledBoilIngredients: Ember.computed('recipeScaling', 'recipe.boilEntries.@each.addTime', 'recipe.boilEntries.@each.amount', 'recipe.boilTime', 'measuredPreBoilSG', 'postBoilVolumeCold', function () {
+	scaledBoilIngredients: Ember.computed('recipeScaling', 'boilEntries.@each.addTime', 'boilEntries.@each.amount', 'boilEntries.@each.alpha', 'recipe.boilTime', 'measuredPreBoilSG', 'postBoilVolumeCold', function () {
 		var list = Ember.ArrayProxy.create({ content: [] });
 		var recipeScaling = this.get('recipeScaling');
 		var boilTime = this.get('recipe.boilTime');
 		var preBoilSG = this.get('measuredPreBoilSG');
 		var postBoilVolumeCold = this.get('postBoilVolumeCold');
-		this.get('recipe.boilEntries').then(function (items) {
+		this.get('boilEntries').then(function (items) {
 			items.forEach(function (item) {
 				var bignessFactor = 1.65 * Math.pow(0.000125, preBoilSG - 1);
 				var timeInMins = boilTime - item.get('addTime');
 				var boilTimeFactor = (1 - Math.exp(-0.04 * timeInMins)) / 4.15;
 				var alphaAcidUtilization = bignessFactor * boilTimeFactor;
-				var mgPerLitreAlphaAcids = (item.get('ingredient.alpha') / 100) * (item.get('amount') * 1000) / postBoilVolumeCold;
+				var mgPerLitreAlphaAcids = (item.get('alpha') / 100) * (item.get('amount') * 1000) / postBoilVolumeCold;
 				list.addObject({
 					"entry": item,
 					"amount": item.get('amount') * recipeScaling,

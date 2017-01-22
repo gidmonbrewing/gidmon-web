@@ -45,10 +45,10 @@
 <p>Boil Ingredients:</p>
 <ul>
 	{{#each model.session.scaledBoilIngredients as |item|}}
-	{{#if item.entry.isHops}}
-	<li>{{item.entry.ingredient.name}}: {{format-number item.amount 2}} g, Alpha: {{item.entry.ingredient.alpha}}%, Add Time: {{item.entry.addTime}} min, IBU: {{format-number item.IBU 1}}</li>
+	{{#if item.entry.recipeEntry.isHops}}
+	<li>{{item.entry.recipeEntry.ingredient.name}}: {{format-number item.amount 2}} g, Alpha: {{item.entry.alpha}}%, Add Time: {{item.entry.addTime}} min, IBU: {{format-number item.IBU 1}}</li>
 	{{else}}
-	<li>{{item.entry.ingredient.name}}: {{format-number item.amount 2}} g, Extract: {{item.entry.ingredient.extract}}%</li>
+	<li>{{item.entry.recipeEntry.ingredient.name}}: {{format-number item.amount 2}} g, Extract: {{item.entry.ingredient.extract}}%</li>
 	{{/if}}
 	{{/each}}
 </ul>
