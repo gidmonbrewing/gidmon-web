@@ -22,7 +22,7 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember serve`
+* `ember server [--proxy http://127.0.0.1:8000]`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
@@ -36,12 +36,13 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Building
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+* `ember build [--output-path=..\gidmon-web-dist\dist] [--environment=production]`
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+ember build --output-path=..\gidmon-web-dist\dist --environment=production
+Commit gidmon-web-dist
+Pull down on server
 
 ## Further Reading / Useful Links
 
