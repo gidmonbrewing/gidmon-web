@@ -24,7 +24,9 @@ Router.map(function() {
       this.route('edit');
   });
   this.route('profile', { path: '/profile/:profile_id' });
-  this.route('brewing-session', { path: '/brewing-session/:session_id' });
+  this.route('brewing-session', { path: '/brewing-session/:session_id' }, function () {
+    this.route('comment');
+  });
 });
 
 export default Router;

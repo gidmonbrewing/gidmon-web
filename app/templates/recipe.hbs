@@ -1,83 +1,91 @@
-<h2>Recipe: {{model.recipe.beer.name}} {{if hasUnsavedChanges "*" ""}}</h2>
-<p>Creator: {{model.recipe.creator.fullName}}</p>
-<p>Pre Boil Volume: {{input type="number" value=model.recipe.preBoilVolume}} l</p>
-<p>Cold Pre Boil Volume: {{model.recipe.preBoilVolumeCold}} l</p>
-<h3>Mashing</h3>
-<p>Malt:</p>
-<ul>
-	{{#each model.recipe.mashEntries as |entry|}}
-	<li>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg, Extract: {{format-number entry.ingredient.extractYield 3}} ({{clickable-text value=entry.amount}}%)</li>
-	{{/each}}
-	<li>Unassigned: {{model.recipe.unassignedMalt}}%</li>
-</ul>
-<p>{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} <button {{action "addMashIngredient"}}>Add Mash Ingredient</button></p>
-<p>Total Malt Weight: {{input type="number" step="0.1" value=model.recipe.totalMaltWeight}} kg</p>
-<p>Water/Malt Ratio: {{format-number model.recipe.waterToMaltRatio 2}}</p>
-<p>Average Extract Yield: {{format-number model.recipe.averageExtractYield 3}}</p>
-<p>Total Extract Weight: {{format-number model.recipe.totalExtractWeight 2}} kg</p>
-<p>Water Absorbed By Malt: {{format-number model.recipe.absorbedByMalt 2}} l</p>
-<p>Mashing Temp: {{input type="number" value=model.recipe.mashingTemp}} &deg;C</p>
-<p>Mashing Time: {{input type="number" value=model.recipe.mashingTime}} min</p>
-<p>Mash Out Temp: {{input type="number" value=model.recipe.mashOutTemp}} &deg;C</p>
-<p>Mash Out Time: {{input type="number" value=model.recipe.mashOutTime}} min</p>
-<p>Strike Water Volume: {{format-number model.recipe.strikeWaterVolume 1}} l</p>
-<p>Strike Water Temp: {{format-number model.recipe.strikeWaterTemp 1}} &deg;C</p>
-<p>First Wort SG: {{format-number model.recipe.firstWortSG 3}}</p>
-<p>First Wort Extract Weight: {{format-number model.recipe.firstWortExtractWeight 2}} kg</p>
-<h3>Lautering</h3>
-<p>Sparge Water Volume: {{model.recipe.spargeWaterVolume}} l</p>
-<p>First Sparge SG: {{format-number model.recipe.firstSpargeSG 3}}</p>
-<p>First Sparge Extract Weight: {{format-number model.recipe.firstSpargeExtractWeight 2}} kg</p>
-<p>Pre Boil SG: {{format-number model.recipe.preBoilSG 3}}</p>
-<p>Kettle Extract Weight: {{format-number model.recipe.kettleExtractWeight 2}} kg</p>
-<p>Ideal Brewhouse Efficiency: {{format-number model.recipe.brewhouseEfficiency 1}}%</p>
-<h3>Boiling</h3>
-<p>Post Boil Volume: {{input type="number" value=model.recipe.postBoilVolume}} l</p>
-<p>Post Boil Volume (Cold): {{format-number model.recipe.postBoilVolumeCold 1}} l</p>
-<p>Boil Time: {{input type="number" value=model.recipe.boilTime}} mins</p>
-<p>Boil Off: {{format-number model.recipe.boilOff 1}} l/h</p>
-<p>Boil Ingredients:</p>
-<ul>
-	{{#each model.recipe.sortedBoilEntries as |entry|}}
-	{{#if entry.isHops}}
-	<li>{{entry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
+<div class="col-md-6">
+	<h2>Recipe: {{model.recipe.beer.name}} {{if hasUnsavedChanges "*" ""}}</h2>
+	<p>Creator: {{model.recipe.creator.fullName}}</p>
+	<p>Pre Boil Volume: {{input type="number" value=model.recipe.preBoilVolume}} l</p>
+	<p>Cold Pre Boil Volume: {{model.recipe.preBoilVolumeCold}} l</p>
+	<h3>Mashing</h3>
+	<p>Malt:</p>
+	<ul>
+		{{#each model.recipe.mashEntries as |entry|}}
+		<li>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg, Extract: {{format-number entry.ingredient.extractYield 3}} ({{clickable-text value=entry.amount}}%)</li>
+		{{/each}}
+		<li>Unassigned: {{model.recipe.unassignedMalt}}%</li>
+	</ul>
+	<p>{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} <button {{action "addMashIngredient"}}>Add Mash Ingredient</button></p>
+	<p>Total Malt Weight: {{input type="number" step="0.1" value=model.recipe.totalMaltWeight}} kg</p>
+	<p>Water/Malt Ratio: {{format-number model.recipe.waterToMaltRatio 2}}</p>
+	<p>Average Extract Yield: {{format-number model.recipe.averageExtractYield 3}}</p>
+	<p>Total Extract Weight: {{format-number model.recipe.totalExtractWeight 2}} kg</p>
+	<p>Water Absorbed By Malt: {{format-number model.recipe.absorbedByMalt 2}} l</p>
+	<p>Mashing Temp: {{input type="number" value=model.recipe.mashingTemp}} &deg;C</p>
+	<p>Mashing Time: {{input type="number" value=model.recipe.mashingTime}} min</p>
+	<p>Mash Out Temp: {{input type="number" value=model.recipe.mashOutTemp}} &deg;C</p>
+	<p>Mash Out Time: {{input type="number" value=model.recipe.mashOutTime}} min</p>
+	<p>Strike Water Volume: {{format-number model.recipe.strikeWaterVolume 1}} l</p>
+	<p>Strike Water Temp: {{format-number model.recipe.strikeWaterTemp 1}} &deg;C</p>
+	<p>First Wort SG: {{format-number model.recipe.firstWortSG 3}}</p>
+	<p>First Wort Extract Weight: {{format-number model.recipe.firstWortExtractWeight 2}} kg</p>
+	<h3>Lautering</h3>
+	<p>Sparge Water Volume: {{model.recipe.spargeWaterVolume}} l</p>
+	<p>Sparge Water Temp: {{input type="number" value=model.recipe.spargeWaterTemp}} &deg;C</p>
+	<p>First Sparge SG: {{format-number model.recipe.firstSpargeSG 3}}</p>
+	<p>First Sparge Extract Weight: {{format-number model.recipe.firstSpargeExtractWeight 2}} kg</p>
+	<p>Pre Boil SG: {{format-number model.recipe.preBoilSG 3}}</p>
+	<p>Kettle Extract Weight: {{format-number model.recipe.kettleExtractWeight 2}} kg</p>
+	<p>Ideal Brewhouse Efficiency: {{format-number model.recipe.brewhouseEfficiency 1}}%</p>
+	<h3>Boiling</h3>
+	<p>Post Boil Volume: {{input type="number" value=model.recipe.postBoilVolume}} l</p>
+	<p>Post Boil Volume (Cold): {{format-number model.recipe.postBoilVolumeCold 1}} l</p>
+	<p>Boil Time: {{input type="number" value=model.recipe.boilTime}} mins</p>
+	<p>Boil Off: {{format-number model.recipe.boilOff 1}} l/h</p>
+	<p>Boil Ingredients:</p>
+	<ul>
+		{{#each model.recipe.sortedBoilEntries as |entry|}}
+		{{#if entry.isHops}}
+		<li>{{entry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
+		{{else}}
+		<li>{{entry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
+		{{/if}}
+		{{/each}}
+	</ul>
+	<p>Boil Extract: {{format-number model.recipe.totalBoilExtract 2}} kg</p>
+	<p>Post Boil Extract: {{format-number model.recipe.postBoilExtract 2}} kg</p>
+	<p>OG: {{format-number model.recipe.OG 3}} ({{format-number model.recipe.OGPlato 1}}&deg;P)</p>
+	<p>IBU: {{format-number model.recipe.IBU 1}}</p>
+	<h3>Fermentation</h3>
+	<p>Fermentation Volume: {{input type="number" value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</p>
+	<p>Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
+		{{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
+	{{/power-select}}</p>
+	<p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
+	<p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
+	<p>Pitch Type: {{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
+		{{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
+		{{/power-select}}
+	</p>
+	<p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
+	<p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
+	<p>FG: {{format-number model.recipe.FG 3}}</p>
+	<p>Real FG: {{format-number model.recipe.realFG 3}} ({{format-number model.recipe.realFGPlato 1}}&deg;P) (Accounting for decreased density because of alcohol)</p>
+	<p>Post Fermentation Extract Weight: {{format-number model.recipe.postFermentationExtractWeight 2}} kg</p>
+	<p>ABV: {{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</p>
+	<p>Approximate ABV: {{format-number model.recipe.approxABV 1}}%</p>
+	<h3>Bottling</h3>
+	<p>Recommended CO2 For {{model.recipe.beer.beerType.name}}: {{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</p>
+	<p>CO2 Dissolved In Beer: {{format-number model.recipe.dissolvedCO2 2}} g/l</p>
+	<p>Required Table Sugar: {{format-number model.recipe.requiredTableSugar 1}} g</p>
+	<hr/>
+	{{#if hasUnsavedChanges}}
+	<button {{action "saveModel"}}>Save</button>
 	{{else}}
-	<li>{{entry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
+	<button disabled>Nothing to save</button>
 	{{/if}}
-	{{/each}}
-</ul>
-<p>Boil Extract: {{format-number model.recipe.totalBoilExtract 2}} kg</p>
-<p>Post Boil Extract: {{format-number model.recipe.postBoilExtract 2}} kg</p>
-<p>OG: {{format-number model.recipe.OG 3}} ({{format-number model.recipe.OGPlato 1}}&deg;P)</p>
-<p>IBU: {{format-number model.recipe.IBU 1}}</p>
-<h3>Fermentation</h3>
-<p>Fermentation Volume: {{input type="number" value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</p>
-<p>Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
-	{{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
-{{/power-select}}</p>
-<p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
-<p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
-<p>Pitch Type: {{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
-	{{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
-	{{/power-select}}
-</p>
-<p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
-<p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
-<p>FG: {{format-number model.recipe.FG 3}}</p>
-<p>Real FG: {{format-number model.recipe.realFG 3}} ({{format-number model.recipe.realFGPlato 1}}&deg;P) (Accounting for decreased density because of alcohol)</p>
-<p>Post Fermentation Extract Weight: {{format-number model.recipe.postFermentationExtractWeight 2}} kg</p>
-<p>ABV: {{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</p>
-<p>Approximate ABV: {{format-number model.recipe.approxABV 1}}%</p>
-<h3>Bottling</h3>
-<p>Recommended CO2 For {{model.recipe.beer.beerType.name}}: {{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</p>
-<p>CO2 Dissolved In Beer: {{format-number model.recipe.dissolvedCO2 2}} g/l</p>
-<p>Required Table Sugar: {{format-number model.recipe.requiredTableSugar 1}} g</p>
-<button {{action "saveModel"}}>Save</button>
-<hr/>
-<h3>Sessions</h3>
-<ul>
-	{{#each model.recipe.sessions as |session|}}
-	<li>{{#link-to "brewing-session" session.id}}{{format-date session.date}}{{/link-to}}</li>
-	{{/each}}
-</ul>
-<button {{action "createSession"}}>Create Session</button>
+	<hr/>
+	<h3>Sessions</h3>
+	<ul>
+		{{#each model.recipe.sessions as |session|}}
+		<li>{{#link-to "brewing-session" session.id}}{{format-date session.date}}{{/link-to}}</li>
+		{{/each}}
+	</ul>
+	<button {{action "createSession"}}>Create Session</button>
+</div>

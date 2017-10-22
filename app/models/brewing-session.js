@@ -143,6 +143,9 @@ export default DS.Model.extend({
 		// we want to get minutes so multiply by 60
 		return 60 * (this.get('preBoilVolume') - this.get('scaledPostBoilVolume')) / this.get('brewingSystem.boilOffRate');
 	}),
+	leftInKettle: Ember.computed('postBoilVolumeCold', 'fermentationVolume', function () {
+		return this.get('postBoilVolumeCold') - this.get('fermentationVolume');
+	}),
 	yeastCellsNeeded: Ember.computed('actualOGPlato', 'fermentationVolume', 'recipe.pitchType.pitchRate', function () {
 		return this.get('actualOGPlato') * this.get('fermentationVolume') * this.get('recipe.pitchType.pitchRate');
 	}),
@@ -181,4 +184,7 @@ export default DS.Model.extend({
 	approxABV: Ember.computed('measuredOG', 'measuredFG', function () {
 		return (this.get('measuredOG') - this.get('measuredFG')) * 131.5;
 	}),
+	comments: DS.hasMany('brewing-session-comment'),
+	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),
+	rootComments: Ember.computed.filterBy('comments', 'isRoot', true),
 });
