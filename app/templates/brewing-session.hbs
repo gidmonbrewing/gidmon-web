@@ -79,7 +79,12 @@
 	<p>Post Fermentation Extract Weight: {{format-number model.session.postFermentationExtractWeight 2}} kg (Max: {{format-number model.session.postFermentationExtractWeightScaled 2}} kg)</p>
 	<p>ABV: {{format-number model.session.ABV 1}}% (Target: {{format-number model.session.recipe.ABV 1}}%)</p>
 	<p>Approximate ABV: {{format-number model.session.approxABV 1}}%</p>
+	<hr/>
+	{{#if hasUnsavedChanges}}
 	<button {{action "saveModel"}}>Save</button>
+	{{else}}
+	<button disabled>Nothing to save</button>
+	{{/if}}
 	<hr />
 	<div class="comments">
 		<h3 id="comments">Comments ({{model.session.commentCount}})</h3>
