@@ -12,6 +12,7 @@ export default Model.extend({
 	mashOutTime: attr('number'),
 	spargeCount: attr('number'),
 	spargeWaterTemp: attr('number'),
+	spargeTime: attr('number'),
 	preBoilVolume: attr('number'),
 	postBoilVolume: attr('number'),
 	fermentationVolume: attr('number'),

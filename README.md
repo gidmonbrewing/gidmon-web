@@ -40,9 +40,9 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-ember build --output-path=..\gidmon-web-dist\dist --environment=production
-Commit gidmon-web-dist
-Pull down on server
+* `ember build --output-path=..\gidmon-web-dist\dist --environment=production`
+* Commit gidmon-web-dist
+* Pull down on server
 
 ## Further Reading / Useful Links
 

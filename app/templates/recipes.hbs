@@ -1,5 +1,10 @@
-<h3>Beer Recipes</h3>
-
-{{#each model as |recipe|}}
-	<h4>Recipe: {{#link-to "recipe" recipe.id}}{{recipe.beer.name}}{{/link-to}}</h4>
-{{/each}}
+<div class="container-fluid">
+	<div class="col-md-6">
+		<h2>Beer Recipes</h2>
+		<ul>
+			{{#each model as |recipe|}}
+			<li>Recipe: {{#link-to "recipe" recipe.id}}{{recipe.beer.name}}{{/link-to}}</li>
+			{{/each}}
+		</ul>
+	</div>
+</div>
