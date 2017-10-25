@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
 			});
 		},
 		createSession() {
-			var recipe = this.model.recipe
+			var recipe = this.model.recipe;
 			var store = this.store;
 			var brewingSession = store.createRecord('brewing-session', {
 				recipe: recipe,
