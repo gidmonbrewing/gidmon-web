@@ -15,10 +15,14 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
+* Install Git
+* Install Node.js
+* `npm install -g bower`
+* `npm install -g ember-cli`
 * `git clone <repository-url>` this repository
 * `cd gidmon-web`
-* `npm install`
-* `bower install`
+* `npm install` (install dependencies)
+* `bower install`(install additional dependencies)
 
 ## Running / Development
 
