@@ -48,6 +48,16 @@ Make use of the many generators for code, try `ember help generate` for more det
 * Commit gidmon-web-dist
 * Pull down on server
 
+## Update Ember and related packages
+
+* `npm outdated` (show packages that are not on the latest version)
+* `npm cache clean && bower cache clean` (cleaned caches npm and bower data)
+* `npm install -g ember-cli@latest` (install latest ember-cli)
+* `npm show ember-cli version` (show installed version)
+* `npm install --save-dev ember-cli@2.16.2 (install npm dependent packages and save latest ember-cli as a dependency, assuming 2.16.2 was the latest installed version)
+* `bower install` (install bower dependencies)
+* `ember init` (update project blueprint)
+
 ## Further Reading / Useful Links
 
 * [ember.js](http://emberjs.com/)
