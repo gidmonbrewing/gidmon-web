@@ -19,7 +19,7 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>true</StartWebBrowser>
   </PropertyGroup>
@@ -30,6 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include=".eslintrc.js" />
     <Compile Include="app\adapters\application.js" />
     <Compile Include="app\app.js" />
     <Compile Include="app\components\clickable-text.js" />
@@ -87,6 +88,7 @@
     <Compile Include="config\environment.js" />
     <Compile Include="ember-cli-build.js" />
     <Compile Include="testem.js" />
+    <Compile Include="tests\.eslintrc.js" />
     <Compile Include="tests\helpers\destroy-app.js" />
     <Compile Include="tests\helpers\module-for-acceptance.js" />
     <Compile Include="tests\helpers\resolver.js" />
@@ -98,22 +100,33 @@
     <Compile Include="tests\unit\adapters\application-test.js" />
     <Compile Include="tests\unit\controllers\application-test.js" />
     <Compile Include="tests\unit\controllers\beer-test.js" />
+    <Compile Include="tests\unit\controllers\brewing-session-test.js" />
+    <Compile Include="tests\unit\controllers\brewing-session\comment-test.js" />
     <Compile Include="tests\unit\controllers\index-test.js" />
     <Compile Include="tests\unit\controllers\login-test.js" />
     <Compile Include="tests\unit\controllers\news-test.js" />
     <Compile Include="tests\unit\controllers\news\item\comment-test.js" />
     <Compile Include="tests\unit\controllers\news\new-test.js" />
+    <Compile Include="tests\unit\controllers\recipe-test.js" />
     <Compile Include="tests\unit\helpers\format-date-test.js" />
+    <Compile Include="tests\unit\helpers\format-number-test.js" />
     <Compile Include="tests\unit\models\beer-batch-test.js" />
     <Compile Include="tests\unit\models\beer-test.js" />
     <Compile Include="tests\unit\models\beer-type-test.js" />
+    <Compile Include="tests\unit\models\boil-session-entry-test.js" />
+    <Compile Include="tests\unit\models\brewing-session-comment-test.js" />
+    <Compile Include="tests\unit\models\brewing-session-test.js" />
     <Compile Include="tests\unit\models\brewing-system-test.js" />
+    <Compile Include="tests\unit\models\hops-recipe-entry-test.js" />
     <Compile Include="tests\unit\models\hops-test.js" />
+    <Compile Include="tests\unit\models\malt-recipe-entry-test.js" />
     <Compile Include="tests\unit\models\malt-test.js" />
     <Compile Include="tests\unit\models\malt-type-test.js" />
+    <Compile Include="tests\unit\models\misc-ingredient-entry-test.js" />
     <Compile Include="tests\unit\models\misc-ingredient-test.js" />
     <Compile Include="tests\unit\models\news-comment-test.js" />
     <Compile Include="tests\unit\models\news-item-test.js" />
+    <Compile Include="tests\unit\models\pitch-type-test.js" />
     <Compile Include="tests\unit\models\profile-test.js" />
     <Compile Include="tests\unit\models\recipe-test.js" />
     <Compile Include="tests\unit\models\user-test.js" />
@@ -122,6 +135,9 @@
     <Compile Include="tests\unit\routes\application-test.js" />
     <Compile Include="tests\unit\routes\beer-test.js" />
     <Compile Include="tests\unit\routes\beers-test.js" />
+    <Compile Include="tests\unit\routes\brewing-session-test.js" />
+    <Compile Include="tests\unit\routes\brewing-session\comment-test.js" />
+    <Compile Include="tests\unit\routes\brewing-session\index-test.js" />
     <Compile Include="tests\unit\routes\login-test.js" />
     <Compile Include="tests\unit\routes\news-item-test.js" />
     <Compile Include="tests\unit\routes\news-item\comment-test.js" />
@@ -154,6 +170,7 @@
     <Content Include="app\models\.gitkeep" />
     <Content Include="app\routes\.gitkeep" />
     <Content Include="app\styles\app.css" />
+    <Content Include="app\styles\app.scss" />
     <Content Include="app\templates\about.hbs" />
     <Content Include="app\templates\application.hbs" />
     <Content Include="app\templates\beer.hbs" />
@@ -219,6 +236,7 @@
     <Content Include="tests\index.html" />
     <Content Include="tests\integration\.gitkeep" />
     <Content Include="tests\unit\.gitkeep" />
+    <Content Include="UpgradeLog.htm" />
     <Content Include="vendor\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
@@ -255,11 +273,13 @@
     <Folder Include="tests\unit\" />
     <Folder Include="tests\unit\adapters\" />
     <Folder Include="tests\unit\controllers\" />
+    <Folder Include="tests\unit\controllers\brewing-session\" />
     <Folder Include="tests\unit\controllers\news\" />
     <Folder Include="tests\unit\controllers\news\item\" />
     <Folder Include="tests\unit\helpers\" />
     <Folder Include="tests\unit\models\" />
     <Folder Include="tests\unit\routes\" />
+    <Folder Include="tests\unit\routes\brewing-session\" />
     <Folder Include="tests\unit\routes\news-item\" />
     <Folder Include="tests\unit\routes\news\" />
     <Folder Include="tests\unit\routes\news\item\" />
