@@ -37,6 +37,7 @@
     <Compile Include="app\controllers\application.js" />
     <Compile Include="app\controllers\beer.js" />
     <Compile Include="app\controllers\brewing-session.js" />
+    <Compile Include="app\controllers\brewing-session\comment.js" />
     <Compile Include="app\controllers\index.js" />
     <Compile Include="app\controllers\login.js" />
     <Compile Include="app\controllers\news.js" />
@@ -49,6 +50,7 @@
     <Compile Include="app\models\beer-type.js" />
     <Compile Include="app\models\beer.js" />
     <Compile Include="app\models\boil-session-entry.js" />
+    <Compile Include="app\models\brewing-session-comment.js" />
     <Compile Include="app\models\brewing-session.js" />
     <Compile Include="app\models\brewing-system.js" />
     <Compile Include="app\models\boil-recipe-entry.js" />
@@ -70,6 +72,7 @@
     <Compile Include="app\routes\beer.js" />
     <Compile Include="app\routes\beers.js" />
     <Compile Include="app\routes\brewing-session.js" />
+    <Compile Include="app\routes\brewing-session\comment.js" />
     <Compile Include="app\routes\login.js" />
     <Compile Include="app\routes\news.js" />
     <Compile Include="app\routes\news\edit.js" />
@@ -156,6 +159,8 @@
     <Content Include="app\templates\beer.hbs" />
     <Content Include="app\templates\beers.hbs" />
     <Content Include="app\templates\brewing-session.hbs" />
+    <Content Include="app\templates\brewing-session\comment.hbs" />
+    <Content Include="app\templates\brewing-session\index.hbs" />
     <Content Include="app\templates\components\.gitkeep" />
     <Content Include="app\templates\components\clickable-text.hbs" />
     <Content Include="app\templates\components\file-upload.hbs" />
@@ -221,18 +226,21 @@
     <Folder Include="app\adapters\" />
     <Folder Include="app\components\" />
     <Folder Include="app\controllers\" />
+    <Folder Include="app\controllers\brewing-session\" />
     <Folder Include="app\controllers\news\" />
     <Folder Include="app\controllers\news\item\" />
     <Folder Include="app\fonts\" />
     <Folder Include="app\helpers\" />
     <Folder Include="app\models\" />
     <Folder Include="app\routes\" />
+    <Folder Include="app\routes\brewing-session\" />
     <Folder Include="app\routes\news\" />
     <Folder Include="app\routes\news\item\" />
     <Folder Include="app\serializers\" />
     <Folder Include="app\services\" />
     <Folder Include="app\styles\" />
     <Folder Include="app\templates\" />
+    <Folder Include="app\templates\brewing-session\" />
     <Folder Include="app\templates\components\" />
     <Folder Include="app\templates\news\" />
     <Folder Include="app\templates\news\item\" />
