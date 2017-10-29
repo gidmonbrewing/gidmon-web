@@ -45,6 +45,17 @@ export default Ember.Service.extend({
 			});
 		});
 	},
+	authenticateFB(username, firstName, lastName, email) {
+		var _this = this;
+		return Ember.$.ajax({
+			method: "POST",
+			url: "/api/oauth-login-fb",
+			data: { username: username, first_name: firstName, last_name: lastName, email: email }
+		}).then((result) => {
+			_this.set('token', result.data['token']);
+			_this.set('currentUser', result.data['userId']);
+		});
+	},
 
 	invalidate() {
 		this.set('token', "");

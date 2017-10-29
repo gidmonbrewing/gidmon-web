@@ -1,79 +1,81 @@
 <div>
-        <a class="navbar-brand" href="#"><img src="/assets/images/logo-medium.png" class="top-logo" /></a>
+		<a class="navbar-brand" href="#"><img src="/assets/images/logo-medium.png" class="top-logo" /></a>
 </div>
-    <div class="header gm">
-        <nav class="navbar tb-clean">
-            <div class="container-fluid gm-90">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!--<a class="navbar-brand" href="#">Gidmon.se</a>-->
-                </div>
-                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-                    
-                    {{#if authManager.isAuthenticated}}
-                    <ul id="loginbar" class="nav navbar-nav navbar-right loginbar">
-                        {{#if currentUser.isStaff}}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header">News</li>
-                                <li> {{#link-to "news.new"}}Add{{/link-to}}</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Beer</li>
-                                <li><a href="#">Add</a></li>
-                                {{#if currentUser.isSuperuser}}
-                                   <li class="dropdown-header">Users</li>
-                                {{/if}}
-                            </ul>
-                        </li>
-                        {{/if}}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.fullName}} <div class="icon"><img src={{currentUser.profile.picture}} alt="avatar"></div><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
+	<div class="header gm">
+		<nav class="navbar tb-clean">
+			<div class="container-fluid gm-90">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!--<a class="navbar-brand" href="#">Gidmon.se</a>-->
+				</div>
+				<div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+					
+					{{#if isAuthenticated}}
+					<ul id="loginbar" class="nav navbar-nav navbar-right loginbar">
+						{{#if currentUser.isStaff}}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li class="dropdown-header">News</li>
+								<li> {{#link-to "news.new"}}Add{{/link-to}}</li>
+								<li class="divider"></li>
+								<li class="dropdown-header">Beer</li>
+								<li><a href="#">Add</a></li>
+								{{#if currentUser.isSuperuser}}
+								   <li class="dropdown-header">Users</li>
+								{{/if}}
+							</ul>
+						</li>
+						{{/if}}
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{currentUser.fullName}} <div class="icon"><img src={{currentUser.profile.picture}} alt="avatar"></div><span class="caret"></span></a>
+							<ul class="dropdown-menu">
 								<li>{{#link-to "profile" currentUser.profile.id}}Profile{{/link-to}}</li>
-                                <li><a href="#" {{action "logout"}}>Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    {{else}}
-                    <ul class="nav navbar-nav navbar-right loginbar">
-                        <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                       <form {{action 'authenticate' on='submit'}}>
-                                        {{input value=login placeholder='Login'}}<br>
-                                        {{input value=password placeholder='Password' type='password'}}<br>
-                                        <button type="submit">Login</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                        </li>
-                    </ul>
-                    {{/if}}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"> {{#link-to "index"}}Start{{/link-to}}</li>
-                        <li>{{#link-to "beers"}}Beers{{/link-to}}</li>
-                        <li class="dropdown">
-                            {{#link-to "recipes"}}Recipes{{/link-to}}
-                        </li>
+								<li><a href="#" {{action "logout"}}>Logout</a></li>
+							</ul>
+						</li>
+					</ul>
+					{{else}}
+					<ul class="nav navbar-nav navbar-right loginbar">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<form {{action 'authenticate' on='submit'}}>
+									{{input value=login placeholder='Login'}}<br>
+									{{input value=password placeholder='Password' type='password'}}<br>
+									<button type="submit">Login</button><br/>
+									<hr/>
+									<a href="#" {{action "authenticateFB"}}><img src="/assets/images/facebook-login.png" width="150"/></a>
+									</form>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					{{/if}}
+					<ul class="nav navbar-nav navbar-right">
+						<li class="active"> {{#link-to "index"}}Start{{/link-to}}</li>
+						<li>{{#link-to "beers"}}Beers{{/link-to}}</li>
+						<li class="dropdown">
+							{{#link-to "recipes"}}Recipes{{/link-to}}
+						</li>
 						<li>{{#link-to "about"}}About{{/link-to}}</li>
-                    </ul>
-                  
-                </div><!--/.nav-collapse -->
-            </div><!--/.container-fluid -->
-        </nav>
-    </div>
-    
-    {{outlet}}
-    
-    <footer class="footer">
-        <p>©2016 Gidmon</p><p>Contact: <a href="mailto:info@gidmon.se">info@gidmon.se</a></p>
-    </footer>
+					</ul>
+				  
+				</div><!--/.nav-collapse -->
+			</div><!--/.container-fluid -->
+		</nav>
+	</div>
+	
+	{{outlet}}
+	
+	<footer class="footer">
+		<p>©2016 Gidmon</p><p>Contact: <a href="mailto:info@gidmon.se">info@gidmon.se</a></p>
+	</footer>
 
 
