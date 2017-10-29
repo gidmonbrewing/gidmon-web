@@ -55,8 +55,11 @@ export default Ember.Controller.extend({
 				FB.getLoginStatus(function (response) {
 					if (response.status == "connected") {
 						FB.logout(function (response) {
-							console.log("Logged out of Facebook");
-							console.log(response);
+							// Debug logging in development mode
+							if (ENV.environment === 'development') {
+								console.log("Logged out of Facebook");
+								console.log(response);
+							}
 						});
 					} else {
 						// Debug logging in development mode
