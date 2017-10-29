@@ -1,15 +1,18 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 export default Ember.Route.extend({
 	model() {
-		let newsItem = this.modelFor('news.item');
-		return this.get('store').createRecord('news-comment', {
-			newsItem: newsItem
+		var store = this.get('store');
+		let parentModel = this.modelFor('news.item');
+		return RSVP.hash({
+			newsItem: parentModel,
+			comment: store.createRecord('news-comment', {}),
 		});
 	},
 	handleDeactivate: function () {
 		// Destroy unsaved records when navigating away
-		let m = this.currentModel;
+		let m = this.currentModel.comment;
 		if (m.get('isNew')) {
 			m.destroyRecord();
 		}

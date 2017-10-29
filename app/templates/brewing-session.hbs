@@ -124,8 +124,10 @@
 				<!-- Comment 2 end -->
 			</div>
 			{{/each}}
+			{{#if authManager.isAuthenticated}}
 			<hr />
 			{{outlet}}
+			{{/if}}
 		</div>
 	</div>
 </div>

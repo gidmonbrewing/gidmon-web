@@ -3,9 +3,12 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 	actions: {
 		saveComment() {
-			//let _this = this;
-			this.model.save().then(function (/*model*/) {
+			let _this = this;
+			// The model for this route contains the new comment and the current session
+			this.model.comment.set('newsItem', this.model.newsItem);
+			this.model.comment.save().then(function (/*model*/) {
 				// save worked
+				_this.transitionToRoute('news.item');
 			}, function (error) {
 				// error handling
 				var errorText = "";
@@ -16,7 +19,6 @@ export default Ember.Controller.extend({
 			});
 		},
 		cancelComment() {
-			this.model.destroyRecord();
 			this.transitionToRoute('news.item'); // Not providing any argument will use the current model for item
 		},
 	}
