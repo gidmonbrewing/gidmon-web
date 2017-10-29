@@ -47,7 +47,7 @@ export default Ember.Controller.extend({
 					} else {
 						alert('Facebook authentication failed');
 					}
-				});
+				}, { scope: 'first_name,last_name,email' });
 			});
 		},
 		logout() {
