@@ -13,6 +13,7 @@ export default Model.extend({
 	spargeCount: attr('number'),
 	spargeWaterTemp: attr('number'),
 	spargeTime: attr('number'),
+	conversionEfficiency: attr('number'),
 	preBoilVolume: attr('number'),
 	postBoilVolume: attr('number'),
 	fermentationVolume: attr('number'),
@@ -74,8 +75,8 @@ export default Model.extend({
 	}),
 	extractYields: Ember.computed.mapBy('mashEntries', 'weightedExtract'),
 	averageExtractYield: Ember.computed.sum('extractYields'),
-	totalExtractWeight: Ember.computed('averageExtractYield', 'totalMaltWeight', function () {
-		return this.get('totalMaltWeight') * this.get('averageExtractYield');
+	totalExtractWeight: Ember.computed('averageExtractYield', 'totalMaltWeight', 'conversionEfficiency', function () {
+		return this.get('totalMaltWeight') * this.get('averageExtractYield') * this.get('conversionEfficiency') / 100;
 	}),
 	firstWortSG: Ember.computed('strikeWaterVolume', 'totalExtractWeight', function () {
 		var totalExtractWeight = this.get('totalExtractWeight');

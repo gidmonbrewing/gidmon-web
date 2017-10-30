@@ -5,24 +5,38 @@ export default DS.Model.extend({
 	date: DS.attr('date', { defaultValue() { return new Date(); } }),
 	recipe: DS.belongsTo('recipe'),
 	brewingSystem: DS.belongsTo('brewing-system'),
+	strikeWaterVolume: DS.attr('number'),
+	strikeWaterTemp: DS.attr('number'),
+	spargeWaterVolume: DS.attr('number'),
+	spargeWaterTemp: DS.attr('number'),
 	preBoilVolume: DS.attr('number'),
+	measuredPreBoilVolume: DS.attr('number'),
 	postBoilVolume: DS.attr('number'),
+	measuredPostBoilVolume: DS.attr('number'),
 	fermentationVolume: DS.attr('number'),
+	measuredFermentationVolume: DS.attr('number'),
+	boilTime: DS.attr('number'),
 	measuredFirstWortSG: DS.attr('number'),
 	measuredFirstSpargeSG: DS.attr('number'),
 	measuredPreBoilSG: DS.attr('number'),
 	measuredOG: DS.attr('number'),
 	measuredFG: DS.attr('number'),
 	yeastUsed: DS.attr('number'),
+	mashEntries: DS.hasMany('mash-session-entry'),
 	boilEntries: DS.hasMany('boil-session-entry'),
+	mashEntriesWeights: Ember.computed.mapBy('mashEntries', 'weight'),
+	totalMaltWeight: Ember.computed.sum('mashEntriesWeights'),
+	waterToMaltRatio: Ember.computed('strikeWaterVolume', 'totalMaltWeight', function () {
+		return this.get('strikeWaterVolume') / this.get('totalMaltWeight');
+	}),
 	recipeScaling: Ember.computed('preBoilVolume', 'recipe.preBoilVolume', function () {
 		return this.get('preBoilVolume') / this.get('recipe.preBoilVolume');
 	}),
 	preBoilVolumeCold: Ember.computed('recipe.preBoilVolumeCold', 'recipeScaling', function () {
 		return this.get('recipe.preBoilVolumeCold') * this.get('recipeScaling');
 	}),
-	postBoilVolumeCold: Ember.computed('postBoilVolume', function () {
-		return this.get('postBoilVolume') * 0.96;
+	postBoilVolumeCold: Ember.computed('measuredPostBoilVolume', function () {
+		return this.get('measuredPostBoilVolume') * 0.96;
 	}),
 	scaledPostBoilVolume: Ember.computed('recipe.postBoilVolume', 'recipeScaling', function () {
 		return this.get('recipe.postBoilVolume') * this.get('recipeScaling');
@@ -43,7 +57,7 @@ export default DS.Model.extend({
 		});
 		return list;
 	}),
-	totalMaltWeight: Ember.computed('recipe.totalMaltWeight', 'recipeScaling', function () {
+	totalMaltWeightOld: Ember.computed('recipe.totalMaltWeight', 'recipeScaling', function () {
 		return this.get('recipe.totalMaltWeight') * this.get('recipeScaling');
 	}),
 	totalExtractWeight: Ember.computed('recipe.totalExtractWeight', 'brewingSystem.conversionEfficiency', 'recipeScaling', function () {
@@ -52,10 +66,10 @@ export default DS.Model.extend({
 	absorbedByMalt: Ember.computed('recipe.absorbedByMalt', 'recipeScaling', function () {
 		return this.get('recipe.absorbedByMalt') * this.get('recipeScaling');
 	}),
-	strikeWaterVolume: Ember.computed('recipe.strikeWaterVolume', 'recipeScaling', function () {
+	strikeWaterVolumeOld: Ember.computed('recipe.strikeWaterVolume', 'recipeScaling', function () {
 		return this.get('recipe.strikeWaterVolume') * this.get('recipeScaling');
 	}),
-	spargeWaterVolume: Ember.computed('recipe.spargeWaterVolume', 'recipeScaling', function () {
+	spargeWaterVolumeOld: Ember.computed('recipe.spargeWaterVolume', 'recipeScaling', function () {
 		return this.get('recipe.spargeWaterVolume') * this.get('recipeScaling');
 	}),
 	firstWortSG: Ember.computed('strikeWaterVolume', 'totalExtractWeight', function () {
@@ -98,9 +112,10 @@ export default DS.Model.extend({
 	actualKettleExtract: Ember.computed('measuredPreBoilSG', 'actualPreBoilPlato', 'preBoilVolumeCold', function () {
 		return this.get('preBoilVolumeCold') * this.get('measuredPreBoilSG') * (this.get('actualPreBoilPlato') / 100);
 	}),
-	totalBoilExtract: Ember.computed('recipe.totalBoilExtract', 'recipeScaling', function () {
-		return this.get('recipe.totalBoilExtract') * this.get('recipeScaling');
-	}),
+	entrySorting: ['addTime'],
+	sortedBoilEntries: Ember.computed.sort('boilEntries', 'entrySorting'),
+	boilExtracts: Ember.computed.mapBy('boilEntries', 'extractWeight'),
+	totalBoilExtract: Ember.computed.sum('boilExtracts'),
 	postBoilExtract: Ember.computed('totalBoilExtract', 'actualKettleExtract', function () {
 		return this.get('actualKettleExtract') + this.get('totalBoilExtract');
 	}),
@@ -137,11 +152,11 @@ export default DS.Model.extend({
 		});
 		return list;
 	}),
-	entrySorting: ['entry.addTime'],
-	sortedBoilEntries: Ember.computed.sort('scaledBoilIngredients', 'entrySorting'),
-	boilTime: Ember.computed('preBoilVolume', 'scaledPostBoilVolume', 'brewingSystem.boilOffRate', function () {
+	entrySortingDebug: ['entry.addTime'],
+	sortedBoilEntriesDebug: Ember.computed.sort('scaledBoilIngredients', 'entrySortingDebug'),
+	requiredBoilTime: Ember.computed('measuredPreBoilVolume', 'postBoilVolume', 'brewingSystem.boilOffRate', function () {
 		// we want to get minutes so multiply by 60
-		return 60 * (this.get('preBoilVolume') - this.get('scaledPostBoilVolume')) / this.get('brewingSystem.boilOffRate');
+		return 60 * (this.get('measuredPreBoilVolume') - this.get('postBoilVolume')) / this.get('brewingSystem.boilOffRate');
 	}),
 	leftInKettle: Ember.computed('postBoilVolumeCold', 'fermentationVolume', function () {
 		return this.get('postBoilVolumeCold') - this.get('fermentationVolume');
