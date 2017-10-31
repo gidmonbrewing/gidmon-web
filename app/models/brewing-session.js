@@ -167,8 +167,8 @@ export default DS.Model.extend({
 		// we want to get minutes so multiply by 60
 		return 60 * (this.get('measuredPreBoilVolume') - this.get('postBoilVolume')) / this.get('brewingSystem.boilOffRate');
 	}),
-	leftInKettle: Ember.computed('postBoilVolumeCold', 'fermentationVolume', function () {
-		return this.get('postBoilVolumeCold') - this.get('fermentationVolume');
+	leftInKettle: Ember.computed('postBoilVolumeCold', 'measuredFermentationVolume', function () {
+		return this.get('postBoilVolumeCold') - this.get('measuredFermentationVolume');
 	}),
 	yeastCellsNeeded: Ember.computed('actualOGPlato', 'fermentationVolume', 'recipe.pitchType.pitchRate', function () {
 		return this.get('actualOGPlato') * this.get('fermentationVolume') * this.get('recipe.pitchType.pitchRate');

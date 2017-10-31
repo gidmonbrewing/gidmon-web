@@ -78,8 +78,8 @@
 		<p>Measured OG: {{input type="number" step="0.001" value=model.session.measuredOG}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</p>
 		<p>IBU: {{format-number model.session.recipe.IBU 1}}</p>
 		<h3>Fermentation</h3>
-		<p>Target Fermentation Volume: {{format-number model.session.scaledFermentationVolume 1}} l</p>
-		<p>Measured Fermentation Volume: {{input type="number" value=model.session.fermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</p>
+		<p>Target Fermentation Volume: {{format-number model.session.fermentationVolume 1}} l</p>
+		<p>Measured Fermentation Volume: {{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</p>
 		<p>Yeast: {{model.session.recipe.yeast.name}}</p>
 		<p>Temperature: {{model.session.recipe.primaryFermentationTemp}} &deg;C</p>
 		<p>Time: {{model.session.recipe.primaryFermentationTime}} days</p>
