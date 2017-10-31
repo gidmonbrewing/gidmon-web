@@ -5,6 +5,10 @@ function round(value, decimals) {
 }
 
 export default Ember.Controller.extend({
+	showFirstWortExtract: false,
+	showFirstSpageExtract: false,
+	showPreBoilExtract: false,
+	showOGDetails: false,
 	actions: {
 		saveModel() {
 			this.model.recipe.save();
@@ -76,6 +80,13 @@ export default Ember.Controller.extend({
 				amount: 0,
 			});
 			mashRecipeEntry.save();
+		},
+		toggleShowFirstWortExtract() {
+			if (this.get('showFirstWortExtract')) {
+				this.set('showFirstWortExtract', false);
+			} else {
+				this.set('showFirstWortExtract', true);
+			}
 		},
 	},
 	hasUnsavedChanges: Ember.computed('model.recipe.hasDirtyAttributes', 'model.recipe.mashEntries.@each.hasDirtyAttributes', function () {

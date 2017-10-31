@@ -19,7 +19,7 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
     <NodejsPort>1337</NodejsPort>
     <StartWebBrowser>true</StartWebBrowser>
   </PropertyGroup>
@@ -42,6 +42,7 @@
     <Compile Include="app\controllers\index.js" />
     <Compile Include="app\controllers\login.js" />
     <Compile Include="app\controllers\news.js" />
+    <Compile Include="app\controllers\news\item.js" />
     <Compile Include="app\controllers\news\item\comment.js" />
     <Compile Include="app\controllers\news\new.js" />
     <Compile Include="app\controllers\recipe.js" />
@@ -59,6 +60,7 @@
     <Compile Include="app\models\mash-recipe-entry.js" />
     <Compile Include="app\models\mash-ingredient-type.js" />
     <Compile Include="app\models\mash-ingredient.js" />
+    <Compile Include="app\models\mash-session-entry.js" />
     <Compile Include="app\models\news-comment.js" />
     <Compile Include="app\models\news-item.js" />
     <Compile Include="app\models\pitch-type.js" />
@@ -85,7 +87,9 @@
     <Compile Include="app\routes\recipes.js" />
     <Compile Include="app\serializers\application.js" />
     <Compile Include="app\services\auth-manager.js" />
+    <Compile Include="app\services\facebook.js" />
     <Compile Include="config\environment.js" />
+    <Compile Include="config\targets.js" />
     <Compile Include="ember-cli-build.js" />
     <Compile Include="testem.js" />
     <Compile Include="tests\.eslintrc.js" />
@@ -105,6 +109,7 @@
     <Compile Include="tests\unit\controllers\index-test.js" />
     <Compile Include="tests\unit\controllers\login-test.js" />
     <Compile Include="tests\unit\controllers\news-test.js" />
+    <Compile Include="tests\unit\controllers\news\item-test.js" />
     <Compile Include="tests\unit\controllers\news\item\comment-test.js" />
     <Compile Include="tests\unit\controllers\news\new-test.js" />
     <Compile Include="tests\unit\controllers\recipe-test.js" />
@@ -122,6 +127,7 @@
     <Compile Include="tests\unit\models\malt-recipe-entry-test.js" />
     <Compile Include="tests\unit\models\malt-test.js" />
     <Compile Include="tests\unit\models\malt-type-test.js" />
+    <Compile Include="tests\unit\models\mash-session-entry-test.js" />
     <Compile Include="tests\unit\models\misc-ingredient-entry-test.js" />
     <Compile Include="tests\unit\models\misc-ingredient-test.js" />
     <Compile Include="tests\unit\models\news-comment-test.js" />
@@ -151,6 +157,7 @@
     <Compile Include="tests\unit\routes\recipes-test.js" />
     <Compile Include="tests\unit\serializers\application-test.js" />
     <Compile Include="tests\unit\services\auth-manager-test.js" />
+    <Compile Include="tests\unit\services\facebook-test.js" />
     <Content Include=".bowerrc" />
     <Content Include=".editorconfig" />
     <Content Include=".ember-cli" />

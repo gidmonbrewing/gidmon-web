@@ -1,197 +1,331 @@
 <div class="container-fluid">
-  <div class="col-md-6">
+	<div class="col-md-6">
 
-    <div class="container-fluid" style="background-color:aliceblue">
-      <div style="font-size: 36px; font-weight:bold;">
-        <i class="fa fa-beer" aria-hidden="true"></i> {{model.recipe.beer.name}} {{if hasUnsavedChanges "*" ""}}
-      </div>
-      {{#if (not-eq model.recipe.creator.fullName "")}}
-      <p>Made by {{model.recipe.creator.fullName}}</p>
-      {{/if}}
+		<div class="container-fluid" style="background-color:aliceblue">
+			<div style="font-size: 36px; font-weight:bold;">
+				<i class="fa fa-beer" aria-hidden="true"></i> {{model.recipe.beer.name}} {{if hasUnsavedChanges "*" ""}}
+			</div>
+			{{#if (not-eq model.recipe.creator.fullName "")}}
+			<p>Made by {{model.recipe.creator.fullName}}</p>
+			{{/if}}
 
-      <p>Pre Boil Volume: {{clickable-text value=model.recipe.preBoilVolume}} l</p>
-      <p>Cold Pre Boil Volume: {{format-number model.recipe.preBoilVolumeCold 2}} l</p>
-    </div>
-    <div class="container-fluid" style="padding-top:2em;">
-      <div style="font-size: 24px;">
-        <i class="glyphicon glyphicon-grain" aria-hidden="true"></i> Mashing
-      </div>
-      <div>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th colspan="3">Malt</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each model.recipe.mashEntries as |entry|}}
-            <tr>
-              <td>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg,</td>
-              <td>Extract: {{format-number entry.ingredient.extractYield 3}}</td>
-              <td>({{clickable-text value=entry.amount}}%)</td>
-            </tr>
-            {{/each}}
-            <tr>
-              <td>Unassigned</td>
-              <td></td>
-              <td>{{model.recipe.unassignedMalt}}%</td>
-            </tr>
-            <tr>
-              <td colspan="2">{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} </td>
-              <td><button {{action "addMashIngredient"}} class="btn btn-link" style="padding:0px;"><i class="fa fa-plus" aria-hidden="true"></i></button> </td>
-            </tr>
-          </tbody>
-        </table>
+			<p>Pre Boil Volume: {{clickable-text value=model.recipe.preBoilVolume}} l</p>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="glyphicon glyphicon-grain" aria-hidden="true"></i> Mashing
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Strike Water Volume</td>
+							<td>{{format-number model.recipe.strikeWaterVolume 1}} l</td>
+						</tr>
+						<tr>
+							<td>Strike Water Temp</td>
+							<td>{{format-number model.recipe.strikeWaterTemp 1}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Mashing Temp</td>
+							<td>{{clickable-text value=model.recipe.mashingTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Mashing Time</td>
+							<td>{{clickable-text value=model.recipe.mashingTime}} min</td>
+						</tr>
+						<tr>
+							<td>Mash Out Temp</td>
+							<td>{{clickable-text value=model.recipe.mashOutTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Mash Out Time</td>
+							<td>{{clickable-text value=model.recipe.mashOutTime}} min</td>
+						</tr>
+						<tr>
+							<td>Total Malt Weight</td>
+							<td>{{clickable-text value=model.recipe.totalMaltWeight}} kg</td>
+						</tr>
+						<tr>
+							<td>Water/Malt Ratio</td>
+							<td>{{format-number model.recipe.waterToMaltRatio 2}}</td>
+						</tr>
+					</tbody>
+				</table>
 
-        <table class="table table-hover">
-          <tbody>
-            <tr>
-              <td>Total Malt Weight</td>
-              <td>{{input type="number" step="0.1" value=model.recipe.totalMaltWeight}} kg</td>
-            </tr>
-            <tr>
-              <td>Water/Malt Ratio</td>
-              <td>{{format-number model.recipe.waterToMaltRatio 2}}</td>
-            </tr>
-            <tr>
-              <td>Average Extract Yield</td>
-              <td>{{format-number model.recipe.averageExtractYield 3}}</td>
-            </tr>
-            <tr>
-              <td>Total Extract Weight</td>
-              <td>{{format-number model.recipe.totalExtractWeight 2}} kg</td>
-            </tr>
-            <tr>
-              <td>Water Absorbed By Malt</td>
-              <td>{{format-number model.recipe.absorbedByMalt 2}} l</td>
-            </tr>
-            <tr>
-              <td>Mashing Temp</td>
-              <td>{{input type="number" value=model.recipe.mashingTemp}} &deg;C</td>
-            </tr>
-            <tr>
-              <td>Mashing Time</td>
-              <td>{{input type="number" value=model.recipe.mashingTime}} min</td>
-            </tr>
-            <tr>
-              <td>Mash Out Temp</td>
-              <td>{{input type="number" value=model.recipe.mashOutTemp}} &deg;C</td>
-            </tr>
-            <tr>
-              <td>Mash Out Time</td>
-              <td>{{input type="number" value=model.recipe.mashOutTime}} min</td>
-            </tr>
-            <tr>
-              <td>Strike Water Volume</td>
-              <td>{{format-number model.recipe.strikeWaterVolume 1}} l</td>
-            </tr>
-            <tr>
-              <td>Strike Water Temp</td>
-              <td>{{format-number model.recipe.strikeWaterTemp 1}} &deg;C</td>
-            </tr>
-		  	<tr>
-		  		<td>Assumed Conversion Efficiency</td>
-		  		<td>{{model.recipe.conversionEfficiency}}%</td>
-		  	</tr>
-            <tr>
-              <td>First Wort SG</td>
-              <td>{{format-number model.recipe.firstWortSG 3}}</td>
-            </tr>
-            <tr>
-              <td>First Wort Extract Weight</td>
-              <td>{{format-number model.recipe.firstWortExtractWeight 2}} kg</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="container-fluid" style="padding-top:2em;">
-      <div style="font-size: 24px;">
-        <i class="fa fa-shower" aria-hidden="true"></i> Lautering
-      </div>
-      <p>Sparge Water Volume: {{model.recipe.spargeWaterVolume}} l</p>
-      <p>Sparge Water Temp: {{clickable-text value=model.recipe.spargeWaterTemp}} &deg;C</p>
-      <p>Sparge Time: {{clickable-text value=model.recipe.spargeTime}} min</p>
-      <p>First Sparge SG: {{format-number model.recipe.firstSpargeSG 3}}</p>
-      <p>First Sparge Extract Weight: {{format-number model.recipe.firstSpargeExtractWeight 2}} kg</p>
-      <p>Pre Boil SG: {{format-number model.recipe.preBoilSG 3}}</p>
-      <p>Kettle Extract Weight: {{format-number model.recipe.kettleExtractWeight 2}} kg</p>
-      <p>Ideal Brewhouse Efficiency: {{format-number model.recipe.brewhouseEfficiency 1}}%</p>
-    </div>
-    <div class="container-fluid" style="padding-top:2em;">
-      <div style="font-size: 24px;">
-        <i class="fa fa-thermometer-half" aria-hidden="true"></i> Boiling
-      </div>
-      <p>Post Boil Volume: {{input type="number" value=model.recipe.postBoilVolume}} l</p>
-      <p>Post Boil Volume (Cold): {{format-number model.recipe.postBoilVolumeCold 1}} l</p>
-      <p>Boil Time: {{input type="number" value=model.recipe.boilTime}} mins</p>
-      <p>Boil Off: {{format-number model.recipe.boilOff 1}} l/h</p>
-      <p>Boil Ingredients:</p>
-      <ul>
-        {{#each model.recipe.sortedBoilEntries as |entry|}}
-        {{#if entry.isHops}}
-        <li>{{entry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
-        {{else}}
-        <li>{{entry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
-        {{/if}}
-        {{/each}}
-      </ul>
-      <p>Boil Extract: {{format-number model.recipe.totalBoilExtract 2}} kg</p>
-      <p>Post Boil Extract: {{format-number model.recipe.postBoilExtract 2}} kg</p>
-      <p>OG: {{format-number model.recipe.OG 3}} ({{format-number model.recipe.OGPlato 1}}&deg;P)</p>
-      <p>IBU: {{format-number model.recipe.IBU 1}}</p>
-    </div>
-    <div class="container-fluid" style="padding-top:2em;">
-      <div style="font-size: 24px;">
-        <i class="fa fa-gear" aria-hidden="true"></i> Fermentation
-      </div>
-      <p>Fermentation Volume: {{input type="number" value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</p>
-      <p>
-        Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
-        {{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
-        {{/power-select}}
-      </p>
-      <p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
-      <p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
-      <p>
-        Pitch Type: {{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
-        {{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
-        {{/power-select}}
-      </p>
-      <p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
-      <p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
-      <p>FG: {{format-number model.recipe.FG 3}}</p>
-      <p>Real FG: {{format-number model.recipe.realFG 3}} ({{format-number model.recipe.realFGPlato 1}}&deg;P) (Accounting for decreased density because of alcohol)</p>
-      <p>Post Fermentation Extract Weight: {{format-number model.recipe.postFermentationExtractWeight 2}} kg</p>
-      <p>ABV: {{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</p>
-      <p>Approximate ABV: {{format-number model.recipe.approxABV 1}}%</p>
-    </div>
-    <div class="container-fluid" style="padding-top:2em;">
-      <div style="font-size: 24px;">
-        <i class="fa fa-glass" aria-hidden="true"></i> Bottling
-      </div>
-      <p>Recommended CO2 For {{model.recipe.beer.beerType.name}}: {{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</p>
-      <p>CO2 Dissolved In Beer: {{format-number model.recipe.dissolvedCO2 2}} g/l</p>
-      <p>Required Table Sugar: {{format-number model.recipe.requiredTableSugar 1}} g</p>
-    </div>
-    <hr />
-    {{#if hasUnsavedChanges}}
-    <button {{action "saveModel"}}>Save</button>
-    {{else}}
-    <button disabled>Nothing to save</button>
-    {{/if}}
-    <hr />
-    <h3>Sessions</h3>
-    <ul>
-      {{#each model.recipe.sessions as |session|}}
-      <li>{{#link-to "brewing-session" session.id}}{{format-date session.date}}, {{session.preBoilVolume}} l{{/link-to}}</li>
-      {{/each}}
-    </ul>
-  	<h3>Create New Session</h3>
-  	<form {{action 'createSession' on='submit'}}>
-  		Select desired pre boil volume (Recipe: {{model.recipe.preBoilVolume}}): <br />
-		This will be used to scale the recipe. <br />
-		{{input type="number" value=preBoilVolume placeholder=model.recipe.preBoilVolume}} <button type="submit">Create</button>
-	</form>
-</div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Malt</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each model.recipe.mashEntries as |entry|}}
+						<tr>
+							<td>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg,</td>
+							<td>Extract: {{format-number entry.ingredient.extractYield 3}}</td>
+							<td>({{clickable-text value=entry.amount}}%)</td>
+						</tr>
+						{{/each}}
+						<tr>
+							<td>Unassigned</td>
+							<td></td>
+							<td>{{model.recipe.unassignedMalt}}%</td>
+						</tr>
+						<tr>
+							<td colspan="2">{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} </td>
+							<td><button {{action "addMashIngredient"}} class="btn btn-link" style="padding:0px;"><i class="fa fa-plus" aria-hidden="true"></i></button> </td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Assumed Conversion Efficiency</td>
+							<td colspan="2">{{model.recipe.conversionEfficiency}}%</td>
+						</tr>
+						<tr>
+							<td>First Wort SG</td>
+							<td>{{format-number model.recipe.firstWortSG 3}}</td>
+							<td>{{collapse-button toggleParam=showFirstWortExtract}}</td>
+						</tr>
+						{{#if showFirstWortExtract}}
+						<tr bgcolor="#EEEEEE">
+							<td>Average Extract Yield</td>
+							<td colspan="2">{{format-number model.recipe.averageExtractYield 3}}</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>Total Extract Weight</td>
+							<td colspan="2">{{format-number model.recipe.totalExtractWeight 2}} kg</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>First Wort Extract Weight</td>
+							<td colspan="2">{{format-number model.recipe.firstWortExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+		  </div>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-shower" aria-hidden="true"></i> Lautering
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Sparge Water Volume</td>
+							<td>{{format-number model.recipe.spargeWaterVolume 1}} l</td>
+						</tr>
+						<tr>
+							<td>Sparge Water Temp</td>
+							<td>{{clickable-text value=model.recipe.spargeWaterTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Sparge Time</td>
+							<td>{{clickable-text value=model.recipe.spargeTime}} min</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Results</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>First Sparge SG</td>
+							<td>{{format-number model.recipe.firstSpargeSG 3}}</td>
+							<td>{{collapse-button toggleParam=showFirstSpageExtract}}</td>
+						</tr>
+						{{#if showFirstSpageExtract}}
+						<tr bgcolor="#EEEEEE">
+							<td>First Sparge Extract Weight</td>
+							<td colspan="2">{{format-number model.recipe.firstSpargeExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>Pre Boil SG</td>
+							<td>{{format-number model.recipe.preBoilSG 3}}</td>
+							<td>{{collapse-button toggleParam=showPreBoilExtract}}</td>
+						</tr>
+						{{#if showPreBoilExtract}}
+						<tr bgcolor="#EEEEEE">
+							<td>Pre Boil Extract Weight</td>
+							<td colspan="2">{{format-number model.recipe.kettleExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>Brewhouse Efficiency</td>
+							<td colspan="2">{{format-number model.recipe.brewhouseEfficiency 1}}%</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-thermometer-half" aria-hidden="true"></i> Boiling
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Pre Boil Volume</td>
+							<td>{{format-number model.recipe.preBoilVolume 1}} l</td>
+						</tr>
+						<tr>
+							<td>Post Boil Volume</td>
+							<td>{{clickable-text value=model.recipe.postBoilVolume}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Post Boil Volume (Cold)</td>
+							<td>{{format-number model.recipe.postBoilVolumeCold 1}} l</td>
+						</tr>
+						<tr>
+							<td>Boil Time</td>
+							<td>{{clickable-text value=model.recipe.boilTime}} min</td>
+						</tr>
+						<tr>
+							<td>Required Boil Off</td>
+							<td>{{format-number model.recipe.boilOff 1}} l/h</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="4">Ingredients</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each model.recipe.sortedBoilEntries as |entry|}}
+						<tr>
+							{{#if entry.isHops}}
+							<td>{{entry.ingredient.name}}: {{entry.amount}} g</td>
+							<td>Alpha: {{entry.ingredient.alpha}}%</td>
+							<td>Add Time: {{entry.addTime}} min</td>
+							<td>IBU: {{format-number entry.IBU 1}}</td>
+							{{else}}
+							<td>{{entry.ingredient.name}}: {{entry.amount}} g</td>
+							<td>Extract: {{entry.ingredient.extract}}%</td>
+							<td>Add Time: {{entry.addTime}} min</td>
+							<td></td>
+							{{/if}}
+						</tr>
+						{{/each}}
+						<tr>
+							<td colspan="3">{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} </td>
+							<td><button {{action "dummy"}} class="btn btn-link" style="padding:0px;"><i class="fa fa-plus" aria-hidden="true"></i></button> </td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>OG</td>
+							<td>{{format-number model.recipe.OG 3}} ({{format-number model.recipe.OGPlato 1}}&deg;P)</td>
+							<td>{{collapse-button toggleParam=showOGDetails}}</td>
+						</tr>
+						{{#if showOGDetails}}
+						<tr bgcolor="#EEEEEE">
+							<td>Extract From Ingredients</td>
+							<td colspan="2">{{format-number model.recipe.totalBoilExtract 2}} kg</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>Post Boil Extract</td>
+							<td colspan="2">{{format-number model.recipe.postBoilExtract 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>IBU</td>
+							<td colspan="2">{{format-number model.recipe.IBU 1}} l/h</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-gear" aria-hidden="true"></i> Fermentation
+			</div>
+			<p>Fermentation Volume: {{input type="number" value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</p>
+			<p>
+			Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
+			{{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
+			{{/power-select}}
+			</p>
+			<p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
+			<p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
+			<p>
+			Pitch Type: {{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
+			{{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
+			{{/power-select}}
+			</p>
+			<p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
+			<p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
+			<p>FG: {{format-number model.recipe.FG 3}}</p>
+			<p>Real FG: {{format-number model.recipe.realFG 3}} ({{format-number model.recipe.realFGPlato 1}}&deg;P) (Accounting for decreased density because of alcohol)</p>
+			<p>Post Fermentation Extract Weight: {{format-number model.recipe.postFermentationExtractWeight 2}} kg</p>
+			<p>ABV: {{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</p>
+			<p>Approximate ABV: {{format-number model.recipe.approxABV 1}}%</p>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-glass" aria-hidden="true"></i> Bottling
+			</div>
+			<p>Recommended CO2 For {{model.recipe.beer.beerType.name}}: {{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</p>
+			<p>CO2 Dissolved In Beer: {{format-number model.recipe.dissolvedCO2 2}} g/l</p>
+			<p>Required Table Sugar: {{format-number model.recipe.requiredTableSugar 1}} g</p>
+		</div>
+		<hr />
+		{{#if hasUnsavedChanges}}
+		<button {{action "saveModel"}}>Save</button>
+		{{else}}
+		<button disabled>Nothing to save</button>
+		{{/if}}
+		<hr />
+		<h3>Sessions</h3>
+		<ul>
+			{{#each model.recipe.sessions as |session|}}
+			<li>{{#link-to "brewing-session" session.id}}{{format-date session.date}}, {{session.preBoilVolume}} l{{/link-to}}</li>
+			{{/each}}
+		</ul>
+		<h3>Create New Session</h3>
+		<form {{action 'createSession' on='submit'}}>
+			Select desired pre boil volume (Recipe: {{model.recipe.preBoilVolume}}): <br />
+			This will be used to scale the recipe. <br />
+			{{input type="number" value=preBoilVolume placeholder=model.recipe.preBoilVolume}} <button type="submit">Create</button>
+		</form>
+	</div>
 </div>
