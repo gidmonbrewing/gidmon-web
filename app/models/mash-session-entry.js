@@ -8,7 +8,7 @@ export default DS.Model.extend({
 	amount: Ember.computed('weight', 'session.totalMaltWeight', function () {
 		return this.get('weight') / this.get('session.totalMaltWeight') * 100;
 	}),
-	weightedExtract: Ember.computed('amount', 'ingredient.extractYield', function () {
-		return this.get('ingredient.extractYield') * (this.get('amount') / 100);
+	weightedExtract: Ember.computed('amount', 'recipeEntry.ingredient.extractYield', function () {
+		return this.get('recipeEntry.ingredient.extractYield') * (this.get('amount') / 100);
 	}),
 });

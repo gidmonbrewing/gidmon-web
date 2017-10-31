@@ -29,6 +29,13 @@ export default DS.Model.extend({
 	waterToMaltRatio: Ember.computed('strikeWaterVolume', 'totalMaltWeight', function () {
 		return this.get('strikeWaterVolume') / this.get('totalMaltWeight');
 	}),
+	recommendedStrikeWaterTemp: Ember.computed('waterToMaltRatio', 'recipe.mashingTemp', function () {
+		var mashingTemp = Number(this.get('recipe.mashingTemp')); // This will default to 0 if not set
+		// Formula based on http://braukaiser.com/wiki/index.php?title=Infusion_Mashing
+		// 2.09 is ratio between qt/lb and l/kg
+		var maltTemp = 20; // this should be part of session
+		return (0.2 / (this.get('waterToMaltRatio') / 2.09)) * (mashingTemp - maltTemp) + mashingTemp;
+	}),
 	recipeScaling: Ember.computed('preBoilVolume', 'recipe.preBoilVolume', function () {
 		return this.get('preBoilVolume') / this.get('recipe.preBoilVolume');
 	}),
@@ -60,8 +67,10 @@ export default DS.Model.extend({
 	totalMaltWeightOld: Ember.computed('recipe.totalMaltWeight', 'recipeScaling', function () {
 		return this.get('recipe.totalMaltWeight') * this.get('recipeScaling');
 	}),
-	totalExtractWeight: Ember.computed('recipe.totalExtractWeight', 'brewingSystem.conversionEfficiency', 'recipeScaling', function () {
-		return this.get('recipe.totalExtractWeight') * this.get('recipeScaling') * this.get('brewingSystem.conversionEfficiency') / 100;
+	extractYields: Ember.computed.mapBy('mashEntries', 'weightedExtract'),
+	averageExtractYield: Ember.computed.sum('extractYields'),
+	totalExtractWeight: Ember.computed('averageExtractYield', 'totalMaltWeight', 'brewingSystem.conversionEfficiency', function () {
+		return this.get('totalMaltWeight') * this.get('averageExtractYield') * this.get('brewingSystem.conversionEfficiency') / 100;
 	}),
 	absorbedByMalt: Ember.computed('recipe.absorbedByMalt', 'recipeScaling', function () {
 		return this.get('recipe.absorbedByMalt') * this.get('recipeScaling');
@@ -96,8 +105,8 @@ export default DS.Model.extend({
 		// This is the total amount of extract that we get into the boiling kettle and it will detemine both SG and OG
 		return this.get('firstWortExtractWeight') + this.get('firstSpargeExtractWeight');
 	}),
-	brewhouseEfficiency: Ember.computed('kettleExtractWeight', 'recipe.totalExtractWeight', function () {
-		return 100 * this.get('kettleExtractWeight') / this.get('recipe.totalExtractWeight');
+	brewhouseEfficiency: Ember.computed('kettleExtractWeight', 'totalExtractWeight', function () {
+		return 100 * this.get('kettleExtractWeight') / this.get('totalExtractWeight');
 	}),
 	preBoilSG: Ember.computed('kettleExtractWeight', 'preBoilVolumeCold', function () {
 		// ew = 2.59(sg - 1) * V
@@ -202,4 +211,8 @@ export default DS.Model.extend({
 	comments: DS.hasMany('brewing-session-comment'),
 	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),
 	rootComments: Ember.computed.filterBy('comments', 'isRoot', true),
+	brewingSystemChanged: Ember.observer('brewingSystem', function () {
+		console.log(`brewingSystem changed to: ${this.get('brewingSystem')}`);
+		this.send('becomeDirty');
+	})
 });

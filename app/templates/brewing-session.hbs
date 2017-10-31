@@ -13,12 +13,12 @@
 		<p>Mashing Time: {{model.session.recipe.mashingTime}} min</p>
 		<p>Mash Out Temp: {{model.session.recipe.mashOutTemp}} &deg;C</p>
 		<p>Mash Out Time: {{model.session.recipe.mashOutTime}} min</p>
-		<p>Strike Water Temp: {{format-number model.session.recipe.strikeWaterTemp 1}} &deg;C</p>
+		<p>Strike Water Temp: {{clickable-text value=model.session.strikeWaterTemp}} &deg;C (Recommended: {{format-number model.session.recommendedStrikeWaterTemp 1}} &deg;C)</p>
 		<p>Total Malt Weight: {{format-number model.session.totalMaltWeight 2}} kg (Water/Malt Ratio: {{format-number model.session.waterToMaltRatio 2}})</p>
 		<p>Malt:</p>
 		<ul>
 			{{#each model.session.mashEntries as |entry|}}
-			<li>{{entry.recipeEntry.ingredient.name}}: {{entry.weight}} kg, Extract: {{format-number entry.recipeEntry.ingredient.extractYield 3}} ({{format-number entry.amount 0}}%)</li>
+			<li>{{entry.recipeEntry.ingredient.name}}: {{entry.weight}} kg, Extract: {{format-number entry.recipeEntry.ingredient.extractYield 3}} ({{format-number entry.amount 1}}%)</li>
 			{{/each}}
 		</ul>
 		<p>Debug Malt:</p>
@@ -27,7 +27,7 @@
 			<li>{{item.entry.ingredient.name}}: {{format-number item.weight 2}} kg, Extract: {{format-number item.entry.ingredient.extractYield 3}} ({{item.entry.amount}}%)</li>
 			{{/each}}
 		</ul>
-		<p>Average Extract Yield: {{format-number model.session.recipe.averageExtractYield 3}}</p>
+		<p>Average Extract Yield: {{format-number model.session.averageExtractYield 3}}</p>
 		<p>Total Extract Weight: {{format-number model.session.totalExtractWeight 2}} kg</p>
 		<p>Water Absorbed By Malt: {{format-number model.session.absorbedByMalt 2}} l</p>
 		<p>Conversion Efficiency: {{model.session.brewingSystem.conversionEfficiency}}% (Recipe: {{model.session.recipe.conversionEfficiency}}%)</p>

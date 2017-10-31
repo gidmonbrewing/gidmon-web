@@ -18,13 +18,29 @@ export default Ember.Controller.extend({
 			});
 		},
 		createSession() {
+			const { preBoilVolume } = this.getProperties('preBoilVolume');
 			var recipe = this.model.recipe;
+			var scale = preBoilVolume / recipe.get('preBoilVolume');
+			var scaledPostBoilVolume = round(recipe.get('postBoilVolume') * scale, 2);
+			var scaledFermentationVolume = round(recipe.get('fermentationVolume') * scale, 2);
+			var scaledStrikeWaterVolume = round(recipe.get('strikeWaterVolume') * scale, 2);
+			var strikeWaterTemp = recipe.get('strikeWaterTemp');
+			var scaledSpargeWaterVolume = round(recipe.get('spargeWaterVolume') * scale, 2);
+			var spargeWaterTemp = recipe.get('spargeWaterTemp');
 			var store = this.store;
 			var brewingSession = store.createRecord('brewing-session', {
 				recipe: recipe,
-				preBoilVolume: recipe.get('preBoilVolume'),
-				postBoilVolume: recipe.get('postBoilVolume'),
-				fermentationVolume: recipe.get('fermentationVolume'),
+				preBoilVolume: preBoilVolume,
+				measuredPreBoilVolume: preBoilVolume,
+				postBoilVolume: scaledPostBoilVolume,
+				measuredPostBoilVolume: scaledPostBoilVolume,
+				fermentationVolume: scaledFermentationVolume,
+				strikeWaterVolume: scaledStrikeWaterVolume,
+				strikeWaterTemp: strikeWaterTemp,
+				spargeWaterVolume: scaledSpargeWaterVolume,
+				spargeWaterTemp: spargeWaterTemp,
+				measuredFermentationVolume: scaledFermentationVolume,
+				boilTime: recipe.get('boilTime'),
 				measuredFirstWortSG: round(recipe.get('firstWortSG'), 3),
 				measuredFirstSpargeSG: round(recipe.get('firstSpargeSG'), 3),
 				measuredPreBoilSG: round(recipe.get('preBoilSG'), 3),
@@ -37,7 +53,16 @@ export default Ember.Controller.extend({
 					var newEntry = store.createRecord('boil-session-entry', {
 						session: brewingSession,
 						recipeEntry: entry,
+						amount: round(entry.get('amount') * scale, 0),
 						alpha: entry.get('ingredient.alpha'),
+					});
+					newEntry.save();
+				});
+				recipe.get('mashEntries').forEach(function (entry) {
+					var newEntry = store.createRecord('mash-session-entry', {
+						session: brewingSession,
+						recipeEntry: entry,
+						weight: round(entry.get('weight') * scale, 2),
 					});
 					newEntry.save();
 				});
