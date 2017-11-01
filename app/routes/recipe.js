@@ -8,6 +8,7 @@ export default Ember.Route.extend({
 			recipe: store.findRecord('recipe', params.recipe_id, { include: 'yeast' }),
 			yeasts: store.findAll('yeast'),
 			mashIngredients: store.findAll('mash-ingredient'),
+			boilIngredients: store.findAll('boil-ingredient'),
 			pitchTypes: store.findAll('pitch-type'),
 		});
 	}

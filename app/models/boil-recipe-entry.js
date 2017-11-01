@@ -9,12 +9,18 @@ export default DS.Model.extend({
 	isHops: Ember.computed('ingredient.ingredientType', function () {
 		return this.get('ingredient.ingredientType') !== "other";
 	}),
-	addTime: Ember.computed('boilTime', 'recipe.boilTime', function () {
-		var addTime = this.get('recipe.boilTime') - this.get('boilTime');
-		if (addTime < 0) {
-			return 0;
-		} else {
-			return addTime;
+	addTime: Ember.computed('boilTime', 'recipe.boilTime', {
+		get(key) {
+			var addTime = this.get('recipe.boilTime') - this.get('boilTime');
+			if (addTime < 0) {
+				return 0;
+			} else {
+				return addTime;
+			}
+		},
+		set(key, value) {
+			this.set('boilTime', this.get('recipe.boilTime') - value);
+			return value;
 		}
 	}),
 	IBU: Ember.computed('recipe.preBoilSG', 'recipe.boilTime', 'recipe.postBoilVolumeCold', 'ingredient.alpha', 'addTime', 'amount', function () {

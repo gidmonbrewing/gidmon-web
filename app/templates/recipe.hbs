@@ -226,9 +226,9 @@
 						{{#each model.recipe.sortedBoilEntries as |entry|}}
 						<tr>
 							{{#if entry.isHops}}
-							<td>{{entry.ingredient.name}}: {{entry.amount}} g</td>
+							<td>{{entry.ingredient.name}}: {{clickable-text value=entry.amount}} g</td>
 							<td>Alpha: {{entry.ingredient.alpha}}%</td>
-							<td>Add Time: {{entry.addTime}} min</td>
+							<td>Add Time: {{clickable-text value=entry.addTime}} min</td>
 							<td>IBU: {{format-number entry.IBU 1}}</td>
 							{{else}}
 							<td>{{entry.ingredient.name}}: {{entry.amount}} g</td>
@@ -239,8 +239,8 @@
 						</tr>
 						{{/each}}
 						<tr>
-							<td colspan="3">{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} </td>
-							<td><button {{action "dummy"}} class="btn btn-link" style="padding:0px;"><i class="fa fa-plus" aria-hidden="true"></i></button> </td>
+							<td colspan="3">{{#power-select options=model.boilIngredients selected=newBoilIngredient onchange=(action (mut newBoilIngredient)) as |item|}}{{item.name}}{{/power-select}} </td>
+							<td><button {{action "addBoilIngredient"}} class="btn btn-link" style="padding:0px;"><i class="fa fa-plus" aria-hidden="true"></i></button> </td>
 						</tr>
 					</tbody>
 				</table>

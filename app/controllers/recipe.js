@@ -21,6 +21,14 @@ export default Ember.Controller.extend({
 					}
 				});
 			});
+			// save all dirty boil entries
+			this.model.recipe.get('boilEntries').then(function (entries) {
+				entries.forEach(function (element) {
+					if (element.get('hasDirtyAttributes')) {
+						element.save();
+					}
+				});
+			});
 		},
 		createSession() {
 			const { preBoilVolume } = this.getProperties('preBoilVolume');
@@ -82,6 +90,16 @@ export default Ember.Controller.extend({
 			});
 			mashRecipeEntry.save();
 		},
+		addBoilIngredient() {
+			var ingredient = this.get('newBoilIngredient');
+			var boilRecipeEntry = this.store.createRecord('boil-recipe-entry', {
+				recipe: this.model.recipe,
+				ingredient: ingredient,
+				amount: 0,
+				boilTime: 0,
+			});
+			boilRecipeEntry.save();
+		},
 		toggleShowFirstWortExtract() {
 			if (this.get('showFirstWortExtract')) {
 				this.set('showFirstWortExtract', false);
@@ -90,12 +108,17 @@ export default Ember.Controller.extend({
 			}
 		},
 	},
-	hasUnsavedChanges: Ember.computed('model.recipe.hasDirtyAttributes', 'model.recipe.mashEntries.@each.hasDirtyAttributes', function () {
+	hasUnsavedChanges: Ember.computed('model.recipe.hasDirtyAttributes', 'model.recipe.mashEntries.@each.hasDirtyAttributes', 'model.recipe.boilEntries.@each.hasDirtyAttributes', function () {
 		var result = false;
 		if (this.model.recipe.get('hasDirtyAttributes')) {
 			result = true;
 		}
 		this.model.recipe.get('mashEntries').forEach(function (element) {
+			if (element.get('hasDirtyAttributes')) {
+				result = true;
+			}
+		});
+		this.model.recipe.get('boilEntries').forEach(function (element) {
 			if (element.get('hasDirtyAttributes')) {
 				result = true;
 			}
