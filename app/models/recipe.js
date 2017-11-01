@@ -22,8 +22,14 @@ export default Model.extend({
 	primaryFermentationTemp: attr('number'),
 	primaryFermentationTime: attr('number'),
 	yeast: belongsTo('yeast'),
+	yeastChanges: Ember.observer('yeast', function () {
+		this.send('becomeDirty');
+	}),
 	yeastAmount: attr('number'),
 	pitchType: belongsTo('pitch-type'),
+	pitchTypeChanges: Ember.observer('pitchType', function () {
+		this.send('becomeDirty');
+	}),
 	boilEntries: hasMany('boil-recipe-entry'),
 	mashEntries: hasMany('mash-recipe-entry'),
 	mashEntriesAmounts: Ember.computed.mapBy('mashEntries', 'amount'),
@@ -152,6 +158,9 @@ export default Model.extend({
 	}),
 	FG: Ember.computed('OG', 'yeast.attenuation', function () {
 		return ((this.get('OG') - 1.0) * (1.0 - (this.get('yeast.attenuation') / 100.0))) + 1.0;
+	}),
+	FGPlato: Ember.computed('FG', function () {
+		return 259 - (259 / this.get('FG'));
 	}),
 	realFG: Ember.computed('FG', function () {
 		return 1 + (0.1808 * (this.get('OG') - 1) + 0.8192 * (this.get('FG') - 1));

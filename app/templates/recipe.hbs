@@ -279,34 +279,126 @@
 			<div style="font-size: 24px;">
 				<i class="fa fa-gear" aria-hidden="true"></i> Fermentation
 			</div>
-			<p>Fermentation Volume: {{input type="number" value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</p>
-			<p>
-			Yeast: {{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
-			{{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
-			{{/power-select}}
-			</p>
-			<p>Temperature: {{input type="number" value=model.recipe.primaryFermentationTemp}} &deg;C</p>
-			<p>Time: {{input type="number" value=model.recipe.primaryFermentationTime}} days</p>
-			<p>
-			Pitch Type: {{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
-			{{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
-			{{/power-select}}
-			</p>
-			<p>Yeast Cells Needed: {{format-number model.recipe.yeastCellsNeeded 2}} billion</p>
-			<p>Yeast Needed: {{format-number model.recipe.yeastNeeded 2}} g</p>
-			<p>FG: {{format-number model.recipe.FG 3}}</p>
-			<p>Real FG: {{format-number model.recipe.realFG 3}} ({{format-number model.recipe.realFGPlato 1}}&deg;P) (Accounting for decreased density because of alcohol)</p>
-			<p>Post Fermentation Extract Weight: {{format-number model.recipe.postFermentationExtractWeight 2}} kg</p>
-			<p>ABV: {{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</p>
-			<p>Approximate ABV: {{format-number model.recipe.approxABV 1}}%</p>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Fermentation Volume</td>
+							<td>{{clickable-text value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</td>
+						</tr>
+						<tr>
+							<td>Temperature</td>
+							<td>{{clickable-text value=model.recipe.primaryFermentationTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Time</td>
+							<td>{{clickable-text value=model.recipe.primaryFermentationTime}} days</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Ingredients</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Yeast</td>
+							<td>
+								{{#power-select options=model.yeasts selected=model.recipe.yeast onchange=(action (mut model.recipe.yeast)) as |yeast|}}
+								{{yeast.name}} (Attenuation: {{yeast.attenuation}}%, {{yeast.cellConcentration}} billion cells/g)
+								{{/power-select}}
+							</td>
+						</tr>
+						<tr>
+							<td>Pitch Type</td>
+							<td>
+								{{#power-select options=model.pitchTypes selected=model.recipe.pitchType onchange=(action (mut model.recipe.pitchType)) as |pitchType|}}
+								{{pitchType.name}} (Rate: {{pitchType.pitchRate}} billion cells/l wort/&deg;P)
+								{{/power-select}}
+							</td>
+						</tr>
+						<tr>
+							<td>Yeast Cells Needed</td>
+							<td>{{format-number model.recipe.yeastCellsNeeded 2}} billion</td>
+						</tr>
+						<tr>
+							<td>Yeast Needed</td>
+							<td>{{format-number model.recipe.yeastNeeded 2}} g</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Results</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>FG</td>
+							<td>{{format-number model.recipe.FG 3}} ({{format-number model.recipe.FGPlato 1}}&deg;P)</td>
+							<td>{{collapse-button toggleParam=showFGDetails}}</td>
+						</tr>
+						{{#if showFGDetails}}
+						<tr bgcolor="#EEEEEE">
+							<td>FG Adjusted For Alcohol Density Change</td>
+							<td colspan="2">{{format-number model.recipe.realFG 3}} ({{format-number model.recipe.realFGPlato 1}}&deg;P)</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>Post Fermentation Extract Weight</td>
+							<td colspan="2">{{format-number model.recipe.postFermentationExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>ABV</td>
+							<td colspan="2">{{format-number model.recipe.ABV 1}}% (ABW: {{format-number model.recipe.ABW 1}}%)</td>
+						</tr>
+						{{#if probablyNotNeeded}}
+						<tr bgcolor="#EEEEEE">
+							<td>Approximate ABV</td>
+							<td colspan="2">{{format-number model.recipe.approxABV 1}}%</td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="container-fluid" style="padding-top:2em;">
 			<div style="font-size: 24px;">
 				<i class="fa fa-glass" aria-hidden="true"></i> Bottling
 			</div>
-			<p>Recommended CO2 For {{model.recipe.beer.beerType.name}}: {{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</p>
-			<p>CO2 Dissolved In Beer: {{format-number model.recipe.dissolvedCO2 2}} g/l</p>
-			<p>Required Table Sugar: {{format-number model.recipe.requiredTableSugar 1}} g</p>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Ingredients</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Required Table Sugar</td>
+							<td>{{format-number model.recipe.requiredTableSugar 1}} g</td>
+						</tr>
+						<tr>
+							<td>Recommended CO2 For {{model.recipe.beer.beerType.name}}</td>
+							<td>{{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</td>
+						</tr>
+						<tr>
+							<td>CO2 Dissolved In Beer</td>
+							<td>{{format-number model.recipe.dissolvedCO2 2}} g/l</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<hr />
 		{{#if hasUnsavedChanges}}

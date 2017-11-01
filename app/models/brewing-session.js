@@ -5,6 +5,9 @@ export default DS.Model.extend({
 	date: DS.attr('date', { defaultValue() { return new Date(); } }),
 	recipe: DS.belongsTo('recipe'),
 	brewingSystem: DS.belongsTo('brewing-system'),
+	brewingSystemChanged: Ember.observer('brewingSystem', function () {
+		this.send('becomeDirty');
+	}),
 	strikeWaterVolume: DS.attr('number'),
 	strikeWaterTemp: DS.attr('number'),
 	spargeWaterVolume: DS.attr('number'),
@@ -211,8 +214,4 @@ export default DS.Model.extend({
 	comments: DS.hasMany('brewing-session-comment'),
 	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),
 	rootComments: Ember.computed.filterBy('comments', 'isRoot', true),
-	brewingSystemChanged: Ember.observer('brewingSystem', function () {
-		console.log(`brewingSystem changed to: ${this.get('brewingSystem')}`);
-		this.send('becomeDirty');
-	})
 });

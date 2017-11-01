@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
 	showFirstSpageExtract: false,
 	showPreBoilExtract: false,
 	showOGDetails: false,
+	showFGDetails: false,
 	actions: {
 		saveModel() {
 			this.model.recipe.save();
