@@ -231,9 +231,9 @@
 							<td>Add Time: {{clickable-text value=entry.addTime}} min</td>
 							<td>IBU: {{format-number entry.IBU 1}}</td>
 							{{else}}
-							<td>{{entry.ingredient.name}}: {{entry.amount}} g</td>
+							<td>{{entry.ingredient.name}}: {{clickable-text value=entry.amount}} g</td>
 							<td>Extract: {{entry.ingredient.extract}}%</td>
-							<td>Add Time: {{entry.addTime}} min</td>
+							<td>Add Time: {{clickable-text value=entry.addTime}} min</td>
 							<td></td>
 							{{/if}}
 						</tr>

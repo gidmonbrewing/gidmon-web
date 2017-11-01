@@ -10,7 +10,7 @@ export default DS.Model.extend({
 		return this.get('ingredient.ingredientType') !== "other";
 	}),
 	addTime: Ember.computed('boilTime', 'recipe.boilTime', {
-		get(key) {
+		get() {
 			var addTime = this.get('recipe.boilTime') - this.get('boilTime');
 			if (addTime < 0) {
 				return 0;
