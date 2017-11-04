@@ -8,6 +8,7 @@ export default DS.Model.extend({
 	brewingSystemChanged: Ember.observer('brewingSystem', function () {
 		this.send('becomeDirty');
 	}),
+	brewers: DS.hasMany('session-brewer'),
 	strikeWaterVolume: DS.attr('number'),
 	strikeWaterTemp: DS.attr('number'),
 	spargeWaterVolume: DS.attr('number'),
@@ -67,7 +68,7 @@ export default DS.Model.extend({
 		});
 		return list;
 	}),
-	totalMaltWeightOld: Ember.computed('recipe.totalMaltWeight', 'recipeScaling', function () {
+	totalMaltWeightRecipeScaled: Ember.computed('recipe.totalMaltWeight', 'recipeScaling', function () {
 		return this.get('recipe.totalMaltWeight') * this.get('recipeScaling');
 	}),
 	extractYields: Ember.computed.mapBy('mashEntries', 'weightedExtract'),

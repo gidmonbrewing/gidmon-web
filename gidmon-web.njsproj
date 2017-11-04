@@ -34,6 +34,7 @@
     <Compile Include="app\adapters\application.js" />
     <Compile Include="app\app.js" />
     <Compile Include="app\components\clickable-text.js" />
+    <Compile Include="app\components\collapse-button.js" />
     <Compile Include="app\components\file-upload.js" />
     <Compile Include="app\controllers\application.js" />
     <Compile Include="app\controllers\beer.js" />
@@ -98,6 +99,7 @@
     <Compile Include="tests\helpers\resolver.js" />
     <Compile Include="tests\helpers\start-app.js" />
     <Compile Include="tests\integration\components\clickable-text-test.js" />
+    <Compile Include="tests\integration\components\collapse-button-test.js" />
     <Compile Include="tests\integration\components\file-upload-test.js" />
     <Compile Include="tests\integration\components\model-input-field-test.js" />
     <Compile Include="tests\test-helper.js" />
@@ -187,6 +189,7 @@
     <Content Include="app\templates\brewing-session\index.hbs" />
     <Content Include="app\templates\components\.gitkeep" />
     <Content Include="app\templates\components\clickable-text.hbs" />
+    <Content Include="app\templates\components\collapse-button.hbs" />
     <Content Include="app\templates\components\file-upload.hbs" />
     <Content Include="app\templates\index.hbs" />
     <Content Include="app\templates\login.hbs" />

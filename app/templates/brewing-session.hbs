@@ -1,150 +1,281 @@
 <div class="container-fluid">
 	<div class="col-md-6">
-		<h2>Brewing Session: {{#link-to "recipe" model.session.recipe.id}}{{model.session.recipe.beer.name}}{{/link-to}} {{format-date model.session.date}}{{if hasUnsavedChanges "*" ""}}</h2>
-		<p>
-			Brewing System: {{#power-select options=model.brewingSystems selected=model.session.brewingSystem onchange=(action (mut model.session.brewingSystem)) as |system|}}
-			{{system.name}}
-			{{/power-select}}
-		</p>
-		<p>Pre Boil Volume: {{model.session.preBoilVolume}} l (Recipe: {{model.session.recipe.preBoilVolume}} l, Scaling: {{format-number model.session.recipeScaling 2}})</p>
-		<h3>Mashing</h3>
-		<p>Strike Water Volume: {{format-number model.session.strikeWaterVolume 1}} l ({{format-number model.session.strikeWaterVolumeOld 1}})</p>
-		<p>Mashing Temp: {{model.session.recipe.mashingTemp}} &deg;C</p>
-		<p>Mashing Time: {{model.session.recipe.mashingTime}} min</p>
-		<p>Mash Out Temp: {{model.session.recipe.mashOutTemp}} &deg;C</p>
-		<p>Mash Out Time: {{model.session.recipe.mashOutTime}} min</p>
-		<p>Strike Water Temp: {{clickable-text value=model.session.strikeWaterTemp}} &deg;C (Recommended: {{format-number model.session.recommendedStrikeWaterTemp 1}} &deg;C)</p>
-		<p>Total Malt Weight: {{format-number model.session.totalMaltWeight 2}} kg (Water/Malt Ratio: {{format-number model.session.waterToMaltRatio 2}})</p>
-		<p>Malt:</p>
-		<ul>
-			{{#each model.session.mashEntries as |entry|}}
-			<li>{{entry.recipeEntry.ingredient.name}}: {{entry.weight}} kg, Extract: {{format-number entry.recipeEntry.ingredient.extractYield 3}} ({{format-number entry.amount 1}}%)</li>
-			{{/each}}
-		</ul>
-		<p>Debug Malt:</p>
-		<ul>
-			{{#each model.session.scaledMashIngredients as |item|}}
-			<li>{{item.entry.ingredient.name}}: {{format-number item.weight 2}} kg, Extract: {{format-number item.entry.ingredient.extractYield 3}} ({{item.entry.amount}}%)</li>
-			{{/each}}
-		</ul>
-		<p>Average Extract Yield: {{format-number model.session.averageExtractYield 3}}</p>
-		<p>Total Extract Weight: {{format-number model.session.totalExtractWeight 2}} kg</p>
-		<p>Water Absorbed By Malt: {{format-number model.session.absorbedByMalt 2}} l</p>
-		<p>Conversion Efficiency: {{model.session.brewingSystem.conversionEfficiency}}% (Recipe: {{model.session.recipe.conversionEfficiency}}%)</p>
-		<p>Estimated First Wort SG: {{format-number model.session.firstWortSG 3}} (Recipe: {{format-number model.session.recipe.firstWortSG 3}}) <a href="#" {{action "toggleShowFirstWortExtract"}}><span class="glyphicon {{if showFirstWortExtract "glyphicon-triangle-top" "glyphicon-triangle-bottom"}}"></span></a></p>
-		{{#if showFirstWortExtract}}
-		<p>Estimated First Wort Extract Weight: {{format-number model.session.firstWortExtractWeight 2}} kg (Recipe: {{format-number model.session.recipe.firstWortExtractWeight 2}} kg)</p>
-		{{/if}}
-		<p>Measured First Wort SG: {{input type="number" step="0.001" value=model.session.measuredFirstWortSG}}</p>
-		<h3>Lautering</h3>
-		<p>Sparge Water Volume: {{format-number model.session.spargeWaterVolume 2}} l ({{format-number model.session.spargeWaterVolumeOld 2}})</p>
-		<p>Sparge Water Temp: {{model.session.recipe.spargeWaterTemp}} &deg;C</p>
-		<p>Sparge Time: {{model.session.recipe.spargeTime}} min</p>
-		<p>Estimated First Sparge SG: {{format-number model.session.firstSpargeSG 3}} (Recipe: {{format-number model.session.recipe.firstSpargeSG 3}})</p>
-		{{#if showFirstSpargeExtract}}
-		<p>Estimated First Sparge Extract Weight: {{format-number model.session.firstSpargeExtractWeight 2}} kg</p>
-		{{/if}}
-		<p>Measured First Sparge SG: {{input type="number" step="0.001" value=model.session.measuredFirstSpargeSG}}</p>
-		<p>Brewhouse Efficiency: {{format-number model.session.brewhouseEfficiency 1}}% (Recipe: {{format-number model.session.recipe.brewhouseEfficiency 1}}%)</p>
-		<p>Estimated Pre Boil SG: {{format-number model.session.preBoilSG 3}} (Recipe: {{format-number model.session.recipe.preBoilSG 3}})</p>
-		{{#if showPreBoilExtract}}
-		<p>Estimated Pre Boil Extract Weight: {{format-number model.session.kettleExtractWeight 2}} kg</p>
-		{{/if}}
-		<p>Measured Pre Boil SG: {{input type="number" step="0.001" value=model.session.measuredPreBoilSG}}</p>
-		<p>Kettle Extract (Based On SG Measurement): {{format-number model.session.actualKettleExtract 2}} kg</p>
-		<h3>Boiling</h3>
-		<p>Measured Pre Boil Volume: {{input type="number" value=model.session.measuredPreBoilVolume}} l</p>
-		<p>Target Post Boil Volume: {{format-number model.session.postBoilVolume 1}} l</p>
-		<p>System Boil Off: {{format-number model.session.brewingSystem.boilOffRate 1}} l/h</p>
-		<p>Required Boil Time: {{format-number model.session.requiredBoilTime 0}} mins</p>
-		<p>Boil Time: {{clickable-text value=model.session.boilTime}} mins (Recipe: {{model.session.recipe.boilTime}} mins)</p>
-		<p>Boil Ingredients:</p>
-		<ul>
-			{{#each model.session.sortedBoilEntries as |entry|}}
-			{{#if entry.recipeEntry.isHops}}
-			<li>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.recipeEntry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
-			{{else}}
-			<li>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.recipeEntry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
-			{{/if}}
-			{{/each}}
-		</ul>
-		<p>Extract From Boil Ingredients: {{format-number model.session.totalBoilExtract 2}} kg</p>
-		<p>Measured Post Boil Volume: {{input type="number" value=model.session.measuredPostBoilVolume}} l</p>
-		<p>Post Boil Volume (Cold): {{format-number model.session.postBoilVolumeCold 1}} l</p>
-		<p>Estimated OG: {{format-number model.session.OG 3}} (Recipe: {{format-number model.session.recipe.OG 3}}) <a href="#" {{action "toggleShowOGDetails"}}><span class="glyphicon {{if showOGDetails "glyphicon-triangle-top" "glyphicon-triangle-bottom"}}"></span></a></p>
-		{{#if showOGDetails}}
-		<p>Post Boil Extract: {{format-number model.session.postBoilExtract 2}} kg</p>
-		{{/if}}
-		<p>Measured OG: {{input type="number" step="0.001" value=model.session.measuredOG}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</p>
-		<p>IBU: {{format-number model.session.recipe.IBU 1}}</p>
-		<h3>Fermentation</h3>
-		<p>Target Fermentation Volume: {{format-number model.session.fermentationVolume 1}} l</p>
-		<p>Measured Fermentation Volume: {{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</p>
-		<p>Yeast: {{model.session.recipe.yeast.name}}</p>
-		<p>Temperature: {{model.session.recipe.primaryFermentationTemp}} &deg;C</p>
-		<p>Time: {{model.session.recipe.primaryFermentationTime}} days</p>
-		<p>Pitch Type: {{model.session.recipe.pitchType.name}} ({{format-number model.session.recipe.pitchType.pitchRate 2}} billion cells/l wort/&deg;P)</p>
-		<p>Yeast Cells Needed: {{format-number model.session.yeastCellsNeeded 2}} billion</p>
-		<p>Yeast Needed: {{format-number model.session.yeastNeeded 2}} g</p>
-		<p>Yeast Used: {{input type="number" value=model.session.yeastUsed}}</p>
-		<p>Estimated FG: {{format-number model.session.FG 3}} (Recipe: {{format-number model.session.recipe.FG 3}})</p>
-		<p>Measured FG: {{input type="number" step="0.001" value=model.session.measuredFG}}</p>
-		{{#if showFGDetails}}
-		<p>Real FG (Accounting for decreased density because of alcohol): {{format-number model.session.realFG 3}} ({{format-number model.session.realFGPlato 1}}&deg;P)</p>
-		<p>Post Fermentation Extract Weight: {{format-number model.session.postFermentationExtractWeight 2}} kg (Max: {{format-number model.session.postFermentationExtractWeightScaled 2}} kg)</p>
-		{{/if}}
-		<p>ABV: {{format-number model.session.ABV 1}}% (Target: {{format-number model.session.recipe.ABV 1}}%)</p>
-		{{#if showABVDetails}}
-		<p>Approximate ABV: {{format-number model.session.approxABV 1}}%</p>
-		{{/if}}
-		<hr />
-		{{#if hasUnsavedChanges}}
-		<button {{action "saveModel"}}>Save</button>
-		{{else}}
-		<button disabled>Nothing to save</button>
-		{{/if}}
-		<hr />
-		<div class="comments">
-			<h3 id="comments">Comments ({{model.session.commentCount}})</h3>
-			<hr />
-			{{#each model.session.rootComments as |comment|}}
-			<div class="comment clearfix">
-				<div class="comment-avatar">
-					<img src={{comment.author.profile.picture}} alt="avatar">
-				</div>
-				<div class="comment-content clearfix">
-					<div class="comment-author">
-						<a href="#">{{comment.author.fullName}}</a>
-					</div>
-					<div class="comment-body">
-						<p>{{{comment.content}}}</p>
-					</div>
-					<div class="comment-meta font-alt">{{format-date comment.created}} - <a href="#">Reply</a></div>
-				</div>
-				<!-- Comment 2 start -->
-				{{#each comment.children as |childComment|}}
-				<div class="comment clearfix">
-					<div class="comment-avatar">
-						<img src={{childComment.author.profile.picture}} alt="avatar">
-					</div>
-					<div class="comment-content clearfix">
-						<div class="comment-author">
-							<a href="#">{{childComment.author.fullName}}</a>
-						</div>
-						<div class="comment-body">
-							<p>{{{childComment.content}}}</p>
-						</div>
-						<div class="comment-meta font-alt">{{format-date childComment.created}} - <a href="#">Reply</a></div>
-					</div>
-				</div>
-				{{/each}}
-				<!-- Comment 2 end -->
+		<div class="container-fluid" style="background-color:aliceblue">
+			<div style="font-size: 36px; font-weight:bold;">
+				<i class="fa fa-beer" aria-hidden="true"></i> {{model.session.recipe.beer.name}} {{if hasUnsavedChanges "*" ""}}
 			</div>
-			{{/each}}
-			{{#if authManager.isAuthenticated}}
-			<hr />
-			{{outlet}}
-			{{/if}}
+			<p>Brewing Date: {{format-date model.session.date}}</p>
+
+			<p>Style: {{model.session.recipe.beer.beerType.name}}</p>
+			<p>Pre Boil Volume: {{model.session.recipe.preBoilVolume}} l (Recipe: {{model.session.recipe.preBoilVolume}} l, Scaling: {{format-number model.session.recipeScaling 2}})</p>
 		</div>
-	</div>
-</div>
+
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="glyphicon glyphicon-home" aria-hidden="true"></i> Session Setup
+			</div>
+			<div>
+				<table class="table table-hover">
+					<tbody>
+						<tr>
+							<td>Brewing System</td>
+							<td colspan="2">
+								{{#power-select options=model.brewingSystems selected=model.session.brewingSystem onchange=(action (mut model.session.brewingSystem)) as |system|}}
+								{{system.name}}
+								{{/power-select}}
+							</td>
+						</tr>
+						<tr>
+							<td>Brewers</td>
+							<td>
+								{{#each model.session.brewers as |brewer|}}
+								{{brewer.brewer.fullName}},
+								{{/each}}
+							</td>
+							<td>
+								{{collapse-button toggleParam=showAddBrewer}}
+							</td>
+						</tr>
+						{{#if showAddBrewer}}
+						<tr>
+							<td colspan="2">{{#power-select options=model.users selected=newBrewer onchange=(action (mut newBrewer)) as |brewer|}}{{brewer.fullName}}{{/power-select}} </td>
+							<td><button {{action "addBrewer"}} class="btn btn-link" style="padding:0px;"><i class="fa fa-plus" aria-hidden="true"></i></button> </td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="glyphicon glyphicon-grain" aria-hidden="true"></i> Mashing
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Strike Water Volume</td>
+							<td>{{format-number model.session.strikeWaterVolume 1}} l ({{format-number model.session.strikeWaterVolumeOld 1}})</td>
+						</tr>
+						<tr>
+							<td>Strike Water Temp</td>
+							<td>{{clickable-text value=model.session.strikeWaterTemp}} &deg;C (Recommended: {{format-number model.session.recommendedStrikeWaterTemp 1}} &deg;C)</td>
+						</tr>
+						<tr>
+							<td>Mashing Temp</td>
+							<td>{{model.session.recipe.mashingTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Mashing Time</td>
+							<td>{{model.session.recipe.mashingTime}} min</td>
+						</tr>
+						<tr>
+							<td>Mash Out Temp</td>
+							<td>{{model.session.recipe.mashOutTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Mash Out Time</td>
+							<td>{{model.session.recipe.mashOutTime}} min</td>
+						</tr>
+						<tr>
+							<td>Total Malt Weight</td>
+							<td>{{format-number model.session.totalMaltWeight 2}} kg (Recipe: {{format-number model.session.totalMaltWeightRecipeScaled 2}} kg)</td>
+						</tr>
+						<tr>
+							<td>Water/Malt Ratio</td>
+							<td>{{format-number model.session.waterToMaltRatio 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Malt</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each model.session.mashEntries as |entry|}}
+						<tr>
+							<td>{{entry.recipeEntry.ingredient.name}}: {{entry.weight}} kg</td>
+							<td>Extract: {{format-number entry.recipeEntry.ingredient.extractYield 3}}</td>
+							<td>({{format-number entry.amount 1}}%)</td>
+						</tr>
+						{{/each}}
+						<tr>
+							<td colspan="3">Debug</td>
+						</tr>
+						{{#each model.session.scaledMashIngredients as |item|}}
+						<tr>
+							<td>{{item.entry.ingredient.name}}: {{format-number item.weight 2}} kg</td>
+							<td>Extract: {{format-number item.entry.ingredient.extractYield 3}}</td>
+							<td>({{item.entry.amount}}%)</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Conversion Efficiency</td>
+							<td colspan="2">{{model.session.brewingSystem.conversionEfficiency}}% (Recipe: {{model.session.recipe.conversionEfficiency}}%)</td>
+						</tr>
+						<tr>
+							<td>First Wort SG</td>
+							<td>{{format-number model.session.firstWortSG 3}} (Recipe: {{format-number model.session.recipe.firstWortSG 3}})</td>
+							<td>{{collapse-button toggleParam=showFirstWortExtract}}</td>
+						</tr>
+						{{#if showFirstWortExtract}}
+						<tr bgcolor="#EEEEEE">
+							<td>Average Extract Yield</td>
+							<td colspan="2">{{format-number model.session.averageExtractYield 3}}</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>Total Extract Weight</td>
+							<td colspan="2">{{format-number model.session.totalExtractWeight 2}} kg</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>First Wort Extract Weight</td>
+							<td colspan="2">{{format-number model.session.firstWortExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Measured Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>First Wort SG</td>
+							<td>{{clickable-text value=model.session.measuredFirstWortSG}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+				<h3>Lautering</h3>
+				<p>Sparge Water Volume: {{format-number model.session.spargeWaterVolume 2}} l ({{format-number model.session.spargeWaterVolumeOld 2}})</p>
+				<p>Sparge Water Temp: {{model.session.recipe.spargeWaterTemp}} &deg;C</p>
+				<p>Sparge Time: {{model.session.recipe.spargeTime}} min</p>
+				<p>Estimated First Sparge SG: {{format-number model.session.firstSpargeSG 3}} (Recipe: {{format-number model.session.recipe.firstSpargeSG 3}})</p>
+				{{#if showFirstSpargeExtract}}
+				<p>Estimated First Sparge Extract Weight: {{format-number model.session.firstSpargeExtractWeight 2}} kg</p>
+				{{/if}}
+				<p>Measured First Sparge SG: {{input type="number" step="0.001" value=model.session.measuredFirstSpargeSG}}</p>
+				<p>Brewhouse Efficiency: {{format-number model.session.brewhouseEfficiency 1}}% (Recipe: {{format-number model.session.recipe.brewhouseEfficiency 1}}%)</p>
+				<p>Estimated Pre Boil SG: {{format-number model.session.preBoilSG 3}} (Recipe: {{format-number model.session.recipe.preBoilSG 3}})</p>
+				{{#if showPreBoilExtract}}
+				<p>Estimated Pre Boil Extract Weight: {{format-number model.session.kettleExtractWeight 2}} kg</p>
+				{{/if}}
+				<p>Measured Pre Boil SG: {{input type="number" step="0.001" value=model.session.measuredPreBoilSG}}</p>
+				<p>Kettle Extract (Based On SG Measurement): {{format-number model.session.actualKettleExtract 2}} kg</p>
+				<h3>Boiling</h3>
+				<p>Measured Pre Boil Volume: {{input type="number" value=model.session.measuredPreBoilVolume}} l</p>
+				<p>Target Post Boil Volume: {{format-number model.session.postBoilVolume 1}} l</p>
+				<p>System Boil Off: {{format-number model.session.brewingSystem.boilOffRate 1}} l/h</p>
+				<p>Required Boil Time: {{format-number model.session.requiredBoilTime 0}} mins</p>
+				<p>Boil Time: {{clickable-text value=model.session.boilTime}} mins (Recipe: {{model.session.recipe.boilTime}} mins)</p>
+				<p>Boil Ingredients:</p>
+				<ul>
+					{{#each model.session.sortedBoilEntries as |entry|}}
+					{{#if entry.recipeEntry.isHops}}
+					<li>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.recipeEntry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
+					{{else}}
+					<li>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.recipeEntry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
+					{{/if}}
+					{{/each}}
+				</ul>
+				<p>Extract From Boil Ingredients: {{format-number model.session.totalBoilExtract 2}} kg</p>
+				<p>Measured Post Boil Volume: {{input type="number" value=model.session.measuredPostBoilVolume}} l</p>
+				<p>Post Boil Volume (Cold): {{format-number model.session.postBoilVolumeCold 1}} l</p>
+				<p>Estimated OG: {{format-number model.session.OG 3}} (Recipe: {{format-number model.session.recipe.OG 3}}) <a href="#" {{action "toggleShowOGDetails"}}><span class="glyphicon {{if showOGDetails "glyphicon-triangle-top" "glyphicon-triangle-bottom"}}"></span></a></p>
+				{{#if showOGDetails}}
+				<p>Post Boil Extract: {{format-number model.session.postBoilExtract 2}} kg</p>
+				{{/if}}
+				<p>Measured OG: {{input type="number" step="0.001" value=model.session.measuredOG}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</p>
+				<p>IBU: {{format-number model.session.recipe.IBU 1}}</p>
+				<h3>Fermentation</h3>
+				<p>Target Fermentation Volume: {{format-number model.session.fermentationVolume 1}} l</p>
+				<p>Measured Fermentation Volume: {{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</p>
+				<p>Yeast: {{model.session.recipe.yeast.name}}</p>
+				<p>Temperature: {{model.session.recipe.primaryFermentationTemp}} &deg;C</p>
+				<p>Time: {{model.session.recipe.primaryFermentationTime}} days</p>
+				<p>Pitch Type: {{model.session.recipe.pitchType.name}} ({{format-number model.session.recipe.pitchType.pitchRate 2}} billion cells/l wort/&deg;P)</p>
+				<p>Yeast Cells Needed: {{format-number model.session.yeastCellsNeeded 2}} billion</p>
+				<p>Yeast Needed: {{format-number model.session.yeastNeeded 2}} g</p>
+				<p>Yeast Used: {{input type="number" value=model.session.yeastUsed}}</p>
+				<p>Estimated FG: {{format-number model.session.FG 3}} (Recipe: {{format-number model.session.recipe.FG 3}})</p>
+				<p>Measured FG: {{input type="number" step="0.001" value=model.session.measuredFG}}</p>
+				{{#if showFGDetails}}
+				<p>Real FG (Accounting for decreased density because of alcohol): {{format-number model.session.realFG 3}} ({{format-number model.session.realFGPlato 1}}&deg;P)</p>
+				<p>Post Fermentation Extract Weight: {{format-number model.session.postFermentationExtractWeight 2}} kg (Max: {{format-number model.session.postFermentationExtractWeightScaled 2}} kg)</p>
+				{{/if}}
+				<p>ABV: {{format-number model.session.ABV 1}}% (Target: {{format-number model.session.recipe.ABV 1}}%)</p>
+				{{#if showABVDetails}}
+				<p>Approximate ABV: {{format-number model.session.approxABV 1}}%</p>
+				{{/if}}
+				<hr />
+				{{#if hasUnsavedChanges}}
+				<button {{action "saveModel"}}>Save</button>
+				{{else}}
+				<button disabled>Nothing to save</button>
+				{{/if}}
+				<hr />
+				<div class="comments">
+					<h3 id="comments">Comments ({{model.session.commentCount}})</h3>
+					<hr />
+					{{#each model.session.rootComments as |comment|}}
+					<div class="comment clearfix">
+						<div class="comment-avatar">
+							<img src={{comment.author.profile.picture}} alt="avatar">
+						</div>
+						<div class="comment-content clearfix">
+							<div class="comment-author">
+								<a href="#">{{comment.author.fullName}}</a>
+							</div>
+							<div class="comment-body">
+								<p>{{{comment.content}}}</p>
+							</div>
+							<div class="comment-meta font-alt">{{format-date comment.created}} - <a href="#">Reply</a></div>
+						</div>
+						<!-- Comment 2 start -->
+						{{#each comment.children as |childComment|}}
+						<div class="comment clearfix">
+							<div class="comment-avatar">
+								<img src={{childComment.author.profile.picture}} alt="avatar">
+							</div>
+							<div class="comment-content clearfix">
+								<div class="comment-author">
+									<a href="#">{{childComment.author.fullName}}</a>
+								</div>
+								<div class="comment-body">
+									<p>{{{childComment.content}}}</p>
+								</div>
+								<div class="comment-meta font-alt">{{format-date childComment.created}} - <a href="#">Reply</a></div>
+							</div>
+						</div>
+						{{/each}}
+						<!-- Comment 2 end -->
+					</div>
+					{{/each}}
+					{{#if authManager.isAuthenticated}}
+					<hr />
+					{{outlet}}
+					{{/if}}
+				</div>
+			</div>
+		</div>

@@ -7,6 +7,7 @@ export default Ember.Route.extend({
 		return RSVP.hash({
 			session: store.findRecord('brewing-session', params.session_id),
 			brewingSystems: store.findAll('brewing-system'),
+			users: store.findAll('user'),
 		});
 	}
 });

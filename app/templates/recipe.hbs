@@ -9,6 +9,7 @@
 			<p>Made by {{model.recipe.creator.fullName}}</p>
 			{{/if}}
 
+			<p>Style: {{model.recipe.beer.beerType.name}}</p>
 			<p>Pre Boil Volume: {{clickable-text value=model.recipe.preBoilVolume}} l</p>
 		</div>
 		<div class="container-fluid" style="padding-top:2em;">
@@ -67,7 +68,7 @@
 					<tbody>
 						{{#each model.recipe.mashEntries as |entry|}}
 						<tr>
-							<td>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg,</td>
+							<td>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg</td>
 							<td>Extract: {{format-number entry.ingredient.extractYield 3}}</td>
 							<td>({{clickable-text value=entry.amount}}%)</td>
 						</tr>
@@ -419,5 +420,8 @@
 			This will be used to scale the recipe. <br />
 			{{input type="number" value=preBoilVolume placeholder=model.recipe.preBoilVolume}} <button type="submit">Create</button>
 		</form>
+	</div>
+	<div class="col-md-6">
+
 	</div>
 </div>

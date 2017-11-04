@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default Ember.Controller.extend({
 	authManager: service('auth-manager'),
+	showAddBrewer: false,
 	showFirstWortExtract: false,
 	showOGDetails: false,
 	actions: {
@@ -38,7 +39,17 @@ export default Ember.Controller.extend({
 			} else {
 				this.set('showOGDetails', true);
 			}
-		}
+		},
+		addBrewer() {
+			var brewer = this.get('newBrewer');
+			var session = this.model.session;
+			var sessionBrewer = this.store.createRecord('session-brewer', {
+				session: session,
+				brewer: brewer,
+			});
+			sessionBrewer.save();
+			this.set('showAddBrewer', false);
+		},
 	},
 	hasUnsavedChanges: Ember.computed('model.session.hasDirtyAttributes', 'model.session.mashEntries.@each.hasDirtyAttributes', 'model.session.boilEntries.@each.hasDirtyAttributes', function () {
 		var result = false;
