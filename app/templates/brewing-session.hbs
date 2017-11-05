@@ -167,47 +167,202 @@
 				</table>
 			</div>
 		</div>
-				<h3>Lautering</h3>
-				<p>Sparge Water Volume: {{format-number model.session.spargeWaterVolume 2}} l ({{format-number model.session.spargeWaterVolumeOld 2}})</p>
-				<p>Sparge Water Temp: {{model.session.recipe.spargeWaterTemp}} &deg;C</p>
-				<p>Sparge Time: {{model.session.recipe.spargeTime}} min</p>
-				<p>Estimated First Sparge SG: {{format-number model.session.firstSpargeSG 3}} (Recipe: {{format-number model.session.recipe.firstSpargeSG 3}})</p>
-				{{#if showFirstSpargeExtract}}
-				<p>Estimated First Sparge Extract Weight: {{format-number model.session.firstSpargeExtractWeight 2}} kg</p>
-				{{/if}}
-				<p>Measured First Sparge SG: {{input type="number" step="0.001" value=model.session.measuredFirstSpargeSG}}</p>
-				<p>Brewhouse Efficiency: {{format-number model.session.brewhouseEfficiency 1}}% (Recipe: {{format-number model.session.recipe.brewhouseEfficiency 1}}%)</p>
-				<p>Estimated Pre Boil SG: {{format-number model.session.preBoilSG 3}} (Recipe: {{format-number model.session.recipe.preBoilSG 3}})</p>
-				{{#if showPreBoilExtract}}
-				<p>Estimated Pre Boil Extract Weight: {{format-number model.session.kettleExtractWeight 2}} kg</p>
-				{{/if}}
-				<p>Measured Pre Boil SG: {{input type="number" step="0.001" value=model.session.measuredPreBoilSG}}</p>
-				<p>Kettle Extract (Based On SG Measurement): {{format-number model.session.actualKettleExtract 2}} kg</p>
-				<h3>Boiling</h3>
-				<p>Measured Pre Boil Volume: {{input type="number" value=model.session.measuredPreBoilVolume}} l</p>
-				<p>Target Post Boil Volume: {{format-number model.session.postBoilVolume 1}} l</p>
-				<p>System Boil Off: {{format-number model.session.brewingSystem.boilOffRate 1}} l/h</p>
-				<p>Required Boil Time: {{format-number model.session.requiredBoilTime 0}} mins</p>
-				<p>Boil Time: {{clickable-text value=model.session.boilTime}} mins (Recipe: {{model.session.recipe.boilTime}} mins)</p>
-				<p>Boil Ingredients:</p>
-				<ul>
-					{{#each model.session.sortedBoilEntries as |entry|}}
-					{{#if entry.recipeEntry.isHops}}
-					<li>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g, Alpha: {{entry.recipeEntry.ingredient.alpha}}%, Add Time: {{entry.addTime}} min, IBU: {{format-number entry.IBU 1}}</li>
-					{{else}}
-					<li>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g, Extract: {{entry.recipeEntry.ingredient.extract}}%, Add Time: {{entry.addTime}} min</li>
-					{{/if}}
-					{{/each}}
-				</ul>
-				<p>Extract From Boil Ingredients: {{format-number model.session.totalBoilExtract 2}} kg</p>
-				<p>Measured Post Boil Volume: {{input type="number" value=model.session.measuredPostBoilVolume}} l</p>
-				<p>Post Boil Volume (Cold): {{format-number model.session.postBoilVolumeCold 1}} l</p>
-				<p>Estimated OG: {{format-number model.session.OG 3}} (Recipe: {{format-number model.session.recipe.OG 3}}) <a href="#" {{action "toggleShowOGDetails"}}><span class="glyphicon {{if showOGDetails "glyphicon-triangle-top" "glyphicon-triangle-bottom"}}"></span></a></p>
-				{{#if showOGDetails}}
-				<p>Post Boil Extract: {{format-number model.session.postBoilExtract 2}} kg</p>
-				{{/if}}
-				<p>Measured OG: {{input type="number" step="0.001" value=model.session.measuredOG}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</p>
-				<p>IBU: {{format-number model.session.recipe.IBU 1}}</p>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-shower" aria-hidden="true"></i> Lautering
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Sparge Water Volume</td>
+							<td>{{format-number model.session.spargeWaterVolume 2}} l ({{format-number model.session.spargeWaterVolumeOld 2}})</td>
+						</tr>
+						<tr>
+							<td>Sparge Water Temp</td>
+							<td>{{model.session.recipe.spargeWaterTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Sparge Time</td>
+							<td>{{model.session.recipe.spargeTime}}  min</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Results</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>First Sparge SG</td>
+							<td>{{format-number model.session.firstSpargeSG 3}} (Recipe: {{format-number model.session.recipe.firstSpargeSG 3}})</td>
+							<td>{{collapse-button toggleParam=showFirstSpageExtract}}</td>
+						</tr>
+						{{#if showFirstSpageExtract}}
+						<tr bgcolor="#EEEEEE">
+							<td>First Sparge Extract Weight</td>
+							<td colspan="2">{{format-number model.session.firstSpargeExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>Pre Boil SG</td>
+							<td>{{format-number model.session.preBoilSG 3}} (Recipe: {{format-number model.session.recipe.preBoilSG 3}})</td>
+							<td>{{collapse-button toggleParam=showPreBoilExtract}}</td>
+						</tr>
+						{{#if showPreBoilExtract}}
+						<tr bgcolor="#EEEEEE">
+							<td>Pre Boil Extract Weight</td>
+							<td colspan="2">{{format-number model.session.kettleExtractWeight 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>Brewhouse Efficiency</td>
+							<td colspan="2">{{format-number model.session.brewhouseEfficiency 1}}% (Recipe: {{format-number model.session.recipe.brewhouseEfficiency 1}}%)</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Measured Results</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>First Sparge SG</td>
+							<td>{{clickable-text value=model.session.measuredFirstSpargeSG}}</td>
+						</tr>
+						<tr>
+							<td>Pre Boil SG</td>
+							<td>{{clickable-text value=model.session.measuredPreBoilSG}}</td>
+						</tr>
+						<tr>
+							<td>Kettle Extract (Based On SG Measurement)</td>
+							<td>{{format-number model.session.actualKettleExtract 2}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-thermometer-half" aria-hidden="true"></i> Boiling
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Measured Pre Boil Volume</td>
+							<td>{{input type="number" value=model.session.measuredPreBoilVolume}} l</td>
+						</tr>
+						<tr>
+							<td>Target Post Boil Volume</td>
+							<td>{{format-number model.session.postBoilVolume 1}} l</td>
+						</tr>
+						<tr>
+							<td>System Boil Off</td>
+							<td>{{format-number model.session.brewingSystem.boilOffRate 1}} l/h</td>
+						</tr>
+						<tr>
+							<td>Required Boil Time</td>
+							<td>{{format-number model.session.requiredBoilTime 0}}</td>
+						</tr>
+						<tr>
+							<td>Boil Time</td>
+							<td>{{clickable-text value=model.session.boilTime}} mins (Recipe: {{model.session.recipe.boilTime}} mins)</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="4">Ingredients</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each model.session.sortedBoilEntries as |entry|}}
+						<tr>
+							{{#if entry.recipeEntry.isHops}}
+							<td>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g</td>
+							<td>Alpha: {{entry.recipeEntry.ingredient.alpha}}%</td>
+							<td>Add Time: {{entry.addTime}} min</td>
+							<td>IBU: {{format-number entry.IBU 1}}</td>
+							{{else}}
+							<td>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g</td>
+							<td>Extract: {{entry.recipeEntry.ingredient.extract}}%</td>
+							<td>Add Time: {{entry.addTime}} min</td>
+							<td></td>
+							{{/if}}
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>OG</td>
+							<td>{{format-number model.session.OG 3}} (Recipe: {{format-number model.session.recipe.OG 3}})</td>
+							<td>{{collapse-button toggleParam=showOGDetails}}</td>
+						</tr>
+						{{#if showOGDetails}}
+						<tr bgcolor="#EEEEEE">
+							<td>Extract From Ingredients</td>
+							<td colspan="2">{{format-number model.session.totalBoilExtract 2}} kg</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>Post Boil Extract</td>
+							<td colspan="2">{{format-number model.session.postBoilExtract 2}} kg</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>IBU</td>
+							<td colspan="2">{{format-number model.session.recipe.IBU 1}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Measured Result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Measured Post Boil Volume</td>
+							<td>{{input type="number" value=model.session.measuredPostBoilVolume}} l</td>
+						</tr>
+						<tr>
+							<td>Measured Post Boil Volume (Cold)</td>
+							<td>{{format-number model.session.postBoilVolumeCold 1}} l</td>
+						</tr>
+						<tr>
+							<td>OG</td>
+							<td>{{input type="number" step="0.001" value=model.session.measuredOG}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 				<h3>Fermentation</h3>
 				<p>Target Fermentation Volume: {{format-number model.session.fermentationVolume 1}} l</p>
 				<p>Measured Fermentation Volume: {{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</p>

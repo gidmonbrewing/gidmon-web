@@ -17,6 +17,7 @@ export default Model.extend({
 	preBoilVolume: attr('number'),
 	postBoilVolume: attr('number'),
 	fermentationVolume: attr('number'),
+	finalVolume: attr('number'),
 	boilTime: attr('number'),
 	totalMaltWeight: attr('number'),
 	primaryFermentationTemp: attr('number'),

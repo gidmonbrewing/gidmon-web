@@ -19,6 +19,8 @@ export default DS.Model.extend({
 	measuredPostBoilVolume: DS.attr('number'),
 	fermentationVolume: DS.attr('number'),
 	measuredFermentationVolume: DS.attr('number'),
+	finalVolume: DS.attr('number'),
+	measuredFinalVolume: DS.attr('number'),
 	boilTime: DS.attr('number'),
 	measuredFirstWortSG: DS.attr('number'),
 	measuredFirstSpargeSG: DS.attr('number'),
