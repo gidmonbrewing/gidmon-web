@@ -36,10 +36,11 @@ export default Ember.Controller.extend({
 			var scale = preBoilVolume / recipe.get('preBoilVolume');
 			var scaledPostBoilVolume = round(recipe.get('postBoilVolume') * scale, 2);
 			var scaledFermentationVolume = round(recipe.get('fermentationVolume') * scale, 2);
+			var scaledFinalVolume = round(recipe.get('finalVolume') * scale, 2);
 			var scaledStrikeWaterVolume = round(recipe.get('strikeWaterVolume') * scale, 2);
-			var strikeWaterTemp = recipe.get('strikeWaterTemp');
+			var strikeWaterTemp = round(recipe.get('strikeWaterTemp'), 0);
 			var scaledSpargeWaterVolume = round(recipe.get('spargeWaterVolume') * scale, 2);
-			var spargeWaterTemp = recipe.get('spargeWaterTemp');
+			var spargeWaterTemp = round(recipe.get('spargeWaterTemp'), 0);
 			var store = this.store;
 			var brewingSession = store.createRecord('brewing-session', {
 				recipe: recipe,
@@ -48,11 +49,13 @@ export default Ember.Controller.extend({
 				postBoilVolume: scaledPostBoilVolume,
 				measuredPostBoilVolume: scaledPostBoilVolume,
 				fermentationVolume: scaledFermentationVolume,
+				measuredFermentationVolume: scaledFermentationVolume,
+				finalVolume: scaledFinalVolume,
+				measuredFinalVolume: scaledFinalVolume,
 				strikeWaterVolume: scaledStrikeWaterVolume,
 				strikeWaterTemp: strikeWaterTemp,
 				spargeWaterVolume: scaledSpargeWaterVolume,
 				spargeWaterTemp: spargeWaterTemp,
-				measuredFermentationVolume: scaledFermentationVolume,
 				boilTime: recipe.get('boilTime'),
 				measuredFirstWortSG: round(recipe.get('firstWortSG'), 3),
 				measuredFirstSpargeSG: round(recipe.get('firstSpargeSG'), 3),

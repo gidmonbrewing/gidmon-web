@@ -264,6 +264,10 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td>Target Pre Boil Volume</td>
+							<td>{{model.session.preBoilVolume}} l</td>
+						</tr>
+						<tr>
 							<td>Measured Pre Boil Volume</td>
 							<td>{{input type="number" value=model.session.measuredPreBoilVolume}} l</td>
 						</tr>
@@ -363,26 +367,164 @@
 				</table>
 			</div>
 		</div>
-				<h3>Fermentation</h3>
-				<p>Target Fermentation Volume: {{format-number model.session.fermentationVolume 1}} l</p>
-				<p>Measured Fermentation Volume: {{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</p>
-				<p>Yeast: {{model.session.recipe.yeast.name}}</p>
-				<p>Temperature: {{model.session.recipe.primaryFermentationTemp}} &deg;C</p>
-				<p>Time: {{model.session.recipe.primaryFermentationTime}} days</p>
-				<p>Pitch Type: {{model.session.recipe.pitchType.name}} ({{format-number model.session.recipe.pitchType.pitchRate 2}} billion cells/l wort/&deg;P)</p>
-				<p>Yeast Cells Needed: {{format-number model.session.yeastCellsNeeded 2}} billion</p>
-				<p>Yeast Needed: {{format-number model.session.yeastNeeded 2}} g</p>
-				<p>Yeast Used: {{input type="number" value=model.session.yeastUsed}}</p>
-				<p>Estimated FG: {{format-number model.session.FG 3}} (Recipe: {{format-number model.session.recipe.FG 3}})</p>
-				<p>Measured FG: {{input type="number" step="0.001" value=model.session.measuredFG}}</p>
-				{{#if showFGDetails}}
-				<p>Real FG (Accounting for decreased density because of alcohol): {{format-number model.session.realFG 3}} ({{format-number model.session.realFGPlato 1}}&deg;P)</p>
-				<p>Post Fermentation Extract Weight: {{format-number model.session.postFermentationExtractWeight 2}} kg (Max: {{format-number model.session.postFermentationExtractWeightScaled 2}} kg)</p>
-				{{/if}}
-				<p>ABV: {{format-number model.session.ABV 1}}% (Target: {{format-number model.session.recipe.ABV 1}}%)</p>
-				{{#if showABVDetails}}
-				<p>Approximate ABV: {{format-number model.session.approxABV 1}}%</p>
-				{{/if}}
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-gear" aria-hidden="true"></i> Fermentation
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Target Fermentation Volume</td>
+							<td>{{format-number model.session.fermentationVolume 1}} l</td>
+						</tr>
+						<tr>
+							<td>Measured Fermentation Volume</td>
+							<td>{{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</td>
+						</tr>
+						<tr>
+							<td>Temperature</td>
+							<td>{{model.session.recipe.primaryFermentationTemp}} &deg;C</td>
+						</tr>
+						<tr>
+							<td>Time</td>
+							<td>{{model.session.recipe.primaryFermentationTime}} days</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Ingredients</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Yeast</td>
+							<td>{{model.session.recipe.yeast.name}}</td>
+						</tr>
+						<tr>
+							<td>Pitch Type</td>
+							<td>{{model.session.recipe.pitchType.name}} ({{format-number model.session.recipe.pitchType.pitchRate 2}} billion cells/l wort/&deg;P)</td>
+						</tr>
+						<tr>
+							<td>Yeast Cells Needed</td>
+							<td>{{format-number model.session.yeastCellsNeeded 2}} billion</td>
+						</tr>
+						<tr>
+							<td>Yeast Needed</td>
+							<td>{{format-number model.session.yeastNeeded 2}} g</td>
+						</tr>
+						<tr>
+							<td>Yeast Used</td>
+							<td>{{input type="number" value=model.session.yeastUsed}} g</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="3">Expected Results</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>FG</td>
+							<td>{{format-number model.session.FG 3}} (Recipe: {{format-number model.session.recipe.FG 3}})</td>
+							<td>{{collapse-button toggleParam=showFGDetails}}</td>
+						</tr>
+						{{#if showFGDetails}}
+						<tr bgcolor="#EEEEEE">
+							<td>FG Adjusted For Alcohol Density Change</td>
+							<td colspan="2">{{format-number model.session.realFG 3}} ({{format-number model.session.realFGPlato 1}}&deg;P)</td>
+						</tr>
+						<tr bgcolor="#EEEEEE">
+							<td>Post Fermentation Extract Weight</td>
+							<td colspan="2">{{format-number model.session.postFermentationExtractWeight 2}} kg (Recipe: {{format-number model.session.postFermentationExtractWeightScaled 2}} kg)</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td>ABV</td>
+							<td colspan="2">{{format-number model.session.ABV 1}}% (Target: {{format-number model.session.recipe.ABV 1}}%)</td>
+						</tr>
+						{{#if probablyNotNeeded}}
+						<tr bgcolor="#EEEEEE">
+							<td>Approximate ABV</td>
+							<td colspan="2">{{format-number model.recipe.approxABV 1}}%</td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Measured Results</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>FG</td>
+							<td>{{input type="number" step="0.001" value=model.session.measuredFG}}</td>
+						</tr>
+						<tr>
+							<td>ABV</td>
+							<td colspan="2">{{format-number model.session.realABV 1}}%</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-glass" aria-hidden="true"></i> Bottling
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Target Final Volume</td>
+							<td>{{model.session.finalVolume}} l</td>
+						</tr>
+						<tr>
+							<td>Measured Final Volume</td>
+							<td>{{clickable-text value=model.session.measuredFinalVolume}} l (Left in fermentor: {{format-number model.session.leftInFermentor 1}} l)</td>
+						</tr>
+						<tr>
+							<td>Recommended CO2 For {{model.session.recipe.beer.beerType.name}}</td>
+							<td>{{model.session.recipe.beer.beerType.primingCo2Min}} - {{model.session.recipe.beer.beerType.primingCo2Max}} g/l</td>
+						</tr>
+					</tbody>
+					<thead>
+						<tr>
+							<th colspan="2">Ingredients</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Required Table Sugar</td>
+							<td>{{format-number model.session.requiredTableSugar 1}} g</td>
+						</tr>
+						<tr>
+							<td>CO2 Dissolved In Beer</td>
+							<td>{{format-number model.session.recipe.dissolvedCO2 2}} g/l</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 				<hr />
 				{{#if hasUnsavedChanges}}
 				<button {{action "saveModel"}}>Save</button>

@@ -176,6 +176,9 @@ export default DS.Model.extend({
 	leftInKettle: Ember.computed('postBoilVolumeCold', 'measuredFermentationVolume', function () {
 		return this.get('postBoilVolumeCold') - this.get('measuredFermentationVolume');
 	}),
+	leftInFermentor: Ember.computed('measuredFinalVolume', 'measuredFermentationVolume', function () {
+		return this.get('measuredFermentationVolume') - this.get('measuredFinalVolume');
+	}),
 	yeastCellsNeeded: Ember.computed('actualOGPlato', 'fermentationVolume', 'recipe.pitchType.pitchRate', function () {
 		return this.get('actualOGPlato') * this.get('fermentationVolume') * this.get('recipe.pitchType.pitchRate');
 	}),
@@ -188,8 +191,7 @@ export default DS.Model.extend({
 	FG: Ember.computed('measuredOG', 'recipe.yeast.attenuation', function () {
 		return ((this.get('measuredOG') - 1.0) * (1.0 - (this.get('recipe.yeast.attenuation') / 100.0))) + 1.0;
 	}),
-	realFG: Ember.computed('measuredFG', function () {
-		// measuredOG dependency is implicit
+	realFG: Ember.computed('measuredOG', 'measuredFG', function () {
 		return 1 + (0.1808 * (this.get('measuredOG') - 1) + 0.8192 * (this.get('measuredFG') - 1));
 	}),
 	realFGPlato: Ember.computed('realFG', function () {
@@ -208,11 +210,20 @@ export default DS.Model.extend({
 		var actualOGPlato = this.get('actualOGPlato');
 		return (actualOGPlato - this.get('realFGPlato')) / (2.065 - (0.010665 * actualOGPlato));
 	}),
-	ABV: Ember.computed('measuredFG', 'ABW', function () {
+	ABV: Ember.computed('FG', 'ABW', function () {
+		return this.get('ABW') * (this.get('FG') / 0.794);
+	}),
+	realABV: Ember.computed('measuredFG', 'ABW', function () {
 		return this.get('ABW') * (this.get('measuredFG') / 0.794);
 	}),
 	approxABV: Ember.computed('measuredOG', 'measuredFG', function () {
 		return (this.get('measuredOG') - this.get('measuredFG')) * 131.5;
+	}),
+	requiredTableSugar: Ember.computed('measuredFinalVolume', 'recipe.dissolvedCO2', function () {
+		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
+		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
+		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
+		return (this.get('measuredFinalVolume') / 0.5) * (4.0 - this.get('recipe.dissolvedCO2'));
 	}),
 	comments: DS.hasMany('brewing-session-comment'),
 	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),

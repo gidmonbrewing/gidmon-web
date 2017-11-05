@@ -149,6 +149,9 @@ export default Model.extend({
 	leftInKettle: Ember.computed('postBoilVolumeCold', 'fermentationVolume', function () {
 		return this.get('postBoilVolumeCold') - this.get('fermentationVolume');
 	}),
+	leftInFermentor: Ember.computed('finalVolume', 'fermentationVolume', function () {
+		return this.get('fermentationVolume') - this.get('finalVolume');
+	}),
 	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
 	IBU: Ember.computed.sum('IBUValues'),
 	yeastCellsNeeded: Ember.computed('OGPlato', 'fermentationVolume', 'pitchType.pitchRate', function () {
@@ -192,10 +195,10 @@ export default Model.extend({
 		// Need to multiply by 2 to go from volumes to g/l
 		return 2 * (3.0378 - (0.050062 * tempFahrenheit) + (0.00026555 * Math.pow(tempFahrenheit, 2)));
 	}),
-	requiredTableSugar: Ember.computed('fermentationVolume', 'dissolvedCO2', function () {
+	requiredTableSugar: Ember.computed('finalVolume', 'dissolvedCO2', function () {
 		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
 		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
 		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
-		return (this.get('fermentationVolume') / 0.5) * (4.0 - this.get('dissolvedCO2'));
+		return (this.get('finalVolume') / 0.5) * (4.0 - this.get('dissolvedCO2'));
 	}),
 });

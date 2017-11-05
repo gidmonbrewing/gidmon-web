@@ -381,6 +381,21 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th colspan="2">Parameters</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Final Volume</td>
+							<td>{{clickable-text value=model.recipe.finalVolume}} l (Left in fermentor: {{format-number model.session.leftInFermentor 1}} l)</td>
+						</tr>
+						<tr>
+							<td>Recommended CO2 For {{model.recipe.beer.beerType.name}}</td>
+							<td>{{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</td>
+						</tr>
+					</tbody>
+					<thead>
+						<tr>
 							<th colspan="2">Ingredients</th>
 						</tr>
 					</thead>
@@ -388,10 +403,6 @@
 						<tr>
 							<td>Required Table Sugar</td>
 							<td>{{format-number model.recipe.requiredTableSugar 1}} g</td>
-						</tr>
-						<tr>
-							<td>Recommended CO2 For {{model.recipe.beer.beerType.name}}</td>
-							<td>{{model.recipe.beer.beerType.primingCo2Min}} - {{model.recipe.beer.beerType.primingCo2Max}} g/l</td>
 						</tr>
 						<tr>
 							<td>CO2 Dissolved In Beer</td>
