@@ -5,14 +5,39 @@ function round(value, decimals) {
 }
 
 export default Ember.Controller.extend({
+	authManager: Ember.inject.service(),
+	store: Ember.inject.service(),
 	showFirstWortExtract: false,
 	showFirstSpageExtract: false,
 	showPreBoilExtract: false,
 	showOGDetails: false,
 	showFGDetails: false,
+	currentUser: Ember.computed('authManager.currentUser', function () {
+		return this.get('store').findRecord('user', this.get('authManager.currentUser'));
+	}),
+	userPermissions: Ember.computed.mapBy('currentUser.userPermissions', 'codename'),
+	canViewBrewingSession: Ember.computed('currentUser.isSuperuser', 'userPermissions', function () {
+		if (this.get('currentUser.isSuperuser')) {
+			return true;
+		} else {
+			return this.get('userPermissions').includes('view_brewingsession');
+		}
+	}),
+	canEditRecipe: Ember.computed('currentUser.isSuperuser', 'userPermissions', function () {
+		if (this.get('currentUser.isSuperuser')) {
+			return true;
+		} else {
+			return this.get('userPermissions').includes('editRecipe');
+		}
+	}),
 	actions: {
 		saveModel() {
-			this.model.recipe.save();
+			this.model.recipe.save().then(function () {
+				// Success callback
+			}, function (e) {
+				// Error callback
+				alert(e);
+			});
 			// save all dirty mash entries
 			this.model.recipe.get('mashEntries').then(function (entries) {
 				entries.forEach(function (element) {

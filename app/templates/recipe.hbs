@@ -412,25 +412,47 @@
 				</table>
 			</div>
 		</div>
+		{{#if canViewBrewingSession}}
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="glyphicon glyphicon-hourglass" aria-hidden="true"></i> Sessions
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Current</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each model.recipe.sessions as |session|}}
+						<tr>
+							<td>{{#link-to "brewing-session" session.id}}{{format-date session.date}}{{/link-to}}</td>
+							<td>{{session.preBoilVolume}} l</td>
+						</tr>
+						{{/each}}
+					</tbody>
+					<thead>
+						<tr>
+							<th colspan="2">Create New</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Select desired pre boil volume (Recipe: {{model.recipe.preBoilVolume}}):</td>
+							<td><form {{action 'createSession' on='submit'}}>{{input type="number" value=preBoilVolume placeholder=model.recipe.preBoilVolume}} <button type="submit">Create</button></form></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{{/if}}
 		<hr />
 		{{#if hasUnsavedChanges}}
 		<button {{action "saveModel"}}>Save</button>
 		{{else}}
 		<button disabled>Nothing to save</button>
 		{{/if}}
-		<hr />
-		<h3>Sessions</h3>
-		<ul>
-			{{#each model.recipe.sessions as |session|}}
-			<li>{{#link-to "brewing-session" session.id}}{{format-date session.date}}, {{session.preBoilVolume}} l{{/link-to}}</li>
-			{{/each}}
-		</ul>
-		<h3>Create New Session</h3>
-		<form {{action 'createSession' on='submit'}}>
-			Select desired pre boil volume (Recipe: {{model.recipe.preBoilVolume}}): <br />
-			This will be used to scale the recipe. <br />
-			{{input type="number" value=preBoilVolume placeholder=model.recipe.preBoilVolume}} <button type="submit">Create</button>
-		</form>
 	</div>
 	<div class="col-md-6">
 

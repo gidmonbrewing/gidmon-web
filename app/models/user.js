@@ -2,7 +2,6 @@ import DS from 'ember-data';
 import Ember from 'ember';
 
 export default DS.Model.extend({
-	username: DS.attr('string'),
 	firstName: DS.attr('string'),
 	lastName: DS.attr('string'),
 	email: DS.attr('string'),
@@ -10,5 +9,6 @@ export default DS.Model.extend({
 	isSuperuser: DS.attr(),
 	profile: DS.belongsTo('profile'),
 	newsItem: DS.hasMany('news-item'),
+	userPermissions: DS.hasMany('permission'),
 	fullName: Ember.computed('firstName', 'lastName', function() { return this.get('firstName') + " " + this.get('lastName'); }),
 });

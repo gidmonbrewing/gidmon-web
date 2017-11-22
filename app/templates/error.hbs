@@ -1,0 +1,14 @@
+<div class="container-fluid">
+	<div class="col-md-6">
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="glyphicon glyphicon-fire" aria-hidden="true"></i> Error
+			</div>
+			<div>
+				{{#each model.errors as |error|}}
+				<p>{{error.status}}: {{error.detail}}</p>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>

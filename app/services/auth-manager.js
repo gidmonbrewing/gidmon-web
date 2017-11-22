@@ -36,13 +36,7 @@ export default Ember.Service.extend({
 			data: { username: login, password: password }
 		}).then((result) => {
 			_this.set('token', result.token);
-			_this.get('store').findAll('user').then(function(users) {
-				let currentUser = users.find(function (element) {
-					var usr = element.get("username");
-					return usr === login;
-				});
-				_this.set('currentUser', currentUser.id);
-			});
+			_this.set('currentUser', result.userId);
 		});
 	},
 	authenticateFB(username, firstName, lastName, email) {
