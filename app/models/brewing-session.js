@@ -169,6 +169,8 @@ export default DS.Model.extend({
 	}),
 	entrySortingDebug: ['entry.addTime'],
 	sortedBoilEntriesDebug: Ember.computed.sort('scaledBoilIngredients', 'entrySortingDebug'),
+	IBUValues: Ember.computed.mapBy('boilEntries', 'IBU'),
+	IBU: Ember.computed.sum('IBUValues'),
 	requiredBoilTime: Ember.computed('measuredPreBoilVolume', 'postBoilVolume', 'brewingSystem.boilOffRate', function () {
 		// we want to get minutes so multiply by 60
 		return 60 * (this.get('measuredPreBoilVolume') - this.get('postBoilVolume')) / this.get('brewingSystem.boilOffRate');

@@ -102,7 +102,7 @@
 					<tbody>
 						{{#each model.session.mashEntries as |entry|}}
 						<tr>
-							<td>{{entry.recipeEntry.ingredient.name}}: {{entry.weight}} kg</td>
+							<td>{{entry.recipeEntry.ingredient.name}}: {{clickable-text value=entry.weight editable=true}} kg</td>
 							<td>Extract: {{format-number entry.recipeEntry.ingredient.extractYield 3}}</td>
 							<td>({{format-number entry.amount 1}}%)</td>
 						</tr>
@@ -301,7 +301,7 @@
 						<tr>
 							{{#if entry.recipeEntry.isHops}}
 							<td>{{entry.recipeEntry.ingredient.name}}: {{entry.amount}} g</td>
-							<td>Alpha: {{entry.recipeEntry.ingredient.alpha}}%</td>
+							<td>Alpha: {{clickable-text value=entry.alpha editable=true}}%</td>
 							<td>Add Time: {{entry.addTime}} min</td>
 							<td>IBU: {{format-number entry.IBU 1}}</td>
 							{{else}}
@@ -339,7 +339,7 @@
 						{{/if}}
 						<tr>
 							<td>IBU</td>
-							<td colspan="2">{{format-number model.session.recipe.IBU 1}}</td>
+							<td colspan="2">{{format-number model.session.IBU 1}} (Recipe: {{format-number model.session.recipe.IBU 1}})</td>
 						</tr>
 					</tbody>
 				</table>
