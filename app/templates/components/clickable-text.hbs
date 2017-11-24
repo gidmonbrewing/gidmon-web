@@ -1,1 +1,5 @@
-<a contenteditable="true">{{value}}</a>
+{{#if editable}}
+<b contenteditable="true">{{value}}</b>
+{{else}}
+{{value}}
+{{/if}}

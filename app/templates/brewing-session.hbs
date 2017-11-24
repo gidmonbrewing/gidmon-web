@@ -64,7 +64,7 @@
 						</tr>
 						<tr>
 							<td>Strike Water Temp</td>
-							<td>{{clickable-text value=model.session.strikeWaterTemp}} &deg;C (Recommended: {{format-number model.session.recommendedStrikeWaterTemp 1}} &deg;C)</td>
+							<td>{{clickable-text value=model.session.strikeWaterTemp editable=true}} &deg;C (Recommended: {{format-number model.session.recommendedStrikeWaterTemp 1}} &deg;C)</td>
 						</tr>
 						<tr>
 							<td>Mashing Temp</td>
@@ -161,7 +161,7 @@
 					<tbody>
 						<tr>
 							<td>First Wort SG</td>
-							<td>{{clickable-text value=model.session.measuredFirstWortSG}}</td>
+							<td>{{clickable-text value=model.session.measuredFirstWortSG editable=true}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -237,15 +237,15 @@
 					<tbody>
 						<tr>
 							<td>First Sparge SG</td>
-							<td>{{clickable-text value=model.session.measuredFirstSpargeSG}}</td>
+							<td>{{clickable-text value=model.session.measuredFirstSpargeSG editable=true}}</td>
 						</tr>
 						<tr>
 							<td>Pre Boil SG</td>
-							<td>{{clickable-text value=model.session.measuredPreBoilSG}}</td>
+							<td>{{clickable-text value=model.session.measuredPreBoilSG editable=true}}</td>
 						</tr>
 						<tr>
 							<td>Kettle Extract (Based On SG Measurement)</td>
-							<td>{{format-number model.session.actualKettleExtract 2}}</td>
+							<td>{{format-number model.session.actualKettleExtract 2}} kg</td>
 						</tr>
 					</tbody>
 				</table>
@@ -269,7 +269,7 @@
 						</tr>
 						<tr>
 							<td>Measured Pre Boil Volume</td>
-							<td>{{input type="number" value=model.session.measuredPreBoilVolume}} l</td>
+							<td>{{clickable-text value=model.session.measuredPreBoilVolume editable=true}} l</td>
 						</tr>
 						<tr>
 							<td>Target Post Boil Volume</td>
@@ -285,7 +285,7 @@
 						</tr>
 						<tr>
 							<td>Boil Time</td>
-							<td>{{clickable-text value=model.session.boilTime}} mins (Recipe: {{model.session.recipe.boilTime}} mins)</td>
+							<td>{{clickable-text value=model.session.boilTime editable=true}} mins (Recipe: {{model.session.recipe.boilTime}} mins)</td>
 						</tr>
 					</tbody>
 				</table>
@@ -352,16 +352,16 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>Measured Post Boil Volume</td>
-							<td>{{input type="number" value=model.session.measuredPostBoilVolume}} l</td>
+							<td>Post Boil Volume</td>
+							<td>{{clickable-text value=model.session.measuredPostBoilVolume editable=true}} l</td>
 						</tr>
 						<tr>
-							<td>Measured Post Boil Volume (Cold)</td>
+							<td>Post Boil Volume (Cold)</td>
 							<td>{{format-number model.session.postBoilVolumeCold 1}} l</td>
 						</tr>
 						<tr>
 							<td>OG</td>
-							<td>{{input type="number" step="0.001" value=model.session.measuredOG}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</td>
+							<td>{{clickable-text value=model.session.measuredOG editable=true}} ({{format-number model.session.actualOGPlato 1}} &deg;P)</td>
 						</tr>
 					</tbody>
 				</table>
@@ -385,7 +385,7 @@
 						</tr>
 						<tr>
 							<td>Measured Fermentation Volume</td>
-							<td>{{input type="number" value=model.session.measuredFermentationVolume}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</td>
+							<td>{{clickable-text value=model.session.measuredFermentationVolume editable=true}} l (Left in Kettle: {{format-number model.session.leftInKettle 1}} l)</td>
 						</tr>
 						<tr>
 							<td>Temperature</td>
@@ -423,7 +423,7 @@
 						</tr>
 						<tr>
 							<td>Yeast Used</td>
-							<td>{{input type="number" value=model.session.yeastUsed}} g</td>
+							<td>{{clickable-text value=model.session.yeastUsed editable=true}} g</td>
 						</tr>
 					</tbody>
 				</table>
@@ -472,7 +472,7 @@
 					<tbody>
 						<tr>
 							<td>FG</td>
-							<td>{{input type="number" step="0.001" value=model.session.measuredFG}}</td>
+							<td>{{clickable-text value=model.session.measuredFG editable=true}}</td>
 						</tr>
 						<tr>
 							<td>ABV</td>
@@ -500,7 +500,7 @@
 						</tr>
 						<tr>
 							<td>Measured Final Volume</td>
-							<td>{{clickable-text value=model.session.measuredFinalVolume}} l (Left in fermentor: {{format-number model.session.leftInFermentor 1}} l)</td>
+							<td>{{clickable-text value=model.session.measuredFinalVolume editable=true}} l (Left in fermentor: {{format-number model.session.leftInFermentor 1}} l)</td>
 						</tr>
 						<tr>
 							<td>Recommended CO2 For {{model.session.recipe.beer.beerType.name}}</td>

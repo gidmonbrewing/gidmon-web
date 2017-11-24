@@ -10,7 +10,7 @@
 			{{/if}}
 
 			<p>Style: {{model.recipe.beer.beerType.name}}</p>
-			<p>Pre Boil Volume: {{clickable-text value=model.recipe.preBoilVolume}} l</p>
+			<p>Pre Boil Volume: {{clickable-text value=model.recipe.preBoilVolume editable=canEditRecipe}} l</p>
 		</div>
 		<div class="container-fluid" style="padding-top:2em;">
 			<div style="font-size: 24px;">
@@ -34,23 +34,23 @@
 						</tr>
 						<tr>
 							<td>Mashing Temp</td>
-							<td>{{clickable-text value=model.recipe.mashingTemp}} &deg;C</td>
+							<td>{{clickable-text value=model.recipe.mashingTemp editable=canEditRecipe}} &deg;C</td>
 						</tr>
 						<tr>
 							<td>Mashing Time</td>
-							<td>{{clickable-text value=model.recipe.mashingTime}} min</td>
+							<td>{{clickable-text value=model.recipe.mashingTime editable=canEditRecipe}} min</td>
 						</tr>
 						<tr>
 							<td>Mash Out Temp</td>
-							<td>{{clickable-text value=model.recipe.mashOutTemp}} &deg;C</td>
+							<td>{{clickable-text value=model.recipe.mashOutTemp editable=canEditRecipe}} &deg;C</td>
 						</tr>
 						<tr>
 							<td>Mash Out Time</td>
-							<td>{{clickable-text value=model.recipe.mashOutTime}} min</td>
+							<td>{{clickable-text value=model.recipe.mashOutTime editable=canEditRecipe}} min</td>
 						</tr>
 						<tr>
 							<td>Total Malt Weight</td>
-							<td>{{clickable-text value=model.recipe.totalMaltWeight}} kg</td>
+							<td>{{clickable-text value=model.recipe.totalMaltWeight editable=canEditRecipe}} kg</td>
 						</tr>
 						<tr>
 							<td>Water/Malt Ratio</td>
@@ -137,11 +137,11 @@
 						</tr>
 						<tr>
 							<td>Sparge Water Temp</td>
-							<td>{{clickable-text value=model.recipe.spargeWaterTemp}} &deg;C</td>
+							<td>{{clickable-text value=model.recipe.spargeWaterTemp editable=canEditRecipe}} &deg;C</td>
 						</tr>
 						<tr>
 							<td>Sparge Time</td>
-							<td>{{clickable-text value=model.recipe.spargeTime}} min</td>
+							<td>{{clickable-text value=model.recipe.spargeTime editable=canEditRecipe}} min</td>
 						</tr>
 					</tbody>
 				</table>
@@ -200,7 +200,7 @@
 						</tr>
 						<tr>
 							<td>Post Boil Volume</td>
-							<td>{{clickable-text value=model.recipe.postBoilVolume}} l</td>
+							<td>{{clickable-text value=model.recipe.postBoilVolume editable=canEditRecipe}} l</td>
 						</tr>
 						<tr>
 							<td>Post Boil Volume (Cold)</td>
@@ -208,7 +208,7 @@
 						</tr>
 						<tr>
 							<td>Boil Time</td>
-							<td>{{clickable-text value=model.recipe.boilTime}} min</td>
+							<td>{{clickable-text value=model.recipe.boilTime editable=canEditRecipe}} min</td>
 						</tr>
 						<tr>
 							<td>Required Boil Off</td>
@@ -227,14 +227,14 @@
 						{{#each model.recipe.sortedBoilEntries as |entry|}}
 						<tr>
 							{{#if entry.isHops}}
-							<td>{{entry.ingredient.name}}: {{clickable-text value=entry.amount}} g</td>
+							<td>{{entry.ingredient.name}}: {{clickable-text value=entry.amount editable=canEditRecipe}} g</td>
 							<td>Alpha: {{entry.ingredient.alpha}}%</td>
-							<td>Add Time: {{clickable-text value=entry.addTime}} min</td>
+							<td>Add Time: {{clickable-text value=entry.addTime editable=canEditRecipe}} min</td>
 							<td>IBU: {{format-number entry.IBU 1}}</td>
 							{{else}}
-							<td>{{entry.ingredient.name}}: {{clickable-text value=entry.amount}} g</td>
+							<td>{{entry.ingredient.name}}: {{clickable-text value=entry.amount editable=canEditRecipe}} g</td>
 							<td>Extract: {{entry.ingredient.extract}}%</td>
-							<td>Add Time: {{clickable-text value=entry.addTime}} min</td>
+							<td>Add Time: {{clickable-text value=entry.addTime editable=canEditRecipe}} min</td>
 							<td></td>
 							{{/if}}
 						</tr>
@@ -290,15 +290,15 @@
 					<tbody>
 						<tr>
 							<td>Fermentation Volume</td>
-							<td>{{clickable-text value=model.recipe.fermentationVolume}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</td>
+							<td>{{clickable-text value=model.recipe.fermentationVolume editable=canEditRecipe}} l (Left in Kettle: {{format-number model.recipe.leftInKettle 1}} l)</td>
 						</tr>
 						<tr>
 							<td>Temperature</td>
-							<td>{{clickable-text value=model.recipe.primaryFermentationTemp}} &deg;C</td>
+							<td>{{clickable-text value=model.recipe.primaryFermentationTemp editable=canEditRecipe}} &deg;C</td>
 						</tr>
 						<tr>
 							<td>Time</td>
-							<td>{{clickable-text value=model.recipe.primaryFermentationTime}} days</td>
+							<td>{{clickable-text value=model.recipe.primaryFermentationTime editable=canEditRecipe}} days</td>
 						</tr>
 					</tbody>
 				</table>
@@ -387,7 +387,7 @@
 					<tbody>
 						<tr>
 							<td>Final Volume</td>
-							<td>{{clickable-text value=model.recipe.finalVolume}} l (Left in fermentor: {{format-number model.recipe.leftInFermentor 1}} l)</td>
+							<td>{{clickable-text value=model.recipe.finalVolume editable=canEditRecipe}} l (Left in fermentor: {{format-number model.recipe.leftInFermentor 1}} l)</td>
 						</tr>
 						<tr>
 							<td>Recommended CO2 For {{model.recipe.beer.beerType.name}}</td>
