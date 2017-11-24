@@ -70,13 +70,13 @@
 						<tr>
 							<td>{{entry.ingredient.name}}: {{format-number entry.weight 2}} kg</td>
 							<td>Extract: {{format-number entry.ingredient.extractYield 3}}</td>
-							<td>({{clickable-text value=entry.amount}}%)</td>
+							<td>({{clickable-text value=entry.amount editable=canEditRecipe}}%)</td>
 						</tr>
 						{{/each}}
 						<tr>
 							<td>Unassigned</td>
 							<td></td>
-							<td>{{model.recipe.unassignedMalt}}%</td>
+							<td>{{format-number model.recipe.unassignedMalt 1}}%</td>
 						</tr>
 						<tr>
 							<td colspan="2">{{#power-select options=model.mashIngredients selected=newMashIngredient onchange=(action (mut newMashIngredient)) as |item|}}{{item.name}}{{/power-select}} </td>
