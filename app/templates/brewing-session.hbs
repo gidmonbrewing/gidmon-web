@@ -525,54 +525,56 @@
 				</table>
 			</div>
 		</div>
-				<hr />
-				{{#if hasUnsavedChanges}}
-				<button {{action "saveModel"}}>Save</button>
-				{{else}}
-				<button disabled>Nothing to save</button>
-				{{/if}}
-				<hr />
-				<div class="comments">
-					<h3 id="comments">Comments ({{model.session.commentCount}})</h3>
-					<hr />
-					{{#each model.session.rootComments as |comment|}}
-					<div class="comment clearfix">
-						<div class="comment-avatar">
-							<img src={{comment.author.profile.picture}} alt="avatar">
-						</div>
-						<div class="comment-content clearfix">
-							<div class="comment-author">
-								<a href="#">{{comment.author.fullName}}</a>
-							</div>
-							<div class="comment-body">
-								<p>{{{comment.content}}}</p>
-							</div>
-							<div class="comment-meta font-alt">{{format-date comment.created}} - <a href="#">Reply</a></div>
-						</div>
-						<!-- Comment 2 start -->
-						{{#each comment.children as |childComment|}}
-						<div class="comment clearfix">
-							<div class="comment-avatar">
-								<img src={{childComment.author.profile.picture}} alt="avatar">
-							</div>
-							<div class="comment-content clearfix">
-								<div class="comment-author">
-									<a href="#">{{childComment.author.fullName}}</a>
-								</div>
-								<div class="comment-body">
-									<p>{{{childComment.content}}}</p>
-								</div>
-								<div class="comment-meta font-alt">{{format-date childComment.created}} - <a href="#">Reply</a></div>
-							</div>
-						</div>
-						{{/each}}
-						<!-- Comment 2 end -->
-					</div>
-					{{/each}}
-					{{#if authManager.isAuthenticated}}
-					<hr />
-					{{outlet}}
-					{{/if}}
+		<div class="comments">
+			<h3 id="comments">Comments ({{model.session.commentCount}})</h3>
+			<hr />
+			{{#each model.session.rootComments as |comment|}}
+			<div class="comment clearfix">
+				<div class="comment-avatar">
+					<img src={{comment.author.profile.picture}} alt="avatar">
 				</div>
+				<div class="comment-content clearfix">
+					<div class="comment-author">
+						<a href="#">{{comment.author.fullName}}</a>
+					</div>
+					<div class="comment-body">
+						<p>{{{comment.content}}}</p>
+					</div>
+					<div class="comment-meta font-alt">{{format-date comment.created}} - <a href="#">Reply</a></div>
+				</div>
+				<!-- Comment 2 start -->
+				{{#each comment.children as |childComment|}}
+				<div class="comment clearfix">
+					<div class="comment-avatar">
+						<img src={{childComment.author.profile.picture}} alt="avatar">
+					</div>
+					<div class="comment-content clearfix">
+						<div class="comment-author">
+							<a href="#">{{childComment.author.fullName}}</a>
+						</div>
+						<div class="comment-body">
+							<p>{{{childComment.content}}}</p>
+						</div>
+						<div class="comment-meta font-alt">{{format-date childComment.created}} - <a href="#">Reply</a></div>
+					</div>
+				</div>
+				{{/each}}
+				<!-- Comment 2 end -->
 			</div>
+			{{/each}}
+			{{#if authManager.isAuthenticated}}
+			<hr />
+			{{outlet}}
+			{{/if}}
 		</div>
+	</div>
+</div>
+
+<!-- Tool bar floating on the right side -->
+<div style="font-size: 18px; position: fixed; right: 0px; top: 400px; padding: 10px; background-color: #e7e7e7">
+	{{#if hasUnsavedChanges}}
+	<a {{action "saveModel"}} style="color: black"><i class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></i></a>
+	{{else}}
+	<a style="color: lightgrey"><i class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></i></a>
+	{{/if}}
+</div>

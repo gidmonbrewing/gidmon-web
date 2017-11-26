@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
 		return this.get('store').findRecord('user', this.get('authManager.currentUser'));
 	}),
 	userPermissions: Ember.computed.mapBy('currentUser.userPermissions', 'codename'),
-	canViewBrewingSession: Ember.computed('currentUser.isSuperuser', 'userPermissions', function () {
+	canViewBrewingSession: Ember.computed('currentUser.isStaff', 'userPermissions', function () {
 		if (this.get('currentUser.isSuperuser')) {
 			return true;
 		} else {
