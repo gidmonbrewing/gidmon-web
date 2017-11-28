@@ -402,11 +402,15 @@
 					<tbody>
 						<tr>
 							<td>Required Table Sugar</td>
-							<td>{{format-number model.recipe.requiredTableSugar 1}} g</td>
+							<td>{{format-number model.recipe.requiredTableSugarMin 1}} - {{format-number model.recipe.requiredTableSugarMax 1}} g</td>
 						</tr>
 						<tr>
 							<td>CO2 Dissolved In Beer</td>
 							<td>{{format-number model.recipe.dissolvedCO2 2}} g/l</td>
+						</tr>
+						<tr>
+							<td>CO2 Dissolved In Beer (Test)</td>
+							<td>{{format-number model.recipe.dissolvedCO2Test 2}} g/l</td>
 						</tr>
 					</tbody>
 				</table>

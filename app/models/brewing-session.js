@@ -28,6 +28,7 @@ export default DS.Model.extend({
 	measuredOG: DS.attr('number'),
 	measuredFG: DS.attr('number'),
 	yeastUsed: DS.attr('number'),
+	sugarUsed: DS.attr('number'),
 	mashEntries: DS.hasMany('mash-session-entry'),
 	boilEntries: DS.hasMany('boil-session-entry'),
 	mashEntriesWeights: Ember.computed.mapBy('mashEntries', 'weight'),
@@ -221,11 +222,17 @@ export default DS.Model.extend({
 	approxABV: Ember.computed('measuredOG', 'measuredFG', function () {
 		return (this.get('measuredOG') - this.get('measuredFG')) * 131.5;
 	}),
-	requiredTableSugar: Ember.computed('measuredFinalVolume', 'recipe.dissolvedCO2', function () {
+	requiredTableSugarMin: Ember.computed('measuredFinalVolume', 'recipe.dissolvedCO2', 'recipe.beer.beerType.primingCo2Min', function () {
 		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
 		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
 		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
-		return (this.get('measuredFinalVolume') / 0.5) * (4.0 - this.get('recipe.dissolvedCO2'));
+		return (this.get('measuredFinalVolume') / 0.5) * (this.get('recipe.beer.beerType.primingCo2Min') - this.get('recipe.dissolvedCO2'));
+	}),
+	requiredTableSugarMax: Ember.computed('measuredFinalVolume', 'recipe.dissolvedCO2', 'recipe.beer.beerType.primingCo2Max', function () {
+		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
+		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
+		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
+		return (this.get('measuredFinalVolume') / 0.5) * (this.get('recipe.beer.beerType.primingCo2Max') - this.get('recipe.dissolvedCO2'));
 	}),
 	comments: DS.hasMany('brewing-session-comment'),
 	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),

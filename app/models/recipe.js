@@ -190,15 +190,30 @@ export default Model.extend({
 	}),
 	dissolvedCO2: Ember.computed('primaryFermentationTemp', function () {
 		var temp = this.get('primaryFermentationTemp');
+		// Using formula: CO2 In Beer = 3.0378 - (0.050062 * temp) + (0.00026555 * temp^2)
+		// Source: https://www.brewersfriend.com/beer-priming-calculator/
 		// The formula uses Fahreheit so we need to convert first
 		var tempFahrenheit = (temp * 1.8000) + 32.00;
 		// Need to multiply by 2 to go from volumes to g/l
 		return 2 * (3.0378 - (0.050062 * tempFahrenheit) + (0.00026555 * Math.pow(tempFahrenheit, 2)));
 	}),
-	requiredTableSugar: Ember.computed('finalVolume', 'dissolvedCO2', function () {
+	dissolvedCO2Test: Ember.computed('primaryFermentationTemp', function () {
+		var temp = this.get('primaryFermentationTemp');
+		// Cbeer = (Phead+1.013)*(2.71828182845904^(-10.73797+(2617.25/(Tbeer+273.15))))*10
+		// Source: http://braukaiser.com/wiki/index.php/Carbonation_Tables
+		// Assume head pressure of 1012.3 hPa = 1.0123 bar
+		return (1.0123 + 1.013) * Math.pow(2.71828182845904, (-10.73797 + (2617.25 / (temp + 273.15)))) * 10;
+	}),
+	requiredTableSugarMin: Ember.computed('finalVolume', 'dissolvedCO2', 'beer.beerType.primingCo2Min', function () {
 		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
 		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
 		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
-		return (this.get('finalVolume') / 0.5) * (4.0 - this.get('dissolvedCO2'));
+		return (this.get('finalVolume') / 0.5) * (this.get('beer.beerType.primingCo2Min') - (this.get('dissolvedCO2')));
+	}),
+	requiredTableSugarMax: Ember.computed('finalVolume', 'dissolvedCO2', 'beer.beerType.primingCo2Max', function () {
+		// target CO2 (g/l) = dissoled CO2 (g/l) + 0.5 * mass table-sugar (g) / volume beer (l)
+		// 0.5 * mass ts / volume = target CO2 - dissolved CO2
+		// mass ts = (volume / 0.5) * (target CO2 - dissolved CO2)
+		return (this.get('finalVolume') / 0.5) * (this.get('beer.beerType.primingCo2Max') - (this.get('dissolvedCO2')));
 	}),
 });

@@ -514,12 +514,16 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>Required Table Sugar</td>
-							<td>{{format-number model.session.requiredTableSugar 1}} g</td>
-						</tr>
-						<tr>
 							<td>CO2 Dissolved In Beer</td>
 							<td>{{format-number model.session.recipe.dissolvedCO2 2}} g/l</td>
+						</tr>
+						<tr>
+							<td>Required Table Sugar</td>
+							<td>{{format-number model.session.requiredTableSugarMin 1}} - {{format-number model.session.requiredTableSugarMax 1}} g</td>
+						</tr>
+						<tr>
+							<td>Sugar Used</td>
+							<td>{{clickable-text value=model.session.sugarUsed editable=true}} g</td>
 						</tr>
 					</tbody>
 				</table>
