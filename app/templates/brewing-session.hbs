@@ -272,16 +272,8 @@
 							<td>{{clickable-text value=model.session.measuredPreBoilVolume editable=true}} l</td>
 						</tr>
 						<tr>
-							<td>Target Post Boil Volume</td>
-							<td>{{format-number model.session.postBoilVolume 1}} l</td>
-						</tr>
-						<tr>
 							<td>System Boil Off</td>
 							<td>{{format-number model.session.brewingSystem.boilOffRate 1}} l/h</td>
-						</tr>
-						<tr>
-							<td>Required Boil Time</td>
-							<td>{{format-number model.session.requiredBoilTime 0}}</td>
 						</tr>
 						<tr>
 							<td>Boil Time</td>
@@ -322,6 +314,10 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr>
+							<td>Post Boil Volume</td>
+							<td>{{format-number model.session.expectedPostBoilVolume 1}} l (Recipe: {{format-number model.session.postBoilVolume 1}} l)</td>
+						</tr>
 						<tr>
 							<td>OG</td>
 							<td>{{format-number model.session.OG 3}} (Recipe: {{format-number model.session.recipe.OG 3}})</td>

@@ -135,10 +135,16 @@ export default DS.Model.extend({
 	postBoilExtract: Ember.computed('totalBoilExtract', 'actualKettleExtract', function () {
 		return this.get('actualKettleExtract') + this.get('totalBoilExtract');
 	}),
-	OG: Ember.computed('postBoilExtract', 'postBoilVolumeCold', function () {
+	expectedPostBoilVolume: Ember.computed('measuredPreBoilVolume', 'brewingSystem.boilOffRate', 'boilTime', function () {
+		return this.get('measuredPreBoilVolume') - (this.get('brewingSystem.boilOffRate') * this.get('boilTime') / 60);
+	}),
+	expectedPostBoilVolumeCold: Ember.computed('expectedPostBoilVolume', function () {
+		return this.get('expectedPostBoilVolume') * 0.96;
+	}),
+	OG: Ember.computed('postBoilExtract', 'expectedPostBoilVolumeCold', function () {
 		// ew = 2.59(sg - 1) * V
 		// sg = ew/(V * 2.59) + 1
-		return 1 + (this.get('postBoilExtract') / (this.get('postBoilVolumeCold') * 2.59));
+		return 1 + (this.get('postBoilExtract') / (this.get('expectedPostBoilVolumeCold') * 2.59));
 	}),
 	correctedOG: Ember.computed('recipe.OG', 'brewingSystem.conversionEfficiency', function () {
 		return 1 + (this.get('recipe.OG') - 1) * (this.get('brewingSystem.conversionEfficiency') / 100);
