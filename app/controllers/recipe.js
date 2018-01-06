@@ -88,6 +88,7 @@ export default Ember.Controller.extend({
 				measuredOG: round(recipe.get('OG'), 3),
 				measuredFG: round(recipe.get('FG'), 3),
 				yeastUsed: 0,
+				sugarUsed: 0,
 			});
 			brewingSession.save().then(function () {
 				recipe.get('boilEntries').forEach(function (entry) {
