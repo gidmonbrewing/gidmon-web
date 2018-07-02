@@ -36,13 +36,14 @@ export default Ember.Controller.extend({
 			let _this = this;
 			this.get('facebook.SDK').then(function (FB) {
 				FB.login(function (response) {
+					let accessToken = response.authResponse.accessToken;
 					if (response.status == "connected") {
 						FB.api('/me', { fields: 'id, first_name, last_name, email' }, function (response) {
 							// Debug logging in development mode
 							if (ENV.environment === 'development') {
 								console.log('Logging in with: ' + response.first_name + " / " + response.id);
 							}
-							_this.get('authManager').authenticateFB(response.id, response.first_name, response.last_name, response.email);
+							_this.get('authManager').authenticateFB(response.id, response.first_name, response.last_name, response.email, accessToken);
 						});
 					} else {
 						alert('Facebook authentication failed');

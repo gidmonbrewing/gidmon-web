@@ -1,0 +1,29 @@
+<div class="container-fluid">
+	<div class="col-md-6">
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-beer" aria-hidden="true"></i> Create New Beer
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">Create New</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Name</td>
+							<td>
+								{{input type="text" value=beerName}}
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><button {{action 'createBeer'}}>Create</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,12 +1,12 @@
 import Ember from 'ember';
-
-// let recipes = [{
-//   id: 1,
-//   name: 'Gidmon Bla'
-// }];
+import RSVP from 'rsvp';
 
 export default Ember.Route.extend({
 	model() {
-		return this.get('store').findAll('recipe');
+		var store = this.get('store');
+		return RSVP.hash({
+			recipes: store.findAll('recipe'),
+			beers: store.findAll('beer'),
+		});
 	}
 });
