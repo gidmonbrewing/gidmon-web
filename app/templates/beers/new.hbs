@@ -15,7 +15,15 @@
 						<tr>
 							<td>Name</td>
 							<td>
-								{{input type="text" value=beerName}}
+								{{input type="text" value=model.beer.name}}
+							</td>
+						</tr>
+						<tr>
+							<td>Type</td>
+							<td>
+								{{#power-select options=model.beerTypes selected=model.beer.beerType onchange=(action (mut model.beer.beerType)) as |beerType|}}
+								{{beerType.name}}
+								{{/power-select}}
 							</td>
 						</tr>
 						<tr>

@@ -38,6 +38,7 @@
     <Compile Include="app\components\file-upload.js" />
     <Compile Include="app\controllers\application.js" />
     <Compile Include="app\controllers\beer.js" />
+    <Compile Include="app\controllers\beers\new.js" />
     <Compile Include="app\controllers\brewing-session.js" />
     <Compile Include="app\controllers\brewing-session\comment.js" />
     <Compile Include="app\controllers\index.js" />
@@ -47,6 +48,7 @@
     <Compile Include="app\controllers\news\item\comment.js" />
     <Compile Include="app\controllers\news\new.js" />
     <Compile Include="app\controllers\recipe.js" />
+    <Compile Include="app\controllers\recipes.js" />
     <Compile Include="app\helpers\format-date.js" />
     <Compile Include="app\helpers\format-number.js" />
     <Compile Include="app\models\beer-batch.js" />
@@ -77,6 +79,8 @@
     <Compile Include="app\routes\application.js" />
     <Compile Include="app\routes\beer.js" />
     <Compile Include="app\routes\beers.js" />
+    <Compile Include="app\routes\beers\index.js" />
+    <Compile Include="app\routes\beers\new.js" />
     <Compile Include="app\routes\brewing-session.js" />
     <Compile Include="app\routes\brewing-session\comment.js" />
     <Compile Include="app\routes\login.js" />
@@ -117,6 +121,7 @@
     <Compile Include="tests\unit\controllers\news\item\comment-test.js" />
     <Compile Include="tests\unit\controllers\news\new-test.js" />
     <Compile Include="tests\unit\controllers\recipe-test.js" />
+    <Compile Include="tests\unit\controllers\recipes-test.js" />
     <Compile Include="tests\unit\helpers\format-date-test.js" />
     <Compile Include="tests\unit\helpers\format-number-test.js" />
     <Compile Include="tests\unit\models\beer-batch-test.js" />
@@ -147,6 +152,8 @@
     <Compile Include="tests\unit\routes\application-test.js" />
     <Compile Include="tests\unit\routes\beer-test.js" />
     <Compile Include="tests\unit\routes\beers-test.js" />
+    <Compile Include="tests\unit\routes\beers\index-test.js" />
+    <Compile Include="tests\unit\routes\beers\new-test.js" />
     <Compile Include="tests\unit\routes\brewing-session-test.js" />
     <Compile Include="tests\unit\routes\brewing-session\comment-test.js" />
     <Compile Include="tests\unit\routes\brewing-session\index-test.js" />
@@ -188,6 +195,8 @@
     <Content Include="app\templates\application.hbs" />
     <Content Include="app\templates\beer.hbs" />
     <Content Include="app\templates\beers.hbs" />
+    <Content Include="app\templates\beers\index.hbs" />
+    <Content Include="app\templates\beers\new.hbs" />
     <Content Include="app\templates\brewing-session.hbs" />
     <Content Include="app\templates\brewing-session\comment.hbs" />
     <Content Include="app\templates\brewing-session\index.hbs" />
@@ -259,6 +268,7 @@
     <Folder Include="app\adapters\" />
     <Folder Include="app\components\" />
     <Folder Include="app\controllers\" />
+    <Folder Include="app\controllers\beers\" />
     <Folder Include="app\controllers\brewing-session\" />
     <Folder Include="app\controllers\news\" />
     <Folder Include="app\controllers\news\item\" />
@@ -266,6 +276,8 @@
     <Folder Include="app\helpers\" />
     <Folder Include="app\models\" />
     <Folder Include="app\routes\" />
+    <Folder Include="app\routes\beers\" />
+    <Folder Include="app\routes\beer\" />
     <Folder Include="app\routes\brewing-session\" />
     <Folder Include="app\routes\news\" />
     <Folder Include="app\routes\news\item\" />
@@ -273,6 +285,8 @@
     <Folder Include="app\services\" />
     <Folder Include="app\styles\" />
     <Folder Include="app\templates\" />
+    <Folder Include="app\templates\beers\" />
+    <Folder Include="app\templates\beer\" />
     <Folder Include="app\templates\brewing-session\" />
     <Folder Include="app\templates\components\" />
     <Folder Include="app\templates\news\" />
@@ -294,6 +308,7 @@
     <Folder Include="tests\unit\helpers\" />
     <Folder Include="tests\unit\models\" />
     <Folder Include="tests\unit\routes\" />
+    <Folder Include="tests\unit\routes\beers\" />
     <Folder Include="tests\unit\routes\brewing-session\" />
     <Folder Include="tests\unit\routes\news-item\" />
     <Folder Include="tests\unit\routes\news\" />

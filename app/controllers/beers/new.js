@@ -1,15 +1,13 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-	store: Ember.inject.service(),
 	actions: {
 		createBeer() {
-			const { beerName } = this.getProperties('beerName');
-			var store = this.store;
-			var beer = store.createRecord('beer', {
-				name: beerName,
+			let _this = this;
+			this.model.beer.save().then(function (model) {
+				// save worked
+				_this.transitionToRoute('beer', model.id);
 			});
-			beer.save();
 		}
 	},
 });
