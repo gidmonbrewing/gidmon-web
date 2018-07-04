@@ -8,5 +8,8 @@ export default Model.extend({
 	imageName: attr(),
 	beerType: belongsTo('beer-type'),
 	recipe: belongsTo('recipe'),
-	beerBatch: hasMany('beer-batch')
+	beerBatch: hasMany('beer-batch'),
+	hasRecipe: Ember.computed('recipe', function () {
+		return this.get('recipe').content != null;
+	}),
 });

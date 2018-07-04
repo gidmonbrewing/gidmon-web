@@ -1,4 +1,40 @@
-<h2>{{model.name}}</h2>
-Abv: {{input name="abv" value=model.abv enter="updateModel"}} <br/>
-<button {{action "saveModel"}}>Save</button>
-<button {{action "createRecipe" model.id}}>Create recipe</button>
+<div class="container-fluid">
+	<div class="col-md-6">
+		<div class="container-fluid" style="padding-top:2em;">
+			<div style="font-size: 24px;">
+				<i class="fa fa-beer" aria-hidden="true"></i> {{model.name}}
+			</div>
+			<div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2">About</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Type</td>
+							<td>
+								{{model.beerType.name}}
+							</td>
+						</tr>
+					</tbody>
+					<thead>
+						<tr>
+							<th colspan="2">Recipe</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							{{#if model.hasRecipe}}
+							<td colspan="2">{{#link-to "recipe" model.recipe.id}}Recipe{{/link-to}}</td>
+							{{else}}
+							<td colspan="2"><button {{action 'createRecipe'}}>Create Recipe</button></td>
+							{{/if}}
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
