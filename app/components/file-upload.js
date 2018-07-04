@@ -1,17 +1,19 @@
-import Ember from 'ember';
-import EmberUploader from 'ember-uploader';
+import FileField from 'ember-uploader/components/file-field';
+import Uploader from 'ember-uploader/uploaders/uploader';
+import { inject } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 
-export default EmberUploader.FileField.extend({
-	store: Ember.inject.service(),
+export default FileField.extend({
+	store: inject(),
 	filesDidChange: function (files) {
-		const uploader = EmberUploader.Uploader.create({
+		const uploader = Uploader.create({
 			url: this.get('url'),
 			ajaxSettings: {
 				headers: this.get('store').adapterFor('application').get('headers')
 			}
 		});
 	
-		if (!Ember.isEmpty(files)) {
+		if (!isEmpty(files)) {
 			// this second argument is optional and can to be sent as extra data with the upload
 			uploader.upload(files[0], {}).then(data => {
 				// Handle success

@@ -9,25 +9,21 @@ You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with NPM)
-* [Bower](https://bower.io/)
 * [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
 
 ## Installation
 
 * Install Git
 * Install Node.js
-* `npm install -g bower`
-* `npm install -g ember-cli`
 * `git clone <repository-url>` this repository
 * `cd gidmon-web`
 * `npm install` (install dependencies)
-* `bower install`(install additional dependencies)
 
 ## Running / Development
 
-* `ember server [--proxy http://127.0.0.1:8000]`
+* `ember serve [--proxy http://127.0.0.1:8000]`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
+* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
 
 ### Code Generators
 
@@ -51,12 +47,13 @@ Make use of the many generators for code, try `ember help generate` for more det
 ## Update Ember and related packages
 
 * `npm outdated` (show packages that are not on the latest version)
-* `npm cache clean && bower cache clean` (cleaned caches npm and bower data)
+* `npm cache clean` (cleaned caches npm)
 * `npm install -g ember-cli@latest` (install latest ember-cli)
 * `npm show ember-cli version` (show installed version)
 * `npm install --save-dev ember-cli@2.16.2 (install npm dependent packages and save latest ember-cli as a dependency, assuming 2.16.2 was the latest installed version)
-* `bower install` (install bower dependencies)
-* `ember init` (update project blueprint)
+* `ember install ember-power-select`
+* `ember install ember-uploader`
+* `ember init` (update project blueprint, be careful about not overwriting changes you need)
 
 ## Further Reading / Useful Links
 
