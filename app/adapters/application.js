@@ -1,8 +1,8 @@
 import JSONAPIAdapter from 'ember-data/adapters/json-api';
-import Ember from 'ember';
 import { inject } from '@ember/service';
 import { computed } from '@ember/object';
 import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
 
 export default JSONAPIAdapter.extend({
 	//host: 'http://localhost:8000'
@@ -19,6 +19,6 @@ export default JSONAPIAdapter.extend({
 	}),
 	pathForType: function(type) {
 		var underscored = underscore(type);
-		return Ember.String.pluralize(underscored);
+		return pluralize(underscored);
 	},
 });

@@ -1,10 +1,9 @@
 import Service from '@ember/service';
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import ENV from 'gidmon-web/config/environment';
+import { defer } from 'rsvp';
 
-var computed = Ember.computed;
-
-var _facebookSDKDeferrable = Ember.RSVP.defer();
+var _facebookSDKDeferrable = defer();
 
 var fbAsyncInit = function () {
 	_initFacebook(window.FB);

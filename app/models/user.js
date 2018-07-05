@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-import Ember from 'ember';
+import { computed } from '@ember/object';
 
 export default DS.Model.extend({
 	firstName: DS.attr('string'),
@@ -10,5 +10,5 @@ export default DS.Model.extend({
 	profile: DS.belongsTo('profile'),
 	newsItem: DS.hasMany('news-item'),
 	userPermissions: DS.hasMany('permission'),
-	fullName: Ember.computed('firstName', 'lastName', function() { return this.get('firstName') + " " + this.get('lastName'); }),
+	fullName: computed('firstName', 'lastName', function() { return this.get('firstName') + " " + this.get('lastName'); }),
 });

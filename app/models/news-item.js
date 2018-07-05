@@ -1,7 +1,8 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany, belongsTo } from 'ember-data/relationships';
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { filterBy } from '@ember/object/computed';
 
 export default Model.extend({
 	title: attr('string'),
@@ -10,9 +11,9 @@ export default Model.extend({
 	created: attr('date', { defaultValue() { return new Date(); } }),
 	author: belongsTo('user'),
 	comments: hasMany('news-comment'),
-	commentCount: Ember.computed('comments', function () { return this.get('comments.length'); }),
-	rootComments: Ember.computed.filterBy('comments', 'isRoot', true),
-	htmlPreamble: Ember.computed('preamble', function() {
+	commentCount: computed('comments', function () { return this.get('comments.length'); }),
+	rootComments: filterBy('comments', 'isRoot', true),
+	htmlPreamble: computed('preamble', function() {
 		var pre = this.get('preamble');
 		if (pre === undefined)
 		{
@@ -23,7 +24,7 @@ export default Model.extend({
 			return pre.replace(/\n/g, '<br/>'); // global replacement /[string to replace]/g
 		}
 	}),
-	htmlContent: Ember.computed('content', function() {
+	htmlContent: computed('content', function() {
 		var cont = this.get('content');
 		if (cont === undefined)
 		{
