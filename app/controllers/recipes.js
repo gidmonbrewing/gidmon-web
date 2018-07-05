@@ -1,14 +1,16 @@
 import Controller from '@ember/controller';
-import Ember from 'ember';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
+import { mapBy } from '@ember/object/computed';
 
 export default Controller.extend({
-	authManager: Ember.inject.service(),
-	store: Ember.inject.service(),
-	currentUser: Ember.computed('authManager.currentUser', function () {
+	authManager: inject(),
+	store: inject(),
+	currentUser: computed('authManager.currentUser', function () {
 		return this.get('store').findRecord('user', this.get('authManager.currentUser'));
 	}),
-	userPermissions: Ember.computed.mapBy('currentUser.userPermissions', 'codename'),
-	canAddRecipe: Ember.computed('currentUser.isStaff', 'userPermissions', function () {
+	userPermissions: mapBy('currentUser.userPermissions', 'codename'),
+	canAddRecipe: computed('currentUser.isStaff', 'userPermissions', function () {
 		if (this.get('currentUser.isSuperuser')) {
 			return true;
 		} else {

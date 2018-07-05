@@ -1,29 +1,32 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
+import { mapBy } from '@ember/object/computed';
 
 function round(value, decimals) {
 	return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
 
-export default Ember.Controller.extend({
-	authManager: Ember.inject.service(),
-	store: Ember.inject.service(),
+export default Controller.extend({
+	authManager: inject(),
+	store: inject(),
 	showFirstWortExtract: false,
 	showFirstSpageExtract: false,
 	showPreBoilExtract: false,
 	showOGDetails: false,
 	showFGDetails: false,
-	currentUser: Ember.computed('authManager.currentUser', function () {
+	currentUser: computed('authManager.currentUser', function () {
 		return this.get('store').findRecord('user', this.get('authManager.currentUser'));
 	}),
-	userPermissions: Ember.computed.mapBy('currentUser.userPermissions', 'codename'),
-	canViewBrewingSession: Ember.computed('currentUser.isStaff', 'userPermissions', function () {
+	userPermissions: mapBy('currentUser.userPermissions', 'codename'),
+	canViewBrewingSession: computed('currentUser.isStaff', 'userPermissions', function () {
 		if (this.get('currentUser.isSuperuser')) {
 			return true;
 		} else {
 			return this.get('userPermissions').includes('view_brewingsession');
 		}
 	}),
-	canEditRecipe: Ember.computed('currentUser.isSuperuser', 'userPermissions', function () {
+	canEditRecipe: computed('currentUser.isSuperuser', 'userPermissions', function () {
 		if (this.get('currentUser.isSuperuser')) {
 			return true;
 		} else {
@@ -137,7 +140,7 @@ export default Ember.Controller.extend({
 			}
 		},
 	},
-	hasUnsavedChanges: Ember.computed('model.recipe.hasDirtyAttributes', 'model.recipe.mashEntries.@each.hasDirtyAttributes', 'model.recipe.boilEntries.@each.hasDirtyAttributes', function () {
+	hasUnsavedChanges: computed('model.recipe.{hasDirtyAttributes,mashEntries.@each.hasDirtyAttributes,boilEntries.@each.hasDirtyAttributes}', function () {
 		var result = false;
 		if (this.model.recipe.get('hasDirtyAttributes')) {
 			result = true;

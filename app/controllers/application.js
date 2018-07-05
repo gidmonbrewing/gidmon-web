@@ -1,14 +1,16 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 import ENV from 'gidmon-web/config/environment';
 
-export default Ember.Controller.extend({
-	authManager: Ember.inject.service(),
-	store: Ember.inject.service(),
-	facebook: Ember.inject.service(),
-	currentUser: Ember.computed('authManager.currentUser',  function() {
+export default Controller.extend({
+	authManager: inject(),
+	store: inject(),
+	facebook: inject(),
+	currentUser: computed('authManager.currentUser',  function() {
 		return this.get('store').findRecord('user', this.get('authManager.currentUser'));
 	}),
-	isAuthenticated: Ember.computed('authManager.isAuthenticated', function () {
+	isAuthenticated: computed('authManager.isAuthenticated', function () {
 		let _this = this;
 		if (this.get('authManager.isAuthenticated')) {
 			return true;

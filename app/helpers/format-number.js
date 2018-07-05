@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper as buildHelper } from '@ember/component/helper';
 
 export function formatNumber(params/*, hash*/) {
 	let [arg1, arg2] = params;
@@ -8,4 +8,4 @@ export function formatNumber(params/*, hash*/) {
 	return arg1.toFixed(arg2);
 }
 
-export default Ember.Helper.helper(formatNumber);
+export default buildHelper(formatNumber);

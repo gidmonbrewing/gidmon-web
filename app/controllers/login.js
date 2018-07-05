@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 
-export default Ember.Controller.extend({
-  authManager: Ember.inject.service(),
-  isAuthenticated: Ember.computed('authManager.token',  function() {
+export default Controller.extend({
+  authManager: inject(),
+  isAuthenticated: computed('authManager.token',  function() {
     return this.get("authManager.token") !== "";
   }),
   actions: {

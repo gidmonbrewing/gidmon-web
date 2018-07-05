@@ -1,5 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject } from '@ember/controller';
 
-export default Ember.Controller.extend({
-	appCont: Ember.inject.controller('application')
+export default Controller.extend({
+	appCont: inject('application')
 });

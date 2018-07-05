@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper as buildHelper } from '@ember/component/helper';
 
 export function formatDate(params/*, hash*/) {
 	let date = params[0];
@@ -6,4 +6,4 @@ export function formatDate(params/*, hash*/) {
 	return date.toLocaleDateString('sv-SE');
 }
 
-export default Ember.Helper.helper(formatDate);
+export default buildHelper(formatDate);

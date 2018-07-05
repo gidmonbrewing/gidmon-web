@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 	authManager: service('auth-manager'),
 	showAddBrewer: false,
 	showFirstWortExtract: false,
@@ -51,7 +52,7 @@ export default Ember.Controller.extend({
 			this.set('showAddBrewer', false);
 		},
 	},
-	hasUnsavedChanges: Ember.computed('model.session.hasDirtyAttributes', 'model.session.mashEntries.@each.hasDirtyAttributes', 'model.session.boilEntries.@each.hasDirtyAttributes', function () {
+	hasUnsavedChanges: computed('model.session.{hasDirtyAttributes,mashEntries.@each.hasDirtyAttributes,boilEntries.@each.hasDirtyAttributes}', function () {
 		var result = false;
 		if (this.model.session.get('hasDirtyAttributes')) {
 			result = true;
