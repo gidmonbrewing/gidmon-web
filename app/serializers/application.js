@@ -1,24 +1,25 @@
 import DS from 'ember-data';
-import Ember from 'ember';
+import { underscore } from '@ember/string';
+import { pluralize } from 'ember-inflector';
 
 export default DS.JSONAPISerializer.extend({
 	keyForAttribute: function(attr) {
-		return Ember.String.underscore(attr);
+		return underscore(attr);
 	},
 	keyForRelationship: function(attr) {
-		return Ember.String.underscore(attr);
+		return underscore(attr);
 	},
 	payloadTypeFromModelName(modelName) {
-		return Ember.String.underscore(modelName);
+		return underscore(modelName);
 	},
 	payloadKeyFromModelName(modelName) {
-		let underscored = Ember.String.underscore(modelName);
-		return Ember.String.pluralize(underscored);
+		let underscored = underscore(modelName);
+		return pluralize(underscored);
 	},
 	serialize(snapshot, options) {
 		var json = this._super(snapshot, options);
 
-		json.data.type = Ember.String.pluralize(json.data.type);
+		json.data.type = pluralize(json.data.type);
 		return json;
 	},
 });

@@ -9,11 +9,11 @@ export default Route.extend({
 			beer: store.createRecord('beer'),
 		});
 	},
-	handleDeactivate: function () {
+	deactivate() {
 		// Destroy unsaved records when navigating away
 		let m = this.currentModel.beer;
 		if (m.get('isNew')) {
 			m.destroyRecord();
 		}
-	}.on('deactivate')
+	}
 });
